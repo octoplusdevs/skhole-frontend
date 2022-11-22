@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { Wrapper } from "./style";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { InputEmail } from "../Inputs/InputEmail";
+import { Input } from "../Inputs/Text";
 import { InputPassword } from "../Inputs/InputPassword";
 import { schemaLogin } from "../../Schemas/schemaLogin";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { EnvelopeSimple } from "phosphor-react";
 
 export function NewPass() {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,19 +29,21 @@ export function NewPass() {
     <>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <InputEmail
+          <Input
             {...register("email")}
             placeholder="Seu endereço de email"
-            color={errors.email && "#FD4747"}
-            className={errors.email && "errorInput"}
+            ClassName={errors.email && "error"}
+            icon={EnvelopeSimple}
+            type="email"
           />
+          {/* <p>{errors.email}</p> */}
 
-          <InputPassword
+          {/* <InputPassword
             {...register("password")}
             placeholder="Sua senha"
             color={errors.password && "#FD4747"}
             className={errors.password && "errorInput"}
-          />
+          /> */}
 
           <Button
             Text="Entrar"
