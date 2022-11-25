@@ -73,9 +73,7 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    &:first-child {
-      margin-bottom: 2.4rem;
-    }
+    margin-bottom: 2.4rem;
     .message_error {
       color: red;
       font-size: 1.4rem;

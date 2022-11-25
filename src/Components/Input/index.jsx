@@ -21,13 +21,13 @@ export const Input = forwardRef(({ color, Icon, ClassName, type = "text", ...res
       )}
       <input type={inputType} ref={ref} {...rest} />
       {type === "password" ? (
-        <button className="Eye" onClick={toggleTypeInput}>
+        <div className="Eye" onClick={toggleTypeInput}>
           {inputType === "password" ? (
             <EyeClosed size={30} color="#323232" />
           ) : (
             <Eye size={30} color="#47FDBB" />
           )}
-        </button>
+        </div>
       ) : null}
     </Wrapper>
   );

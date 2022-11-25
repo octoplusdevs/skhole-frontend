@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { EnvelopeSimple } from "phosphor-react";
+import { EnvelopeSimple, LockSimple } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
@@ -10,7 +10,6 @@ import { Wrapper, Form, Header } from "./style";
 
 export function Login() {
   const [isLoading, setIsLoading] = useState(false);
-  const [clicked, setClicked] = useState(false);
 
   const {
     register,
@@ -21,7 +20,6 @@ export function Login() {
   function onSubmit(data) {
     console.log(data);
     setIsLoading(!isLoading);
-    setClicked(!clicked);
   }
 
   return (
@@ -52,19 +50,14 @@ export function Login() {
               {...register("password")}
               placeholder="Sua senha"
               ClassName={errors.password && "error"}
-              Icon={EnvelopeSimple}
+              Icon={LockSimple}
               type="password"
               id="password"
             />
             <p className="message_error">{errors?.password?.message}</p>
           </div>
 
-          <Button
-            Text="Entrar"
-            isLoading={isLoading}
-            Primary
-            onClick={() => setIsLoading(!isLoading)}
-          />
+          <Button text="Entrar" isLoading={true} Primary onClick={() => setIsLoading(!isLoading)} />
           <div className="links">
             <Link to={"/Login"}>Recuperar conta</Link>
             <Link to={"/Register"}>Criar uma nova conta</Link>
