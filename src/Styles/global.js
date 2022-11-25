@@ -1,13 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
-
 export const GlobalStyle = createGlobalStyle`
 
+   html{
+      font-size: 62.5%;
+   }
    body{
       background-color:  #141313;
-   }
-   body, html{
-        font-size: 62.5%;
+      font-size: 16px;
    }
 
    *{
@@ -55,14 +55,14 @@ export const GlobalStyle = createGlobalStyle`
       cursor: pointer;
    }
    @media (max-width:1060px){
-      body, html{
+      html{
          font-size: 58%;
       }
    }
 
    @media (max-width:600px){
-      body, html{
+      html{
          font-size: 50%;
       }
    }
-`
+`;

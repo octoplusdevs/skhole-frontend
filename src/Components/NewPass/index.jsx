@@ -3,8 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "../Button";
 import { Wrapper } from "./style";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input } from "../Inputs/Text";
-import { InputPassword } from "../Inputs/InputPassword";
+import { Input } from "../Input";
 import { schemaLogin } from "../../Schemas/schemaLogin";
 import { Link } from "react-router-dom";
 import { EnvelopeSimple } from "phosphor-react";
@@ -36,14 +35,15 @@ export function NewPass() {
             icon={EnvelopeSimple}
             type="email"
           />
-          {/* <p>{errors.email}</p> */}
+          <p>{errors.email}</p>
 
-          {/* <InputPassword
+          <Input
             {...register("password")}
             placeholder="Sua senha"
-            color={errors.password && "#FD4747"}
-            className={errors.password && "errorInput"}
-          /> */}
+            ClassName={errors.email && "error"}
+            icon={EnvelopeSimple}
+            type="password"
+          />
 
           <Button
             Text="Entrar"

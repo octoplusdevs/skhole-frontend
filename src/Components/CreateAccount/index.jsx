@@ -1,9 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "../Button";
-import { Input } from "../Inputs/Text";
-import { InputPassword } from "../Inputs/InputPassword";
-import { InputText } from "../Inputs/InputText";
+import { Input } from "../Input";
 import { Wrapper } from "./style";
 import { schemaRegister } from "../../Schemas/schemaRegister";
 import { Link } from "react-router-dom";
@@ -28,7 +26,7 @@ export default function CreateAnAcount() {
     <>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <InputText
+          <Input
             {...register("name")}
             placeholder="Seu nome do registo"
             color={errors.name && "#FD4747"}
@@ -42,7 +40,7 @@ export default function CreateAnAcount() {
             className={errors.email && "errorInput"}
           />
 
-          <InputPassword
+          <Input
             {...register("password")}
             placeholder="Sua senha"
             color={errors.password && "#FD4747"}

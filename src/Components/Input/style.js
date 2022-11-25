@@ -1,14 +1,17 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   background-color: #141313;
-  padding-left: 16px;
+  padding: 0 16px;
   gap: 8px;
   border: 1px solid transparent;
   width: 100%;
   transition: all 0.3s ease;
+  .Eye {
+    cursor: pointer;
+  }
   input {
     width: 100%;
     padding: 16px 0;
