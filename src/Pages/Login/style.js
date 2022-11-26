@@ -74,9 +74,12 @@ export const Form = styled.form`
     flex-direction: column;
     gap: 1.2rem;
     margin-bottom: 2.4rem;
+    position: relative;
     .message_error {
       color: red;
       font-size: 1.4rem;
+      position: absolute;
+      bottom: -20px;
     }
   }
   .links {

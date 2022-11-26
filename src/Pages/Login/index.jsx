@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { EnvelopeSimple, LockSimple } from "phosphor-react";
+import { EnvelopeSimple, LockSimple } from "phosphor-react"; 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
-import { schemaLogin } from "../../Schemas/schemaLogin";
+import { schemaLogin } from "../../Schemas/schema";
 import { Wrapper, Form, Header } from "./style";
 
 export function Login() {
@@ -57,7 +57,10 @@ export function Login() {
             <p className="message_error">{errors?.password?.message}</p>
           </div>
 
-          <Button text="Entrar" isLoading={true} Primary onClick={() => setIsLoading(!isLoading)} />
+          <Button
+           text="Entrar" isLoading={isLoading} Primary
+          // onClick={() => setIsLoading(!isLoading)}
+            />
           <div className="links">
             <Link to={"/Login"}>Recuperar conta</Link>
             <Link to={"/Register"}>Criar uma nova conta</Link>

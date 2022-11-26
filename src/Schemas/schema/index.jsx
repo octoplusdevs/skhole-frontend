@@ -4,8 +4,13 @@ export const schemaRegister = yup.object({
     name: yup.string()
             .required('Campo Obrigatório'),
     email: yup.string()
-            .required('Campo Obrigatório'),
+            .email().required('Campo Obrigatório'),
     password: yup.string()
             .required('Campo Obrigatório')
 
 })
+
+export const schemaLogin = yup.object({
+  email: yup.string().email().required("Campo Obrigatório"),
+  password: yup.string().required("Campo Obrigatório"),
+});
