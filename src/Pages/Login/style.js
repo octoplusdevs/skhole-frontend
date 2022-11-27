@@ -78,8 +78,7 @@ export const Form = styled.form`
     .message_error {
       color: red;
       font-size: 1.4rem;
-      position: absolute;
-      bottom: -20px;
+      height: 1.6rem;
     }
   }
   .links {

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { EnvelopeSimple, LockSimple } from "phosphor-react"; 
+import { EnvelopeSimple, LockSimple } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
-import { schemaLogin } from "../../Schemas/schema";
+import { SchemaLogin } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
 
 export function Login() {
@@ -15,7 +15,7 @@ export function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schemaLogin) });
+  } = useForm({ resolver: yupResolver(SchemaLogin) });
 
   function onSubmit(data) {
     console.log(data);
@@ -58,9 +58,11 @@ export function Login() {
           </div>
 
           <Button
-           text="Entrar" isLoading={isLoading} Primary
-          // onClick={() => setIsLoading(!isLoading)}
-            />
+            text="Entrar"
+            isLoading={isLoading}
+            Primary
+            // onClick={() => setIsLoading(!isLoading)}
+          />
           <div className="links">
             <Link to={"/Login"}>Recuperar conta</Link>
             <Link to={"/Register"}>Criar uma nova conta</Link>
