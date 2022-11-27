@@ -16,7 +16,9 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
    }
-
+   :root{
+    --color-red: #ff9494;
+   }
    .container{
       width: 100%;
       max-width: 1246px;

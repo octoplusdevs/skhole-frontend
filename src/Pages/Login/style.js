@@ -12,10 +12,9 @@ export const Wrapper = styled.section`
     justify-content: center;
     flex-direction: column;
     min-height: 100vh;
-
+    gap: 2.4rem;
     @media (min-width: 1024px) {
       flex-direction: row;
-      justify-content: space-between;
     }
   }
 `;
@@ -27,7 +26,6 @@ export const Header = styled.div`
     color: #fff;
     font-size: 2.4rem;
     font-family: "Inter";
-    font-weight: 500;
     line-height: 140%;
     margin: 2.4rem 0;
   }
@@ -62,7 +60,7 @@ export const Header = styled.div`
 export const Form = styled.form`
   width: 100%;
   max-width: 592px;
-  padding: 80px 2.4rem;
+  padding: 4rem;
   background-color: #1f1f1f;
   border-radius: 1.2rem;
   @media (min-width: 1024px) {
@@ -73,10 +71,10 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.4rem;
     position: relative;
     .message_error {
-      color: red;
+      color: var(--color-red);
       font-size: 1.4rem;
       height: 1.6rem;
     }

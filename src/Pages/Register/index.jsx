@@ -18,7 +18,12 @@ export function Register() {
   } = useForm({ resolver: yupResolver(SchemaRegister) });
 
   function onSubmit(data) {
-    console.log(data);
+    const newData = {
+      first_name: data.name[0],
+      last_name: data.name[1],
+      ...data,
+    };
+    console.log(newData);
     setIsLoading(!isLoading);
   }
 

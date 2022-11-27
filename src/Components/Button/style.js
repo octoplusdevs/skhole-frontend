@@ -19,6 +19,7 @@ export const Wrapper = styled.button`
   width: 100%;
   cursor: pointer;
   transition: all 0.1s ease;
+  border-radius: 4px;
   .loading {
     animation: ${loadingAnimated} 1s linear infinite;
   }

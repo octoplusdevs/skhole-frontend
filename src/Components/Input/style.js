@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   border: 1px solid transparent;
   width: 100%;
   transition: all 0.3s ease;
+  border-radius: 4px;
   .Eye {
     cursor: pointer;
   }
@@ -21,7 +22,7 @@ export const Wrapper = styled.div`
     outline: none;
     font-size: 16px;
     font-family: "Inter", sans-serif;
-    height: 64px;
+    /* height: 64px; */
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
@@ -43,9 +44,9 @@ export const Wrapper = styled.div`
     }
   }
   &.error {
-    border: 1px solid #fd4747;
+    border: 1px solid var(--color-red);
     .icon svg {
-      color: #fd4747;
+      color: var(--color-red);
     }
   }
   &.disabled {

@@ -16,7 +16,7 @@ export const Input = forwardRef(({ color, Icon, ClassName, type = "text", ...res
     <Wrapper className={ClassName}>
       {Icon && (
         <div className="icon">
-          <Icon size={32} color={color} />
+          <Icon size={24} color={color} />
         </div>
       )}
       <input type={inputType} ref={ref} {...rest} />
@@ -25,7 +25,7 @@ export const Input = forwardRef(({ color, Icon, ClassName, type = "text", ...res
           {inputType === "password" ? (
             <EyeClosed size={30} color="#323232" />
           ) : (
-            <Eye size={30} color="#47FDBB" />
+            <Eye size={24} color="#47FDBB" />
           )}
         </div>
       ) : null}
