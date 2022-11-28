@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react";
 // import PropTypes from "prop-types";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
@@ -18,6 +18,7 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
   });
+  console.log("AuthContext state:", state);
   return <AuthContext.Provider value={{ ...state, dispatch }}>{children}</AuthContext.Provider>;
 };
 

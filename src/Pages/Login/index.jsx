@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { EnvelopeSimple, LockSimple } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,10 +8,17 @@ import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaLogin } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
+import { useLogin } from "../../hooks/useLogin";
 
 export function Login() {
-  const [isLoading, setIsLoading] = useState(false);
+  const { login, error, isLoading } = useLogin();
+  const navigate = useNavigate();
+  const AuthStored = JSON.parse(localStorage.getItem("user"));
+  const authenticated = AuthStored?.user?.logged;
 
+  useEffect(() => {
+    if (authenticated) navigate("/");
+  }, []);
   const {
     register,
     handleSubmit,
@@ -19,7 +27,11 @@ export function Login() {
 
   function onSubmit(data) {
     console.log(data);
-    setIsLoading(!isLoading);
+    const { username, password } = data;
+    (async () => {
+      await login(username, password);
+      console.log(error);
+    })();
   }
 
   return (
@@ -32,14 +44,14 @@ export function Login() {
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="input">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="username">Email</label>
             <Input
-              {...register("email")}
-              placeholder="Seu endereço de email"
-              ClassName={errors.email && "error"}
+              {...register("username")}
+              placeholder="Seu nome de usuário"
+              ClassName={errors.username && "error"}
               Icon={EnvelopeSimple}
-              type="email"
-              id="email"
+              type="text"
+              id="username"
             />
             <p className="message_error">{errors?.email?.message}</p>
           </div>
@@ -57,15 +69,11 @@ export function Login() {
             <p className="message_error">{errors?.password?.message}</p>
           </div>
 
-          <Button
-            text="Entrar"
-            isLoading={isLoading}
-            Primary
-            // onClick={() => setIsLoading(!isLoading)}
-          />
+          <Button text="Entrar" isLoading={isLoading} Primary disabled={isLoading} />
           <div className="links">
             <Link to={"/Login"}>Recuperar conta</Link>
             <Link to={"/Register"}>Criar uma nova conta</Link>
+            <Link to={"/"}>Home</Link>
           </div>
         </Form>
       </div>
