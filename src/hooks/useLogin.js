@@ -32,7 +32,7 @@ export const useLogin = () => {
       })
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
       toast.success("Login feito!")
-      navigate("/");
+      navigate("/Discover");
 
     } catch (error) {
       setError(error);

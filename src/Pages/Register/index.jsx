@@ -72,7 +72,7 @@ export function Register() {
           <Button text="Entrar" isLoading={isLoading} disabled={isLoading} Primary />
           <div className="links">
             <Link to={"/Recover-Account"}>Recuperar conta</Link>
-            <Link to={"/Login"}>Fazer Login</Link>
+            <Link to={"/"}>Fazer Login</Link>
           </div>
         </Form>
       </div>

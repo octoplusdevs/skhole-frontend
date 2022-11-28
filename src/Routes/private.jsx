@@ -5,12 +5,11 @@ import { AuthContext } from "../contexts/authContext";
 // eslint-disable-next-line react/prop-types
 export function PrivateRoute({ children }) {
   const Auth = useContext(AuthContext);
-  console.log("aaa",Auth);
-  const authenticated = Auth.user.logged;
+  const authenticated = Auth.logged;
   let location = useLocation();
 
   if (!authenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
   return children;
 }

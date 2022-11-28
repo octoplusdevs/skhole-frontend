@@ -1,6 +1,4 @@
-import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { EnvelopeSimple, LockSimple } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,13 +10,7 @@ import { useLogin } from "../../hooks/useLogin";
 
 export function Login() {
   const { login, error, isLoading } = useLogin();
-  const navigate = useNavigate();
-  const AuthStored = JSON.parse(localStorage.getItem("user"));
-  const authenticated = AuthStored?.user?.logged;
 
-  useEffect(() => {
-    if (authenticated) navigate("/");
-  }, []);
   const {
     register,
     handleSubmit,
@@ -52,8 +44,9 @@ export function Login() {
               Icon={EnvelopeSimple}
               type="text"
               id="username"
+              autoComplete="username"
             />
-            <p className="message_error">{errors?.email?.message}</p>
+            <p className="message_error">{errors?.username?.message}</p>
           </div>
 
           <div className="input">
@@ -65,15 +58,15 @@ export function Login() {
               Icon={LockSimple}
               type="password"
               id="password"
+              autoComplete="current-password"
             />
             <p className="message_error">{errors?.password?.message}</p>
           </div>
 
           <Button text="Entrar" isLoading={isLoading} Primary disabled={isLoading} />
           <div className="links">
-            <Link to={"/Login"}>Recuperar conta</Link>
+            <Link to={"/"}>Recuperar conta</Link>
             <Link to={"/Register"}>Criar uma nova conta</Link>
-            <Link to={"/"}>Home</Link>
           </div>
         </Form>
       </div>
