@@ -3,6 +3,8 @@ import { Header } from "../../Components/Header";
 import { Wrapper } from "./style";
 
 export function Discover() {
+  console.log("Discover");
+
   return (
     <>
       <Header />
