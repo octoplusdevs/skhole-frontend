@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { CircleNotch } from "phosphor-react";
 import { Wrapper } from "./style";
 
-export function Button({ className, text, isLoading = false, Icon, ...rest }) {
+export function Button({ className, text, isLoading, Icon, ...rest }) {
   return (
     <Wrapper {...rest} className={className}>
       {isLoading === false ? text : <CircleNotch className="loading" size={24} />}
@@ -12,7 +12,7 @@ export function Button({ className, text, isLoading = false, Icon, ...rest }) {
 }
 
 Button.propTypes = {
-  isLoading: PropTypes.boolean,
+  isLoading: PropTypes.bool,
   Icon: PropTypes.elementType,
   className: PropTypes.string,
   text: PropTypes.string,

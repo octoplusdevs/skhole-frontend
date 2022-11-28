@@ -1,9 +1,9 @@
 import * as yup from "yup";
 
 const Register = yup.object({
-  name: yup
+  username: yup
     .string()
-    .matches(/^[a-zA-Z]+ [a-zA-Z]+$/, "* Informe o seu primeiro e último nome")
+    .matches(/^[a-zA-Z]+$/, "* Informe o seu nome de usuário sem espaços")
     .required("* Informe o seu nome completo"),
   email: yup.string().email("* Este e-mail não é válido").required("* Informe o seu email actual"),
   password: yup

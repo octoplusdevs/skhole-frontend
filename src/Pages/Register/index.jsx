@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { EnvelopeSimple, LockSimple, User } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSignup } from "../../hooks/useSignup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaRegister } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
 
 export function Register() {
-  const [isLoading, setIsLoading] = useState(false);
+  const { signup, isLoading } = useSignup();
 
   const {
     register,
@@ -18,13 +18,8 @@ export function Register() {
   } = useForm({ resolver: yupResolver(SchemaRegister) });
 
   function onSubmit(data) {
-    const newData = {
-      first_name: data.name[0],
-      last_name: data.name[1],
-      ...data,
-    };
-    console.log(newData);
-    setIsLoading(!isLoading);
+    const { username, email, password } = data;
+    signup(username, email, password);
   }
 
   return (
@@ -37,16 +32,16 @@ export function Register() {
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="input">
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="username">Nome</label>
             <Input
-              {...register("name")}
-              placeholder="Seu nome do registo"
-              ClassName={errors.name && "error"}
+              {...register("username")}
+              placeholder="Seu novo username"
+              ClassName={errors.username && "error"}
               Icon={User}
               type="text"
-              id="name"
+              id="username"
             />
-            <p className="message_error">{errors?.name?.message}</p>
+            <p className="message_error">{errors?.username?.message}</p>
           </div>
           <div className="input">
             <label htmlFor="email">Email</label>
@@ -74,15 +69,10 @@ export function Register() {
             <p className="message_error">{errors?.password?.message}</p>
           </div>
 
-          <Button
-            text="Entrar"
-            isLoading={isLoading}
-            Primary
-            // onClick={() => setIsLoading(!isLoading)}
-          />
+          <Button text="Entrar" isLoading={isLoading} disabled={isLoading} Primary />
           <div className="links">
-            <Link to={"/Login"}>Recuperar conta</Link>
-            <Link to={"/Register"}>Criar uma nova conta</Link>
+            <Link to={"/Recover-Account"}>Recuperar conta</Link>
+            <Link to={"/Login"}>Fazer Login</Link>
           </div>
         </Form>
       </div>
