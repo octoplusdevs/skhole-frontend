@@ -4,7 +4,11 @@ import replayIcon from "../../assets/Vector.svg";
 import Switch from "../Switch";
 
 
-export default function VideoTable(){
+export default function VideoTable({
+  description,
+  title,
+  duration
+}){
     return(
         <>
             <Wrapper>
@@ -15,7 +19,7 @@ export default function VideoTable(){
                     <div className="reproduction">
                         <div className="icon-playback">
                             <img src={replayIcon}/>
-                        </div>  
+                        </div>
                         <div className="switch">
                             <Switch />
                         </div>
@@ -23,10 +27,11 @@ export default function VideoTable(){
                     </div>
                 <div className="text">
                     <h4>
-                        <span>4</span> Introdução a modelagem de dados no modelo relacional usando o Brmodelo
+                        <span>{duration}</span>
+                        {title}
                     </h4>
                     <h5>
-                        DogeCoin buying growth hacker. MVP finishing tech-bro. Alexis Ohanian-tweeted overhyped ed-Tech series D. Generalist-reading secondary markets buyer. Hypergrowth activist investor.
+                      {description}
                     </h5>
                 </div>
             </Wrapper>

@@ -5,14 +5,20 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Routes from "./Routes";
-import { AuthContextProvider } from "./contexts/authContext";
+import { Provider } from "react-redux";
+import { persistor, store } from "./redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <AuthContextProvider>
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
-    <GlobalStyle />
-    <ToastContainer />
-  </AuthContextProvider>,
+  <>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ToastContainer />
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+        <GlobalStyle />
+      </PersistGate>
+    </Provider>
+  </>,
 );

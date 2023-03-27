@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const Login = yup.object({
-  username: yup
+  email: yup
     .string()
     .min(4, "*Mínimo 4 caracteres")
     .matches(/^[a-zA-Z]+/, "* Informe o seu nome de usuário sem espaços")

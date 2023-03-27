@@ -2,7 +2,7 @@ import { Wrapper } from "./style";
 import Avatar from "../../assets/Avatar.png";
 import hamburguer from "../../assets/List.svg";
 import { Link } from "react-router-dom";
-import { Watching } from "../../Pages/Watching";
+import { Watching } from "../../pages/Watching";
 
 export function Header() {
   return (
@@ -10,21 +10,20 @@ export function Header() {
       <Wrapper>
         <div className="container">
           <div className="logo">
-            <h3>SKOLÊ</h3>
+            <Link to={"/discover"}>
+              <h3>SKOLÊ</h3>
+            </Link>
           </div>
           <nav>
             <ul>
               <li>
-                <Link to={"/"}>Home</Link>
+                <Link to={"/discover"}>Discover</Link>
               </li>
               <li>
-                <Link to={"/"}>Discover</Link>
+                <Link to={"/courses"}>Cursos</Link>
               </li>
               <li>
-                <Link to={"/watch"}>Watch</Link>
-              </li>
-              <li>
-                <Link to={"/Watching"}>Cursos</Link>
+                <Link to={"/profile"}>Perfil</Link>
               </li>
             </ul>
           </nav>

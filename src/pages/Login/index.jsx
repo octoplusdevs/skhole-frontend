@@ -1,16 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { EnvelopeSimple, LockSimple } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaLogin } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
-import { useLogin } from "../../hooks/useLogin";
+import { loginUser } from "../../redux/auth/auth.actions";
+import { useEffect } from "react";
 
 export function Login() {
-  const { login, error, isLoading } = useLogin();
-
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const hasError = useSelector((state) => state.auth.error);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,14 +24,14 @@ export function Login() {
   } = useForm({ resolver: yupResolver(SchemaLogin) });
 
   function onSubmit(data) {
-    console.log(data);
-    const { username, password } = data;
-    (async () => {
-      await login(username, password);
-      console.log(error);
-    })();
+    const { email, password } = data;
+    dispatch(loginUser(email, password)).then(() => {
+      navigate("/discover");
+    });
   }
-
+  useEffect(() => {
+    if (isAuthenticated) navigate("/discover");
+  }, []);
   return (
     <Wrapper>
       <div className="container">
@@ -36,17 +42,19 @@ export function Login() {
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="input">
-            <label htmlFor="username">Email</label>
+            <label htmlFor="email">Email</label>
             <Input
-              {...register("username")}
-              placeholder="Seu nome de usuário"
-              ClassName={errors.username && "error"}
+              {...register("email")}
+              placeholder="Seu email"
+              ClassName={errors.email && "error"}
               Icon={EnvelopeSimple}
               type="text"
-              id="username"
-              autoComplete="username"
+              id="email"
+              autoComplete="email"
             />
-            <p className="message_error">{errors?.username?.message}</p>
+            <p className="message_error">
+              {errors?.email?.message || (hasError?.includes("Email") && hasError)}
+            </p>
           </div>
 
           <div className="input">
@@ -60,10 +68,12 @@ export function Login() {
               id="password"
               autoComplete="current-password"
             />
-            <p className="message_error">{errors?.password?.message}</p>
+            <p className="message_error">
+              {errors?.email?.password || (hasError?.includes("Password") && hasError)}
+            </p>
           </div>
 
-          <Button text="Entrar" isLoading={isLoading} Primary disabled={isLoading} />
+          <Button text="Entrar" Primary isLoading={isLoading} disabled={isLoading} />
           <div className="links">
             <Link to={"/"}>Recuperar conta</Link>
             <Link to={"/Register"}>Criar uma nova conta</Link>

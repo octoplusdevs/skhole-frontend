@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { useState } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { useLogin } from "../hooks/useLogin";
-import api from "../services/api"
+import { API } from "../services/api";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
@@ -20,17 +20,15 @@ export const useSignup = () => {
       });
       await login(username, password);
 
-      toast.success("Parabéns, conta criada!")
-
-
+      toast.success("Parabéns, conta criada!");
+      navigate("/discover");
     } catch (error) {
       setError(error);
-      toast.error(error)
-
+      toast.error(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { signup,isLoading, error }
+  return { signup, isLoading, error };
 };

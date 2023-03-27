@@ -1,17 +1,21 @@
 import { Wrapper } from "./style";
 
 
-export default function Card(){
+export default function Card({
+  title,
+  duration,
+  thumbnail,
+  description
+}){
     return(
-        <>
-            <Wrapper>
-                <div className="card">
-                </div>
-                <div className="text">
-                    <h4>Curso de React JS</h4>
-                    <span>Duração 40h</span>
-                </div>
-            </Wrapper>
-        </>
+      <Wrapper>
+          <div className="card">
+            <img src={thumbnail} alt={description} />
+          </div>
+          <div className="text">
+              <h4>{title}</h4>
+              <span>{duration}</span>
+          </div>
+      </Wrapper>
     )
 }
