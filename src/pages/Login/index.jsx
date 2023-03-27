@@ -31,7 +31,7 @@ export function Login() {
   }
   useEffect(() => {
     if (isAuthenticated) navigate("/discover");
-  }, []);
+  }, [isAuthenticated]);
   return (
     <Wrapper>
       <div className="container">

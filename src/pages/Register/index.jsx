@@ -1,15 +1,20 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EnvelopeSimple, LockSimple, User } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSignup } from "../../hooks/useSignup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaRegister } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
+import { registerUser } from "../../redux/auth/auth.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export function Register() {
-  const { signup, isLoading } = useSignup();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -19,8 +24,14 @@ export function Register() {
 
   function onSubmit(data) {
     const { username, email, password } = data;
-    signup(username, email, password);
+    dispatch(registerUser({ username, email, password })).then(() => {
+      navigate("/discover");
+    });
   }
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/discover");
+  }, [isAuthenticated]);
 
   return (
     <Wrapper>
@@ -32,7 +43,7 @@ export function Register() {
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="input">
-            <label htmlFor="username">Nome</label>
+            <label htmlFor="username">Nome de usuário</label>
             <Input
               {...register("username")}
               placeholder="Seu novo username"
