@@ -3,6 +3,7 @@ import { store } from "../redux";
 
 const API = axios.create({
   baseURL: "https://skhole.onrender.com/api/v1", // altere de acordo com sua configuração
+  // baseURL: "http://localhost:1234/api/v1", // altere de acordo com sua configuração
 });
 
 API.interceptors.request.use(

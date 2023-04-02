@@ -11,6 +11,7 @@ export function Watch() {
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
   const { data: modules } = useModules(slug_course);
 
+  console.log(video);
   return (
     <>
       <Header />

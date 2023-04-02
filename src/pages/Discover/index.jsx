@@ -1,21 +1,12 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Card from "../../Components/Cards";
 import { Header } from "../../Components/Header";
-import { fetchCourses, toggleCourse } from "../../redux/courses/courses.actions";
+import { useCourses } from "../../hooks/useCourses";
 import { Wrapper } from "./style";
 
 export function Discover() {
-  const dispatch = useDispatch();
-  const courses = useSelector((state) => state?.courses?.courses);
+  const { data: courses } = useCourses();
 
-  function fetch() {
-    dispatch(fetchCourses());
-  }
-  useEffect(() => {
-    fetch();
-  }, []);
   return (
     <>
       <Header />
@@ -23,20 +14,21 @@ export function Discover() {
         <div className="container">
           <h4>Programação</h4>
           <div className="cards">
-            {courses?.map((course) => (
-              <Link
-                to={`/watch/course/${course.slug}`}
-                onClick={() => dispatch(toggleCourse(course.slug))}
-              >
-                <Card
-                  title={course.title}
-                  duration={course.duration}
-                  thumbnail={course.thumbnail}
-                  description={course.description}
-                  key={course.slug}
-                />
-              </Link>
-            ))}
+            {courses && courses.length > 0 ? (
+              courses.map((course) => (
+                <Link to={`/watch/course/${course.slug}`}>
+                  <Card
+                    title={course.title}
+                    duration={course.duration}
+                    thumbnail={course.thumbnail}
+                    description={course.description}
+                    key={course.slug}
+                  />
+                </Link>
+              ))
+            ) : (
+              <h4>Sem cursos disponíveis</h4>
+            )}
           </div>
         </div>
       </Wrapper>
