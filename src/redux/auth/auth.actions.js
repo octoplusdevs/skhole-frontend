@@ -1,5 +1,4 @@
 import { API } from "../../services/api";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import {
   loginRequest,
   loginSuccess,
@@ -15,7 +14,6 @@ export const loginUser = (email, password) => async (dispatch) => {
   try {
     const response = await API.post(`/auth`, { email, password });
     dispatch(loginSuccess(response.data));
-    useLocalStorage("@skhole::user", JSON.stringify(response.data));
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
   }
@@ -40,7 +38,6 @@ export const registerUser = (userData) => async (dispatch) => {
     dispatch(loginRequest());
     const response = await API.post(`/auth`, { email, password });
     dispatch(loginSuccess(response.data));
-    useLocalStorage("@skhole::user", JSON.stringify(response.data));
   } catch (error) {
     dispatch(registerFailure(error?.response?.data?.error));
   }

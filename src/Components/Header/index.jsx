@@ -2,9 +2,12 @@ import { Wrapper } from "./style";
 import Avatar from "../../assets/Avatar.png";
 import hamburguer from "../../assets/List.svg";
 import { Link } from "react-router-dom";
-import { Watching } from "../../pages/Watching";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/auth/auth.slice";
 
 export function Header() {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Wrapper>
@@ -24,6 +27,9 @@ export function Header() {
               </li>
               <li>
                 <Link to={"/profile"}>Perfil</Link>
+              </li>
+              <li>
+                <button onClick={() => dispatch(logout())}>Sair</button>
               </li>
             </ul>
           </nav>

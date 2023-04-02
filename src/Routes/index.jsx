@@ -2,7 +2,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Discover } from "../pages/Discover";
 import { NotFound } from "../pages/NotFound";
-import { Watching } from "../pages/Watching";
+import { Watch } from "../pages/Watch";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { PrivateRoute } from "./private";
@@ -12,9 +12,11 @@ export default function () {
     <Routes>
       <Route element={<PrivateRoute />}>
         <Route path="/discover" element={<Discover />} />
-        <Route path="/watch" element={<Watching />}>
-          <Route path=":course_id" element={<Watching />}>
-            <Route path=":video_id" element={<Watching />} />
+        <Route path="/watch/course/" element={<Watch />}>
+          <Route path=":slug_course" element={<Watch />}>
+            <Route path=":slug_module" element={<Watch />}>
+              <Route path=":slug_video" element={<Watch />} />
+            </Route>
           </Route>
         </Route>
       </Route>

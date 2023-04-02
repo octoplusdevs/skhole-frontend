@@ -25,9 +25,7 @@ export function Login() {
 
   function onSubmit(data) {
     const { email, password } = data;
-    dispatch(loginUser(email, password)).then(() => {
-      navigate("/discover");
-    });
+    dispatch(loginUser(email, password));
   }
   useEffect(() => {
     if (isAuthenticated) navigate("/discover");

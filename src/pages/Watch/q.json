@@ -1,0 +1,58 @@
+[
+  {
+    "id": "3810d69c-bff4-4eb1-8ec1-158aba956b92",
+    "title": "UI DESIGN",
+    "description": "123456789",
+    "duration": 12,
+    "thumbnail": null,
+    "modules": [
+      {
+        "id": "3f10a3df-02bb-4f17-95e6-d77b962832e3",
+        "title": "Modulo 01",
+        "description": "Modulo 1 do curso de UI Design",
+        "duration": 13,
+        "createdAt": "2023-03-29T10:33:14.261Z",
+        "updatedAt": "2023-03-29T10:33:14.261Z",
+        "course_id": "3810d69c-bff4-4eb1-8ec1-158aba956b92",
+        "thumbnail_id": null
+      }
+    ]
+  },
+  {
+    "id": "1fea97b5-7943-4f0c-aead-e129c8f04dc3",
+    "title": "React JS",
+    "description": "123456789",
+    "duration": 12,
+    "thumbnail": null,
+    "modules": []
+  },
+  {
+    "id": "64866c23-8887-4083-b002-6aa353c07722",
+    "title": "Node JS",
+    "description": "123456789",
+    "duration": 12,
+    "thumbnail": null,
+    "modules": []
+  },
+  {
+    "id": "733b9ced-d528-4de2-bac8-6ffb19bfc613",
+    "title": "Estrutura de Dados",
+    "description": "123456789",
+    "duration": 12,
+    "thumbnail": null,
+    "modules": []
+  },
+  {
+    "id": "ec4e4bd3-836f-4b3f-9b7b-6fb2cb656b28",
+    "title": "Test1",
+    "description": "djsdksdja",
+    "duration": 12,
+    "thumbnail": {
+      "url": "http://localhost:3000/files/a0e3b8c7873d4f5cf1126d9651c76117.jpg",
+      "id": "ffb5678f-4e02-4938-a9b3-c448583cdbdf",
+      "path": "a0e3b8c7873d4f5cf1126d9651c76117.jpg",
+      "name": "208457290_324481229151402_2096899734460494078_n.jpg"
+    },
+    "modules": []
+  }
+]

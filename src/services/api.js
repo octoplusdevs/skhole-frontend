@@ -1,17 +1,21 @@
 import axios from "axios";
-const storage = JSON.parse(localStorage.getItem("@skhole::user"));
+import { store } from "../redux";
 
 const API = axios.create({
-  baseURL: "https://skhole.onrender.com/api/v1",
+  baseURL: "https://skhole.onrender.com/api/v1", // altere de acordo com sua configuração
 });
 
 API.interceptors.request.use(
   (config) => {
-    config.headers.authorization = `bearer ${storage?.token}`;
+    const { auth } = store.getState(); // obter o estado do Redux
+    const token = auth?.user?.token; // obter o token do estado
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // adicionar o cabeçalho de autorização
+    }
+
     return config;
   },
-  null,
-  { synchronous: true },
+  (error) => Promise.reject(error),
 );
 
 export { API };

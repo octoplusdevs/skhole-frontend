@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -11,55 +10,53 @@ export const Wrapper = styled.div`
   border-radius: 8px;
   transition: background-color 0.3s ease;
   cursor: pointer;
-  &:hover{
-    background-color: #211F1F;
-
+  &:hover {
+    background-color: #211f1f;
   }
-  .text{
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
   }
-  .card{
+  .card {
     width: 100%;
     height: 272px;
-    background-color: #211F1F;
+    background-color: #211f1f;
     border-radius: 6px;
   }
-  h4{
-      font-weight: 600;
-      font-size: 2.4rem;
-      line-height: 2.9rem;
-      color: #D9D9D9;
+  h4 {
+    font-weight: 600;
+    font-size: 2.4rem;
+    line-height: 2.9rem;
+    color: #d9d9d9;
   }
-  span{
-      font-weight: 400;
-      font-size: 1.6rem;
-      line-height: 1.9rem;
-      color: #A6A6A6;
+  span {
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    color: #a6a6a6;
   }
-  @media (min-width:600px) {
-      max-width: 278px;
+  @media (min-width: 600px) {
+    max-width: 278px;
   }
-  @media (min-width:768px) {
-      max-width: 360px;
+  @media (min-width: 768px) {
+    max-width: 360px;
   }
-  @media (min-width:800px) {
-      max-width: 376px;
+  @media (min-width: 800px) {
+    max-width: 376px;
   }
-  @media (min-width:991px) {
-      max-width: 310px;
+  @media (min-width: 991px) {
+    max-width: 310px;
   }
-  @media (min-width:1024px) {
-      max-width: 320px;
-  }
-
-  @media (min-width:1150px) {
-      max-width: 360px;
+  @media (min-width: 1024px) {
+    max-width: 320px;
   }
 
-  @media (min-width:1210px) {
-      max-width: 384px;
+  @media (min-width: 1150px) {
+    max-width: 360px;
   }
 
-`
+  @media (min-width: 1210px) {
+    max-width: 384px;
+  }
+`;
