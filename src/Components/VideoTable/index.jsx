@@ -40,8 +40,12 @@ export default function VideoTable({
           </div>
         </div>
         <div className="text">
-          <h4>{isLoading ? "Carregando titulo" : title}</h4>
-          <h5>{isLoading ? "Carregando legenda" : description}</h5>
+          <h4 className={`${isLoading ? "skeleton-loader" : ""}`}>
+            {isLoading ? "Carregando titulo" : title}
+          </h4>
+          <h5 className={`${isLoading ? "skeleton-loader" : ""}`}>
+            {isLoading ? "Carregando legenda" : description}
+          </h5>
         </div>
       </Wrapper>
     </>
