@@ -21,8 +21,18 @@ export const Wrapper = styled.div`
   .card {
     width: 100%;
     height: 272px;
-    background-color: #211f1f;
+    max-height: 272px;
+    background-color: #000;
     border-radius: 6px;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      position: absolute; /* define a posição da imagem em relação ao elemento pai */
+      top: 0;
+      left: 0;
+      object-fit: contain;
+    }
   }
   h4 {
     font-weight: 600;

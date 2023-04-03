@@ -18,11 +18,11 @@ export function Discover() {
               courses.map((course) => (
                 <Link to={`/watch/course/${course.slug}`}>
                   <Card
-                    title={course.title}
-                    duration={course.duration}
-                    thumbnail={course.thumbnail}
-                    description={course.description}
-                    key={course.slug}
+                    title={course?.title}
+                    duration={course?.duration}
+                    thumbnail={course?.thumbnail?.url}
+                    description={course?.description}
+                    key={course?.slug}
                   />
                 </Link>
               ))
