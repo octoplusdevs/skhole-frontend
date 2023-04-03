@@ -13,6 +13,16 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: ["auth", "courses", "modules"],
+  transforms: [
+    {
+      transform: (state, key) => {
+        if (key === "auth") {
+          return omit(state, "isLoading");
+        }
+        return state;
+      },
+    },
+  ],
 };
 const logger = createLogger({
   // ...options
