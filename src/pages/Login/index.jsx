@@ -9,11 +9,11 @@ import { Input } from "../../Components/Input";
 import { SchemaLogin } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
 import { loginUser } from "../../redux/auth/auth.actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Login() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const [isLoading, setLoading] = useState(false);
   const hasError = useSelector((state) => state.auth.error);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
@@ -25,7 +25,10 @@ export function Login() {
 
   function onSubmit(data) {
     const { email, password } = data;
-    dispatch(loginUser(email, password));
+    setLoading(true);
+    dispatch(loginUser(email, password)).finally(() => {
+      setLoading(false);
+    });
   }
   useEffect(() => {
     if (isAuthenticated) navigate("/discover");

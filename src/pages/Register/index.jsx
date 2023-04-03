@@ -8,11 +8,11 @@ import { SchemaRegister } from "../../Schemas";
 import { Wrapper, Form, Header } from "./style";
 import { registerUser } from "../../redux/auth/auth.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Register() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.auth.isLoading);
+  const [isLoading, setLoading] = useState(false);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
 
@@ -24,8 +24,9 @@ export function Register() {
 
   function onSubmit(data) {
     const { username, email, password } = data;
-    dispatch(registerUser({ username, email, password })).then(() => {
-      navigate("/discover");
+    setLoading(true);
+    dispatch(registerUser({ username, email, password })).finally(() => {
+      setLoading(false);
     });
   }
 
