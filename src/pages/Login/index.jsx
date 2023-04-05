@@ -31,7 +31,7 @@ export function Login() {
     });
   }
   useEffect(() => {
-    if (isAuthenticated) navigate("/discover");
+    if (isAuthenticated) navigate("/courses");
   }, [isAuthenticated]);
   return (
     <Wrapper>

@@ -4,7 +4,7 @@ import { Header } from "../../Components/Header";
 import { useCourses } from "../../hooks/useCourses";
 import { Wrapper } from "./style";
 
-export function Discover() {
+export function Courses() {
   const { data: courses } = useCourses();
 
   return (
@@ -16,7 +16,7 @@ export function Discover() {
           <div className="cards">
             {courses && courses.length > 0 ? (
               courses.map((course) => (
-                <Link to={`/watch/course/${course.slug}`}>
+                <Link to={`/courses/watch/${course.slug}`}>
                   <Card
                     title={course?.title}
                     duration={course?.duration}

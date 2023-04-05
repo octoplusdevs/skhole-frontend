@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Discover } from "../pages/Discover";
+import { Courses } from "../pages/Courses";
 import { NotFound } from "../pages/NotFound";
 import { Watch } from "../pages/Watch";
 import { Login } from "../pages/Login";
@@ -11,8 +11,8 @@ export default function () {
   return (
     <Routes>
       <Route element={<PrivateRoute />}>
-        <Route path="/discover" element={<Discover />} />
-        <Route path="/watch/course/" element={<Watch />}>
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/courses/watch/" element={<Watch />}>
           <Route path=":slug_course" element={<Watch />}>
             <Route path=":slug_module" element={<Watch />}>
               <Route path=":slug_video" element={<Watch />} />

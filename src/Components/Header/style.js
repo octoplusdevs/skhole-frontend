@@ -1,51 +1,97 @@
 import styled from "styled-components";
-import { lighten } from "polished";
-
 
 export const Wrapper = styled.header`
-    background-color: #211F1F;
-    .container{
+  background-color: #303632;
+  .container {
+    height: 56px;
+  }
+  .header__nav {
+    display: none;
+  }
+  .header__logo h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Inter, sans-serif;
+  }
+  .header__user {
+    display: flex;
+    cursor: pointer;
+    padding: 8px 24px 8px 8px;
+
+    :hover {
+      background-color: #3d433f;
+      border-radius: 8px;
+    }
+    .header__user-info {
+      display: none;
+      .header__user-info__name {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .header__user-info__status {
+        color: #47fdbb;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+    .user__mobile {
+      color: #fff;
+    }
+    .header__user-avatar {
+      height: 32px;
+      img {
+        max-width: 100%;
+        height: auto;
+        background-color: red;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      height: 80px;
+    }
+    .header__logo h3 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .header__nav {
+      display: block;
+      ul {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        height: 80px;
-    }
-    nav{
-        display: none;
-    }
-    .menu-mobile{
-        display: flex;
-    }
-    
-    ul{
-        display: flex;
-        gap: 24px;
-    }
-    a{
-        font-size: 1.6rem;
-        line-height: 1.9rem;
-        color: #737373;
-        transition: all 0.1s ease;
-        &:hover{
+        gap: 16px;
+        li {
+          a {
+            font-weight: 600;
+            color: #8c8c8c;
+            &:hover {
+              color: #fff;
+            }
+          }
+          &.active a {
             color: #fff;
+            font-weight: 700;
+          }
         }
+      }
     }
-    h3{
-        font-size: 2.4rem;
+    .header__user {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 4px;
+      .header__user-info {
+        display: block;
+      }
+      .user__mobile {
+        display: none;
+      }
+      .header__user-avatar {
+        height: 40px;
+      }
     }
-    @media (min-width: 800px) {
-        nav{
-            display: flex;
-        }
-        .menu-mobile img{
-            display: none;
-        }
-        .user{
-        border-radius: 50%;
-        padding:20px;
-        width:20px;
-        border:1px solid black;
-    }
-        
-    }
-`
+  }
+`;

@@ -1,46 +1,45 @@
 import { Wrapper } from "./style";
 import Avatar from "../../assets/Avatar.png";
-import hamburguer from "../../assets/List.svg";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/auth/auth.slice";
+import { Link, useLocation } from "react-router-dom";
+import { List } from "phosphor-react";
 
 export function Header() {
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const pathSegments = location.pathname.split("/");
+  const activeLocation = pathSegments[1];
 
   return (
-    <>
-      <Wrapper>
-        <div className="container">
-          <div className="logo">
-            <Link to={"/discover"}>
-              <h3>SKOLÊ</h3>
-            </Link>
-          </div>
-          <nav>
-            <ul>
-              <li>
-                <Link to={"/discover"}>Discover</Link>
-              </li>
-              <li>
-                <Link to={"/courses"}>Cursos</Link>
-              </li>
-              <li>
-                <Link to={"/profile"}>Perfil</Link>
-              </li>
-              <li>
-                <button onClick={() => dispatch(logout())}>Sair</button>
-              </li>
-            </ul>
-          </nav>
-          <div className="menu-mobile">
-            <div className="user">
-              <img src={Avatar} />
-            </div>
-            <img src={hamburguer} />
-          </div>
+    <Wrapper className="header">
+      <div className="container flex-between">
+        <div className="header__logo">
+          <Link to={"/discover"}>
+            <h3>SKOLÊ</h3>
+          </Link>
         </div>
-      </Wrapper>
-    </>
+        <nav className="header__nav ">
+          <ul>
+            <li className={`${activeLocation === "courses" ? "active" : ""}`}>
+              <Link to={"/courses"}>Cursos</Link>
+            </li>
+            <li className={`${activeLocation === "bootcamps" ? "active" : ""}`}>
+              <Link to={"/bootcamps"}>Treinamentos</Link>
+            </li>
+            <li className={`${activeLocation === "events" ? "active" : ""}`}>
+              <Link to={"/events"}>Eventos</Link>
+            </li>
+          </ul>
+        </nav>
+        <div className="header__user">
+          <img src={Avatar} className="header__user-avatar" />
+          <div className="header__user-info">
+            <h4 className="header__user-info__name">Jandiro</h4>
+            <span className="header__user-info__status">online</span>
+          </div>
+          <button className="user__mobile">
+            <List size={32} />
+          </button>
+        </div>
+      </div>
+    </Wrapper>
   );
 }
