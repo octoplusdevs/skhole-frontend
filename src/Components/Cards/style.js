@@ -20,8 +20,6 @@ export const Wrapper = styled.div`
   }
   .card {
     width: 100%;
-    height: 272px;
-    max-height: 272px;
     background-color: #000;
     border-radius: 6px;
     position: relative;
@@ -45,28 +43,5 @@ export const Wrapper = styled.div`
     font-size: 1.6rem;
     line-height: 1.9rem;
     color: #a6a6a6;
-  }
-  @media (min-width: 600px) {
-    max-width: 278px;
-  }
-  @media (min-width: 768px) {
-    max-width: 360px;
-  }
-  @media (min-width: 800px) {
-    max-width: 376px;
-  }
-  @media (min-width: 991px) {
-    max-width: 310px;
-  }
-  @media (min-width: 1024px) {
-    max-width: 320px;
-  }
-
-  @media (min-width: 1150px) {
-    max-width: 360px;
-  }
-
-  @media (min-width: 1210px) {
-    max-width: 384px;
   }
 `;

@@ -23,12 +23,33 @@ export function Courses() {
                     thumbnail={course?.thumbnail?.url}
                     description={course?.description}
                     key={course?.slug}
+                    className="card"
                   />
                 </Link>
               ))
             ) : (
               <h4>Sem cursos disponíveis</h4>
             )}
+            {/* <Link to={`/courses/watch/${"course.slug"}`}>
+              <Card
+                title={"course?.title"}
+                duration={"course?.duration"}
+                thumbnail={"course?.thumbnail?.url"}
+                description={"course?.description"}
+                key={"course?.slug"}
+                className="card"
+              />
+            </Link>
+            <Link to={`/courses/watch/${"course.slug"}`}>
+              <Card
+                title={"course?.title"}
+                duration={"course?.duration"}
+                thumbnail={"course?.thumbnail?.url"}
+                description={"course?.description"}
+                key={"course?.slug"}
+                className="card"
+              />
+            </Link> */}
           </div>
         </div>
       </Wrapper>

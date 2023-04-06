@@ -3,6 +3,11 @@ import styled from "styled-components";
 export const Wrapper = styled.header`
   background-color: #303632;
   margin-bottom: 4rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
   .container {
     height: 56px;
   }

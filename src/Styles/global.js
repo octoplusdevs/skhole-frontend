@@ -7,6 +7,8 @@ export const GlobalStyle = createGlobalStyle`
   body{
     background-color:  #0A0B0A;
     font-size: 16px;
+    padding-top: 14rem;
+
   }
   *{
   margin: 0;
