@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.header`
   background-color: #303632;
+  margin-bottom: 4rem;
   .container {
     height: 56px;
   }

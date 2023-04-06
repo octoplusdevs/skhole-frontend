@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Header } from "../../Components/Header";
 import { Wrapper } from "./style";
 import Playlist from "../../Components/Playlist";
-import VideoTable from "../../Components/VideoTable";
+import { Player } from "../../Components/Player";
 import { useModules } from "../../hooks/useModules";
 import { useVideo } from "../../hooks/useVideo";
 
@@ -17,15 +17,21 @@ export function Watch() {
       <Header />
       <Wrapper>
         <div className="container">
-          <VideoTable
-            title={video?.title}
-            description={video?.description}
-            duration={video?.duration}
-            url={video?.url}
-            videoIdCDN={video?.videoIdCDN}
-            isLoading={isLoadingVideo}
-          />
-          <Playlist modules={modules} slug_course={slug_course} activeVideo={video?.id} />
+          <div className="main">
+            <Player
+              title={video?.title}
+              description={video?.description}
+              duration={video?.duration}
+              url={video?.url}
+              videoIdCDN={video?.videoIdCDN}
+              isLoading={isLoadingVideo}
+            />
+            <div className="video__info ">
+              <h1>{video?.title}</h1>
+              <p>{video?.description}</p>
+            </div>
+          </div>
+          <Playlist modules={modules} slug_course={slug_course} activeVideo={slug_video} />
         </div>
       </Wrapper>
     </>

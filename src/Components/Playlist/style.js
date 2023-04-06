@@ -3,17 +3,17 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   width: 100%;
   max-width: 800px;
-  height: 485px;
-  background-color: #211f1f;
-  border-radius: 12px;
+  height: 449px;
+  background-color: #161817;
+  border-radius: 8px;
   .title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     padding: 20px 24px;
-    background-color: #3a3a3a;
-    border-radius: 12px 12px 0 0;
+    background-color: #3d433f;
+    border-radius: 8px 8px 0 0;
   }
   .classes {
     padding: 20px 24px;
@@ -58,7 +58,6 @@ export const Wrapper = styled.div`
     color: #a6a6a6;
   }
   @media (min-width: 768px) {
-    height: 520px;
     .classification {
       flex-direction: row;
       justify-content: space-between;

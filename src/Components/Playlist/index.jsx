@@ -1,11 +1,8 @@
 import { Wrapper } from "./style";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { selectVideo } from "../../redux/modules/modules.actions";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
-  const dispatch = useDispatch();
   return (
     <Wrapper>
       {/* <div className="title">
@@ -22,10 +19,7 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
               <div key={video.slug} className="classification">
                 <Link
                   to={`${slug_course}/${module.slug}/${video.slug}`}
-                  onClick={() =>
-                    dispatch(selectVideo({ slug_video: video.slug, slug_module: module.slug }))
-                  }
-                  className={activeVideo === video.id ? "viewing" : ""}
+                  className={activeVideo === video.slug ? "viewing" : ""}
                 >
                   {video.title}
                 </Link>

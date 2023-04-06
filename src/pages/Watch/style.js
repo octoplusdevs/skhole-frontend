@@ -6,8 +6,27 @@ export const Wrapper = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 81px;
-    gap: 40px;
+    gap: 4rem;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 32px;
+  }
+  .video__info {
+    h1 {
+      font-weight: 700;
+      font-size: 2.4rem;
+      line-height: 140%;
+      color: #f2f2f2;
+    }
+    p {
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 150%;
+      color: #bfbfbf;
+    }
   }
   @media (min-width: 1024px) {
     .container {
