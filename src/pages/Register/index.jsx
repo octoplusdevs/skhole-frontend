@@ -14,6 +14,7 @@ export function Register() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const hasError = useSelector((state) => state.auth.error);
   const navigate = useNavigate();
 
   const {
@@ -31,7 +32,7 @@ export function Register() {
   }
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/discover");
+    if (isAuthenticated) navigate("/courses");
   }, [isAuthenticated]);
 
   return (
@@ -53,7 +54,9 @@ export function Register() {
               type="text"
               id="username"
             />
-            <p className="message_error">{errors?.username?.message}</p>
+            <p className="message_error">
+              {errors?.username?.message || (hasError?.includes("Username") && hasError)}
+            </p>
           </div>
           <div className="input">
             <label htmlFor="email">Email</label>
@@ -65,7 +68,9 @@ export function Register() {
               type="email"
               id="email"
             />
-            <p className="message_error">{errors?.email?.message}</p>
+            <p className="message_error">
+              {errors?.email?.message || (hasError?.includes("Email") && hasError)}
+            </p>
           </div>
 
           <div className="input">
@@ -78,10 +83,12 @@ export function Register() {
               type="password"
               id="password"
             />
-            <p className="message_error">{errors?.password?.message}</p>
+            <p className="message_error">
+              {errors?.password?.message || (hasError?.includes("Password") && hasError)}
+            </p>
           </div>
 
-          <Button text="Entrar" isLoading={isLoading} disabled={isLoading} Primary />
+          <Button text="Criar conta" isLoading={isLoading} disabled={isLoading} Primary />
           <div className="links">
             <Link to={"/Recover-Account"}>Recuperar conta</Link>
             <Link to={"/"}>Fazer Login</Link>
