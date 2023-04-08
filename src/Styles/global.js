@@ -20,19 +20,12 @@ export const GlobalStyle = createGlobalStyle`
   --color-red: #ff9494;
   }
   .skeleton-loader {
-    background-color: #1c1b1b;
-    background-image: linear-gradient(to right, #1c1b1b 0%, #242424 20%, #1c1b1b 40%, #1c1b1b 100%);
     background-size: 800px 104px;
-    display: inline-block;
-    position: relative;
-    border-radius: 4px;
-    overflow: hidden;
     animation-duration: 1s;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
     animation-name: placeholderShimmer;
     animation-timing-function: linear;
-    width: fit-content;
     color: transparent;
   }
 

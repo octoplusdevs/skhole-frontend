@@ -26,12 +26,16 @@ export function Watch() {
               videoIdCDN={video?.videoIdCDN}
               isLoading={isLoadingVideo}
             />
-            <div className="video__info ">
+            <div className={`${isLoadingVideo ? "skeleton" : "video__info"}`}>
               <h1>{video?.title}</h1>
               <p>{video?.description}</p>
             </div>
           </div>
-          <Playlist modules={modules} slug_course={slug_course} activeVideo={slug_video} />
+          <Playlist
+            modules={modules}
+            slug_course={slug_course}
+            activeVideo={slug_video || video?.slug}
+          />
         </div>
       </Wrapper>
     </>
