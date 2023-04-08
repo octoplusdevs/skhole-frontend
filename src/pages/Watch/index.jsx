@@ -11,7 +11,6 @@ export function Watch() {
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
   const { data: modules } = useModules(slug_course);
 
-  console.log(video);
   return (
     <>
       <Header />
@@ -26,7 +25,7 @@ export function Watch() {
               videoIdCDN={video?.videoIdCDN}
               isLoading={isLoadingVideo}
             />
-            <div className={`${isLoadingVideo ? "skeleton" : "video__info"}`}>
+            <div className={`${isLoadingVideo || video.length <= 0 ? "skeleton" : "video__info"}`}>
               <h1>{video?.title}</h1>
               <p>{video?.description}</p>
             </div>
