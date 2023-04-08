@@ -4,14 +4,12 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
 
   .container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    min-height: 100vh;
     gap: 2.4rem;
     @media (min-width: 1024px) {
       flex-direction: row;
