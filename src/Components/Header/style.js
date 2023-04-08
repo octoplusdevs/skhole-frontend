@@ -24,9 +24,8 @@ export const Wrapper = styled.header`
     display: flex;
     cursor: pointer;
     padding: 8px 24px 8px 8px;
-
+    position: relative;
     :hover {
-      background-color: #3d433f;
       border-radius: 8px;
     }
     .header__user-info {
@@ -42,17 +41,24 @@ export const Wrapper = styled.header`
         font-weight: 500;
       }
     }
-    .user__mobile {
-      color: #fff;
-    }
+
     .header__user-avatar {
       height: 32px;
-      img {
+      width: 32px;
+      background: #101010;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      /* img {
         max-width: 100%;
         height: auto;
         background-color: red;
-      }
+      } */
     }
+  }
+  .user__mobile {
+    color: #fff;
   }
 
   @media (min-width: 768px) {
@@ -92,12 +98,14 @@ export const Wrapper = styled.header`
       .header__user-info {
         display: block;
       }
-      .user__mobile {
-        display: none;
-      }
+
       .header__user-avatar {
         height: 40px;
+        width: 40px;
       }
+    }
+    .user__mobile {
+      display: none;
     }
   }
 `;

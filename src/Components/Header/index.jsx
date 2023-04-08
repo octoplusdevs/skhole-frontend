@@ -1,19 +1,23 @@
 import { Wrapper } from "./style";
-import Avatar from "../../assets/Avatar.png";
 import { Link, useLocation } from "react-router-dom";
-import { List } from "phosphor-react";
+import { List, User } from "phosphor-react";
+import { useSelector } from "react-redux";
+import { UserMenu } from "./components/UserMenu";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 export function Header() {
   const location = useLocation();
   const pathSegments = location.pathname.split("/");
   const activeLocation = pathSegments[1];
+  const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
+  const [userMenuOpen, setUserMenuOpen, userMenuRef] = useClickOutside(false);
 
   return (
     <Wrapper className="header">
       <div className="container flex-between">
         <div className="header__logo">
-          <Link to={"/discover"}>
-            <h3>SKOLÊ</h3>
+          <Link to={"/"}>
+            <h3>SKHOLÊ</h3>
           </Link>
         </div>
         <nav className="header__nav ">
@@ -29,16 +33,23 @@ export function Header() {
             </li>
           </ul>
         </nav>
-        <div className="header__user">
-          <img src={Avatar} className="header__user-avatar" />
+        <div
+          className="header__user"
+          ref={userMenuRef}
+          onClick={() => setUserMenuOpen((state) => !state)}
+        >
+          <div className="header__user-avatar">{<User size={22} />}</div>
           <div className="header__user-info">
-            <h4 className="header__user-info__name">Jandiro</h4>
-            <span className="header__user-info__status">online</span>
+            <h4 className="header__user-info__name">Olá, {userLoggedInfo?.username}</h4>
+            <span className="header__user-info__status">
+              {userLoggedInfo?.role === "student" ? "Estudante" : "Admin"}
+            </span>
+            <UserMenu isOpen={userMenuOpen} username={userLoggedInfo?.username} />
           </div>
-          <button className="user__mobile">
-            <List size={32} />
-          </button>
         </div>
+        <button className="user__mobile">
+          <List size={32} />
+        </button>
       </div>
     </Wrapper>
   );
