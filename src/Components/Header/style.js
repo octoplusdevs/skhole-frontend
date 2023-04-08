@@ -14,6 +14,11 @@ export const Wrapper = styled.header`
   .header__nav {
     display: none;
   }
+  .header__cta {
+    display: flex;
+    gap: 0px;
+    width: fit-content;
+  }
   .header__logo h3 {
     color: #fff;
     font-size: 20px;
@@ -23,7 +28,7 @@ export const Wrapper = styled.header`
   .header__user {
     display: flex;
     cursor: pointer;
-    padding: 8px 24px 8px 8px;
+    padding: 8px;
     position: relative;
     :hover {
       border-radius: 8px;
@@ -59,6 +64,7 @@ export const Wrapper = styled.header`
   }
   .user__mobile {
     color: #fff;
+    padding: 8px;
   }
 
   @media (min-width: 768px) {
@@ -95,6 +101,8 @@ export const Wrapper = styled.header`
       justify-content: flex-start;
       align-items: center;
       gap: 4px;
+      padding: 8px 24px 8px 8px;
+
       .header__user-info {
         display: block;
       }

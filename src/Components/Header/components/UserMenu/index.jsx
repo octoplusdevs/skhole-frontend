@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Wrapper } from "./style";
-import { logoutUser } from "../../../redux/auth/auth.actions";
+import { logoutUser } from "../../../../redux/auth/auth.actions";
 
 export function UserMenu({ isOpen, username }) {
   const dispatch = useDispatch();

@@ -49,6 +49,7 @@ export const GlobalStyle = createGlobalStyle`
     max-width: 1246px;
     padding: 0 15px;
     margin: 0 auto;
+    position: relative;
     &.flex-between {
       display: flex;
       justify-content: space-between;
