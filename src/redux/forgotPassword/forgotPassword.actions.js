@@ -1,0 +1,18 @@
+import { API } from "../../services/api";
+import {
+  forgotPasswordFailure,
+  forgotPasswordRequest,
+  forgotPasswordSuccess,
+} from "./forgotPassword.slice";
+
+export const sendForgotPasswordEmail = (email) => {
+  return async (dispatch) => {
+    dispatch(forgotPasswordRequest());
+    try {
+      const response = await API.post("/password/forgot", { email });
+      dispatch(forgotPasswordSuccess(response.data.message));
+    } catch (error) {
+      dispatch(forgotPasswordFailure(error.response.data.error));
+    }
+  };
+};

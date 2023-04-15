@@ -7,6 +7,8 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { createLogger } from "redux-logger";
 import { courseReducer } from "./courses/courses.slice";
 import { ModuleReducer } from "./modules/modules.slice";
+import { forgotPasswordReducer } from "./forgotPassword/forgotPassword.slice";
+import { resetPasswordReducer } from "./resetPassword/forgotPassword.slice";
 // import { skholeApi } from "../services/skhole";
 
 const persistConfig = {
@@ -22,6 +24,8 @@ const rooReducer = combineReducers({
   auth: authReducer,
   courses: courseReducer,
   modules: ModuleReducer,
+  forgotPassword: forgotPasswordReducer,
+  resetPassword: resetPasswordReducer,
   // [skholeApi.reducerPath]: skholeApi.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, rooReducer);

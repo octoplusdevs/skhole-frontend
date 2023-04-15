@@ -6,6 +6,8 @@ import { Watch } from "../pages/Watch";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
 import { PrivateRoute } from "./private";
+import { ForgotPassword } from "../pages/ForgotPassword";
+import { ResetPassword } from "../pages/ResetPassword";
 
 export default function () {
   return (
@@ -22,6 +24,8 @@ export default function () {
       </Route>
 
       <Route path="/register" element={<Register />} />
+      <Route path="/password/reset/:token" element={<ResetPassword />} />
+      <Route path="/password/reset/" element={<ForgotPassword />} />
       <Route path="/" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
