@@ -5,6 +5,7 @@ import Playlist from "../../Components/Playlist";
 import { Player } from "../../Components/Player";
 import { useModules } from "../../hooks/useModules";
 import { useVideo } from "../../hooks/useVideo";
+import { useState } from "react";
 
 export function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
@@ -25,7 +26,7 @@ export function Watch() {
               videoIdCDN={video?.videoIdCDN}
               isLoading={isLoadingVideo}
             />
-            <div className={`${isLoadingVideo || video.length <= 0 ? "skeleton" : "video__info"}`}>
+            <div className={`${isLoadingVideo || video?.length <= 0 ? "skeleton" : "video__info"}`}>
               <h1>{video?.title}</h1>
               <p>{video?.description}</p>
             </div>
