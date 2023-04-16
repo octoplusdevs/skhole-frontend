@@ -5,7 +5,7 @@ import { useCourses } from "../../hooks/useCourses";
 import { Wrapper } from "./style";
 
 export function Courses() {
-  const { data: courses } = useCourses();
+  const { data: courses, isLoading } = useCourses();
 
   return (
     <>
@@ -14,7 +14,8 @@ export function Courses() {
         <div className="container">
           <h4>Programação</h4>
           <div className="cards">
-            {courses && courses.length > 0 ? (
+            {isLoading && "Carregando cursos..."}
+            {/* {courses && courses.length > 0 ? (
               courses.map((course) => (
                 <Link to={`/courses/watch/${course.slug}`}>
                   <Card
@@ -29,27 +30,7 @@ export function Courses() {
               ))
             ) : (
               <h4>Sem cursos disponíveis</h4>
-            )}
-            {/* <Link to={`/courses/watch/${"course.slug"}`}>
-              <Card
-                title={"course?.title"}
-                duration={"course?.duration"}
-                thumbnail={"course?.thumbnail?.url"}
-                description={"course?.description"}
-                key={"course?.slug"}
-                className="card"
-              />
-            </Link>
-            <Link to={`/courses/watch/${"course.slug"}`}>
-              <Card
-                title={"course?.title"}
-                duration={"course?.duration"}
-                thumbnail={"course?.thumbnail?.url"}
-                description={"course?.description"}
-                key={"course?.slug"}
-                className="card"
-              />
-            </Link> */}
+            )} */}
           </div>
         </div>
       </Wrapper>
