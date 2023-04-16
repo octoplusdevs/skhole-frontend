@@ -6,65 +6,68 @@ export const Wrapper = styled.div`
   height: 449px;
   background-color: #161817;
   border-radius: 8px;
-  .title {
+  overflow: scroll;
+
+  @media (min-width: 1024px) {
+    max-width: 384px;
+  }
+`;
+
+export const Module = styled.div`
+  .module__header {
+    background-color: #303632;
+    width: 100%;
+    padding: 16px;
+    border-top: 1px solid #161817;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 20px 24px;
-    background-color: #3d433f;
-    border-radius: 8px 8px 0 0;
-  }
-  .classes {
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.8rem;
-  }
-  .classification {
-    display: flex;
-    gap: 8px;
-    flex-direction: column;
-  }
-  h5,
-  .totalHour,
-  span,
-  .green,
-  a {
-    font-weight: 600;
-    font-size: 1.6rem;
-    line-height: 1.9rem;
-    color: #fff;
-  }
-  .totalHour {
-    font-weight: 500;
-    color: #bfbfbf;
-  }
-  span {
-    font-weight: 400;
-    color: #737272;
-  }
-  .vizualizad {
-    font-weight: 500;
-    color: #47fdbb;
-  }
-  .viewing {
-    color: #47fdbb;
-  }
-  a {
-    font-weight: 500;
-  }
-  .unviewed {
-    color: #a6a6a6;
-  }
-  @media (min-width: 768px) {
-    .classification {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+    color: #c4c4c4;
+    cursor: pointer;
+    .module__title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      h1 {
+        font-size: 16px;
+        color: #fff;
+      }
+      p {
+        color: #c4c4c4;
+      }
     }
   }
-  @media (min-width: 1024px) {
-    max-width: 384px;
+  .module__lessons {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out 0s;
+    &.isOpen {
+      max-height: 500px;
+      overflow: initial;
+    }
+    .lesson {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 32px;
+      .active {
+        color: #47fdbb;
+      }
+      a {
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 1.9rem;
+        color: #fff;
+      }
+      span {
+        font-weight: 400;
+        color: #737272;
+      }
+      &:first-of-type {
+        padding-top: 24px;
+      }
+      &:last-of-type {
+        padding-bottom: 24px;
+      }
+    }
   }
 `;
