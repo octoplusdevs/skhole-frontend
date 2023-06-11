@@ -12,7 +12,7 @@ export function UserMenu({ isOpen }) {
     <Wrapper className={`${isOpen ? "show" : "hidden"}`}>
       <ul>
         <li>
-          <Link to={"/me/"}>
+          <Link to={"/me/profile"}>
             <User size={18} className="icon" weight="fill" />
             Meu perfil
           </Link>

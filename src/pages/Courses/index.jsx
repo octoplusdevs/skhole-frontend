@@ -17,7 +17,7 @@ export function Courses() {
           <div className="cards">
             {courses && courses.length > 0 ? (
               courses.map((course) => (
-                <Link to={`/courses/watch/${course.slug}`}>
+                <Link key={course.slug} to={`/courses/watch/${course.slug}`}>
                   <Card
                     title={course?.title}
                     duration={course?.duration}
