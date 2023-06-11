@@ -5,7 +5,6 @@ import Playlist from "../../Components/Playlist";
 import { Player } from "../../Components/Player";
 import { useModules } from "../../hooks/useModules";
 import { useVideo } from "../../hooks/useVideo";
-import { useState } from "react";
 
 export function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();

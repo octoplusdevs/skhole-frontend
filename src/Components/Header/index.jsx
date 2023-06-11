@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { UserMenu } from "./components/UserMenu";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { MobileMenu } from "./components/MobileMenu";
-import { useState } from "react";
 
 export function Header() {
   const location = useLocation();

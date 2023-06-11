@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.section`
-  margin-top: 82px;
+  margin-top: 140px;
   .container {
     display: flex;
     flex-direction: column;

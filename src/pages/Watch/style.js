@@ -71,6 +71,7 @@ export const Wrapper = styled.section`
     }
   }
   @media (min-width: 1024px) {
+    margin-top: 140px;
     .container {
       flex-direction: row;
       justify-content: space-between;

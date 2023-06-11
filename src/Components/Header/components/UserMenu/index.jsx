@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { Wrapper } from "./style";
 import { logoutUser } from "../../../../redux/auth/auth.actions";
 
-export function UserMenu({ isOpen, username }) {
+export function UserMenu({ isOpen }) {
   const dispatch = useDispatch();
 
   return (
     <Wrapper className={`${isOpen ? "show" : "hidden"}`}>
       <ul>
         <li>
-          <Link to={"/perfil/" + username}>
+          <Link to={"/me/"}>
             <User size={18} className="icon" weight="fill" />
             Meu perfil
           </Link>
