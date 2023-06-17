@@ -3,7 +3,7 @@ import { Wrapper } from "./style";
 import { useState } from "react";
 import { useRef } from "react";
 import { useUserInformation } from "../../../hooks/useUserInformation";
-//import avatarImg from "../../../assets/avatar.png";
+// import avatarImg from "../../../assets/avatar.png";
 
 export function EditProfile() {
   const fileInputRef = useRef(null);
@@ -32,7 +32,7 @@ export function EditProfile() {
       <h2>Informações de Perfil</h2>
       <div className="avatar">
         <div className="user__avatar">
-          <img src={selectedImage} alt="" />
+          <img src={selectedImage || userInfo?.avatar?.url} alt={userInfo?.username} />
         </div>
         <div className="input__file">
           <input
