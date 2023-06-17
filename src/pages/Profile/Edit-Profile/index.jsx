@@ -2,14 +2,14 @@ import React from "react";
 import { Wrapper } from "./style";
 import { useState } from "react";
 import { useRef } from "react";
-import { useUserInformation } from "../../../hooks/useUserInformation";
+// import { useUserInformation } from "../../../hooks/useUserInformation";
 // import avatarImg from "../../../assets/avatar.png";
 
 export function EditProfile() {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { data: userInfo, isLoading } = useUserInformation("cf0a9770-3c6e-4cfc-bfc5-fd9bb5e7e9e4");
-
+  // const { data: userInfo, isLoading } = useUserInformation("cf0a9770-3c6e-4cfc-bfc5-fd9bb5e7e9e4");
+  const userInfo = {}
   console.log(userInfo);
   
   const handleButtonClick = () => {
