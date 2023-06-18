@@ -8,5 +8,11 @@
       "source": "/:path(api/.*)",
       "destination": "/api"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
