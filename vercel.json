@@ -1,17 +1,5 @@
 {
-    "rewrites": [
-      {
-        "source": "/:path((?!api/|.*\\.js$).*)",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/:path(api/.*)",
-        "destination": "/api"
-      },
-      {
-        "source": "/:path((.*\\.js$))",
-        "destination": "/dist/:path"
-      }
+    "rewrites":  [
+      {"source": "/(.*)", "destination": "/"}
     ]
 }
-  
