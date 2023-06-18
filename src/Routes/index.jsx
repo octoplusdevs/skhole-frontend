@@ -8,14 +8,14 @@ import { Register } from "../pages/Register";
 import { PrivateRoute } from "./private";
 import { ForgotPassword } from "../pages/ForgotPassword";
 import { ResetPassword } from "../pages/ResetPassword";
-// import { Profile } from "../pages/Profile";
+import { Profile } from "../pages/Profile";
 
 export default function () {
   return (
     <Routes>
       <Route element={<PrivateRoute />}>
-        {/* <Route path="/me" element={<Navigate to="/me/profile" replace />} /> */}
-        {/* <Route path="/me/*" element={<Profile />} /> */}
+        <Route path="/me" element={<Navigate to="/me/profile" replace />} />
+        <Route path="/me/*" element={<Profile />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/watch/" element={<Watch />}>
           <Route path=":slug_course" element={<Watch />}>
