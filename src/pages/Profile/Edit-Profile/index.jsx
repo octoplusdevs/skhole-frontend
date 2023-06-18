@@ -2,7 +2,7 @@ import React from "react";
 import { Wrapper } from "./style";
 import { useState } from "react";
 import { useRef } from "react";
-// import { useUserInformation } from "../../../hooks/useUserInformation";
+import { useUserInformation } from "../../../hooks/useUserInformation";
 // import avatarImg from "../../../assets/avatar.png";
 
 export function EditProfile() {
