@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.section`
-  margin-top: 82px;
+  margin-top: 140px;
   .container {
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@ export const Wrapper = styled.section`
   }
   .cards {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, 384px);
     width: 100%;
     gap: 1.6rem;
     .card {

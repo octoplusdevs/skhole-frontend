@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.header`
-  background-color: #303632;
-  margin-bottom: 4rem;
+  background-color: #1b2022;
+  /* margin-bottom: 4rem; */
+  border-bottom: 1px solid #2b3133;
   position: fixed;
   top: 0;
   left: 0;
