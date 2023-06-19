@@ -15,7 +15,7 @@ export const Wrapper = styled.section`
   }
   .cards {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, 384px);
     width: 100%;
     gap: 1.6rem;
     .card {

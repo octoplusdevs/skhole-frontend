@@ -13,9 +13,9 @@ export function Courses() {
       <Wrapper>
         <div className="container">
           <h4>Programação</h4>
-          {isLoading && <h4>Carregando cursos...</h4>}
           <div className="cards">
-            {courses && courses.length > 0 ? (
+            {isLoading && "Carregando cursos..."}
+            {/* {courses && courses.length > 0 ? (
               courses.map((course) => (
                 <Link key={course.slug} to={`/courses/watch/${course.slug}`}>
                   <Card
@@ -30,7 +30,7 @@ export function Courses() {
               ))
             ) : (
               <h4>Sem cursos disponíveis</h4>
-            )}
+            )} */}
           </div>
         </div>
       </Wrapper>
