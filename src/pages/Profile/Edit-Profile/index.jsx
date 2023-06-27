@@ -3,14 +3,15 @@ import { Wrapper } from "./style";
 import { useState } from "react";
 import { useRef } from "react";
 import { useUserInformation } from "../../../hooks/useUserInformation";
+import { useSelector } from "react-redux";
 // import avatarImg from "../../../assets/avatar.png";
 
 export function EditProfile() {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const { data: userInfo, isLoading } = useUserInformation("cf0a9770-3c6e-4cfc-bfc5-fd9bb5e7e9e4");
-  // const userInfo = {}
-  console.log(userInfo);
+  const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
+  const { data: userInfo, isLoading } = useUserInformation(userLoggedInfo?.id); // const userInfo = {}
+  console.log("userInfo", userLoggedInfo?.id);
   
   const handleButtonClick = () => {
     fileInputRef.current.click();

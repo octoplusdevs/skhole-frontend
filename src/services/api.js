@@ -4,7 +4,7 @@ import { logout } from "../redux/auth/auth.slice";
 
 const API = axios.create({
   baseURL: "https://skhole.onrender.com/api/v1",
-  // baseURL: "http://localhost:1234/api/v1",
+  // baseURL: "http://localhost:3000/api/v1",
 });
 
 API.interceptors.request.use(
