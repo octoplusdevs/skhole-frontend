@@ -15,9 +15,9 @@ export const resetPassword = (token, email, password, confirmPassword) => {
         password,
         confirmPassword,
       });
-      dispatch(resetPasswordSuccess(response.data.message));
+      dispatch(resetPasswordSuccess(response.data?.message));
     } catch (error) {
-      dispatch(resetPasswordFailure(error.response.data.error));
+      dispatch(resetPasswordFailure(error.response.data?.error));
     }
   };
 };

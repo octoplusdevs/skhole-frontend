@@ -4,18 +4,30 @@ import { useState } from "react";
 import { useRef } from "react";
 import { useUserInformation } from "../../../hooks/useUserInformation";
 import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SchemaProfile } from "../../../Schemas";
 // import avatarImg from "../../../assets/avatar.png";
 
 export function EditProfile() {
   const fileInputRef = useRef(null);
+  const [isLoading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
-  const { data: userInfo, isLoading } = useUserInformation(userLoggedInfo?.id); // const userInfo = {}
-  console.log("userInfo", userLoggedInfo?.id);
+  const { data: userInfo } = useUserInformation(userLoggedInfo?.id); // const userInfo = {}
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(SchemaProfile) });
   
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+
+  function onSubmit(data) {
+    console.log(data);
+  }
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -43,6 +55,7 @@ export function EditProfile() {
             accept="image/*"
             ref={fileInputRef}
             onChange={handleImageChange}
+            
           />
           <button onClick={handleButtonClick}>Carregar Imagem</button>
           <div className="captions">
@@ -51,28 +64,31 @@ export function EditProfile() {
           </div>
         </div>
       </div>
-      <form action="" className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
         <div className="input__group">
           <label htmlFor="username">Nome de usuário</label>
-          <input name="username" placeholder="Nome de usuário" type="tel" className="input" defaultValue={userInfo?.username} />
+          <input {...register("username")} placeholder="Nome de usuário" type="tel" className="input" defaultValue={userInfo?.username} />
+          <p className="message_error">
+            {errors?.username?.message}
+          </p>
         </div>
         <div className="input__line">
           <div className="input__group">
             <label htmlFor="firstname">Nome</label>
-            <input name="firstname" placeholder="Primeiro nome" type="text" className="input" defaultValue={userInfo?.first_name} />
+            <input {...register("firstname")} placeholder="Primeiro nome" type="text" className="input" defaultValue={userInfo?.first_name} />
           </div>
           <div className="input__group">
             <label htmlFor="lastname">Sobrenome</label>
-            <input name="lastname" placeholder="Último nome" type="text" className="input" defaultValue={userInfo?.last_name} />
+            <input {...register("lastname")} placeholder="Último nome" type="text" className="input" defaultValue={userInfo?.last_name} />
           </div>
         </div>
         <div className="input__group">
-          <label htmlFor="lastname">E-mail</label>
-          <input name="lastname" placeholder="Último nome" type="email" className="input" defaultValue={userInfo?.email}/>
+          <label htmlFor="email">E-mail</label>
+          <input {...register("email")} placeholder="Último nome" type="email" className="input" defaultValue={userInfo?.email}/>
         </div>
         <div className="input__group">
-          <label htmlFor="lastname">Telefone</label>
-          <input name="lastname" placeholder="Seu telefone" type="tel" className="input" defaultValue={userInfo?.phone}/>
+          <label htmlFor="phone">Telefone</label>
+          <input {...register("phone")} placeholder="Seu telefone" type="tel" className="input" defaultValue={userInfo?.phone}/>
         </div>
         <div className="input__group">
           <button>Salvar Alterações</button>

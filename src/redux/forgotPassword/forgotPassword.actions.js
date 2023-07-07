@@ -10,9 +10,9 @@ export const sendForgotPasswordEmail = (email) => {
     dispatch(forgotPasswordRequest());
     try {
       const response = await API.post("/password/forgot", { email });
-      dispatch(forgotPasswordSuccess(response.data.message));
+      dispatch(forgotPasswordSuccess(response?.data?.message));
     } catch (error) {
-      dispatch(forgotPasswordFailure(error.response.data.error));
+      dispatch(forgotPasswordFailure(error?.response?.data?.error));
     }
   };
 };
