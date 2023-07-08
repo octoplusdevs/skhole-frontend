@@ -1,15 +1,21 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { API } from "../services/api";
 import { queryClient } from "../services/query";
 
 const useEnrollment = (isUpdate = false) => {
-  const createEnrollment = async (data) => {
-    const { data: response } = await API.post("/enrollments", data);
+  const createEnrollment = async (slug_course) => {
+    const { data: response } = await API.post("/enrollments", {
+      slug_course,
+    });
     return response.data;
   };
 
-  const destroyEnrollment = async (data) => {
-    const { data: response } = await API.delete("/enrollments", data);
+  const destroyEnrollment = async (options) => {
+    const { id, slug_course } = options;
+    const { data: response } = await API.put("/enrollments/" + id, {
+      slug_course,
+      status: "canceled",
+    });
     return response.data;
   };
 

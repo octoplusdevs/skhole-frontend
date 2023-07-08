@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { API } from "../services/api";
 
 export function useVideo(slug_course, slug_module, slug_video) {

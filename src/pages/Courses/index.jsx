@@ -6,32 +6,42 @@ import { Wrapper } from "./style";
 import useEnrollment from "../../hooks/useSubscribeCourse";
 import Modal from "react-modal";
 import { useState } from "react";
+import { ButtonEnroll } from "../../Components/ButtonEnroll";
 
 Modal.setAppElement("#root");
 
 export function Courses() {
-  const { mutate: enroll, isLoadingEnroll } = useEnrollment();
+  const { mutate: enroll } = useEnrollment();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [enrollToDestroy, setEnrollToDestroy] = useState("");
+  const [enrollToDestroy, setEnrollToDestroy] = useState({
+    id: null,
+    slug_course: null,
+  });
   const { mutate: destroyEnroll } = useEnrollment(true);
   const { data: courses, isLoading } = useCourses();
 
-  const setEnrollmentToDestroy = (id) => {
-    setEnrollToDestroy(id);
-    // console.log("/////" + id);
+  const setEnrollmentToDestroy = (id, slug_course) => {
+    setEnrollToDestroy({
+      id,
+      slug_course,
+    });
     setShowConfirmationModal(true);
   };
-  const handleConfirmationModal = (id) => {
-    console.log("/////aaa" + id);
-    destroyEnroll({ id });
+  const handleConfirmationModal = (options) => {
+    destroyEnroll(options);
+    setEnrollToDestroy(null);
     setShowConfirmationModal(false);
   };
-
+  const handleRequestCloseModal = () => {
+    setShowConfirmationModal(false);
+    setEnrollToDestroy(null);
+  };
   return (
     <>
       <Header />
       <Wrapper>
         <div className="container">
+          <h4>Tste {enrollToDestroy?.slug_course}</h4>
           <h4>Cursos</h4>
           <div className="cards">
             {isLoading && "Carregando cursos..."}
@@ -39,7 +49,7 @@ export function Courses() {
               courses.map((course) => (
                 <Link
                   key={course.slug}
-                  to={!!course?.enrollment?.confirmed && `/courses/watch/${course.slug}`}
+                  to={course?.enrollment?.confirmed && `/courses/watch/${course.slug}`}
                 >
                   <Card
                     title={course?.title}
@@ -49,18 +59,22 @@ export function Courses() {
                     key={course?.slug}
                     className="card"
                   />
-                  {course.subscribed ? (
-                    course?.enrollment?.confirmed ? (
-                      <h1 onClick={() => destroyEnroll(course?.enrollment?.id)}>Confirmado</h1>
-                    ) : (
-                      <h1 onClick={() => setEnrollmentToDestroy(course?.enrollment?.id)}>
-                        Inscrito
-                      </h1>
-                    )
-                  ) : (
-                    <h1 onClick={() => enroll({ slug_course: course?.slug })}>
-                      {!isLoadingEnroll ? "Inscrever" : "..."}
-                    </h1>
+                  <button>
+                    <h4>
+                      {course?.enrollment?.confirmed
+                        ? "Confirmado"
+                        : course?.enrollment?.status === "active"
+                        ? "Aguardando confirmacao"
+                        : ""}
+                    </h4>
+                  </button>
+                  {course?.enrollment && (
+                    <ButtonEnroll
+                      enrollment={course.enrollment}
+                      handleEnrollmentDestroy={setEnrollmentToDestroy}
+                      course={course}
+                      handleEnroll={enroll}
+                    />
                   )}
                 </Link>
               ))
@@ -73,7 +87,7 @@ export function Courses() {
 
       <Modal
         isOpen={showConfirmationModal}
-        onRequestClose={() => setShowConfirmationModal(false)}
+        onRequestClose={handleRequestCloseModal}
         style={{
           overlay: {
             backgroundColor: "rgba(0,0,0,0.7)",
@@ -127,7 +141,7 @@ export function Courses() {
               color: "#fff",
               border: "none",
             }}
-            onClick={() => setShowConfirmationModal(false)}
+            onClick={handleRequestCloseModal}
           >
             Cancelar
           </button>
