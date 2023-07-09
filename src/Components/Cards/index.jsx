@@ -12,12 +12,13 @@ export default function Card({
   description,
   slug,
   rate = 4.4,
+  handleEnroll,
   ...rest
 }) {
   return (
     <Wrapper {...rest}>
       <div className="card__thumbnail">
-        {confirmed ? (
+        {confirmed && subscribed ? (
           <Link to={`/courses/watch/${slug}`}>
             <img src={thumbnail} alt={description} />
           </Link>
@@ -27,7 +28,7 @@ export default function Card({
       </div>
       <div className="card__info">
         <h3 className="card__title">
-          {confirmed ? <Link to={`/courses/watch/${slug}`}>{title}</Link> : title}
+          {confirmed && subscribed ? <Link to={`/courses/watch/${slug}`}>{title}</Link> : title}
         </h3>
         <p className="card__price">
           {price > 0 ? "Por apenas " : ""}
@@ -57,9 +58,11 @@ export default function Card({
             Assistir
           </Link>
         </>
+      ) : subscribed ? (
+        <button className="card__button noverify">Em verificação</button>
       ) : (
-        <button className={subscribed ? "card__button noverify" : "card__button"}>
-          {subscribed ? "Em verificação" : "Inscrever"}
+        <button onClick={() => handleEnroll(slug)} className={"card__button"}>
+          Inscrever
         </button>
       )}
     </Wrapper>

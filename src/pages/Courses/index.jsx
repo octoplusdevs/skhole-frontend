@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Card from "../../Components/Cards";
 import { Header } from "../../Components/Header";
 import { useCourses } from "../../hooks/useCourses";
@@ -6,12 +5,11 @@ import { Wrapper } from "./style";
 import useEnrollment from "../../hooks/useSubscribeCourse";
 import Modal from "react-modal";
 import { useState } from "react";
-import { ButtonEnroll } from "../../Components/ButtonEnroll";
 
 Modal.setAppElement("#root");
 
 export function Courses() {
-  const { mutate: enroll } = useEnrollment();
+  const { mutate: enroll, isLoading: isEnrolling } = useEnrollment();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [enrollToDestroy, setEnrollToDestroy] = useState({
     id: null,
@@ -60,6 +58,7 @@ export function Courses() {
                     course?.enrollment?.status === "active" ||
                     course?.enrollment?.status === "completed"
                   }
+                  handleEnroll={enroll}
                   className="card"
                 />
               ))
