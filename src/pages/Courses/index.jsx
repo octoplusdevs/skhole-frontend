@@ -41,42 +41,27 @@ export function Courses() {
       <Header />
       <Wrapper>
         <div className="container">
-          <h4>Tste {enrollToDestroy?.slug_course}</h4>
-          <h4>Cursos</h4>
+          {/* <h4>Tste {enrollToDestroy?.slug_course}</h4> */}
+          {/* <h4>Cursos</h4> */}
           <div className="cards">
             {isLoading && "Carregando cursos..."}
             {courses && courses.length > 0 ? (
               courses.map((course) => (
-                <Link
-                  key={course.slug}
-                  to={course?.enrollment?.confirmed && `/courses/watch/${course.slug}`}
-                >
-                  <Card
-                    title={course?.title}
-                    duration={course?.duration}
-                    thumbnail={course?.thumbnail?.url}
-                    description={course?.description}
-                    key={course?.slug}
-                    className="card"
-                  />
-                  <button>
-                    <h4>
-                      {course?.enrollment?.confirmed
-                        ? "Confirmado"
-                        : course?.enrollment?.status === "active"
-                        ? "Aguardando confirmacao"
-                        : ""}
-                    </h4>
-                  </button>
-                  {course?.enrollment && (
-                    <ButtonEnroll
-                      enrollment={course.enrollment}
-                      handleEnrollmentDestroy={setEnrollmentToDestroy}
-                      course={course}
-                      handleEnroll={enroll}
-                    />
-                  )}
-                </Link>
+                <Card
+                  title={course?.title}
+                  duration={course?.duration}
+                  thumbnail={course?.thumbnail?.url}
+                  description={course?.description}
+                  key={course?.slug}
+                  slug={course?.slug}
+                  confirmed={course?.enrollment?.confirmed}
+                  price={course?.price}
+                  subscribed={
+                    course?.enrollment?.status === "active" ||
+                    course?.enrollment?.status === "completed"
+                  }
+                  className="card"
+                />
               ))
             ) : (
               <h4>Sem cursos disponíveis</h4>
