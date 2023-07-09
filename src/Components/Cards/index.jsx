@@ -1,6 +1,7 @@
 import { Clock, FileVideo, Star } from "phosphor-react";
 import { Wrapper } from "./style";
 import { Link } from "react-router-dom";
+import { formatCurrencyAngola } from "../../utils";
 
 export default function Card({
   title,
@@ -32,7 +33,7 @@ export default function Card({
         </h3>
         <p className="card__price">
           {price > 0 ? "Por apenas " : ""}
-          <span className="price">{price > 0 ? `${price}mil kz` : "Gratuito"}</span>
+          <span className="price">{price > 0 ? `${formatCurrencyAngola(price)}` : "Gratuito"}</span>
         </p>
       </div>
       <div className="card__details">
