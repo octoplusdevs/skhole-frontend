@@ -1,7 +1,7 @@
-export function formatCurrencyAngola(number) {
-  const formatter = new Intl.NumberFormat("pt-AO", {
+export function formatCurrency(number, country = "PT-AO", currency = "AOA") {
+  const formatter = new Intl.NumberFormat(country, {
     style: "currency",
-    currency: "AOA",
+    currency: currency,
   });
 
   return formatter.format(number);
