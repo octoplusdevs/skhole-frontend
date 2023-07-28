@@ -10,7 +10,7 @@ export function Player({
       <div className="video__container">
         {!isLoading && (
           <iframe
-            src={`https://iframe.mediadelivery.net/embed/107511/${videoIdCDN}?autoplay=${autoplay}`}
+            src={`https://iframe.mediadelivery.net/embed/44259/${videoIdCDN}?autoplay=${autoplay}`}
             loading="lazy"
             style={{
               border: "none",
