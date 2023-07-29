@@ -76,8 +76,8 @@ export function Login() {
 
           <Button text="Entrar" Primary isLoading={isLoading} disabled={isLoading} />
           <div className="links">
-            <Link to={"/password/reset"}>Recuperar conta</Link>
-            <Link to={"/Register"}>Criar uma nova conta</Link>
+            <Link to={"/password/reset"}>Recuperar senha</Link>
+            <Link to={"/Register"}>Criar conta</Link>
           </div>
         </Form>
       </div>

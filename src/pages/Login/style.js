@@ -4,6 +4,9 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 32px;
 
   .container {
     display: flex;
@@ -57,12 +60,12 @@ export const Header = styled.div`
 `;
 export const Form = styled.form`
   width: 100%;
-  max-width: 592px;
-  padding: 4rem;
+  max-width: 480px;
+  padding: 32px;
   background-color: #1f1f1f;
   border-radius: 1.2rem;
   @media (min-width: 1024px) {
-    padding: 7.2rem;
+    padding: 64px;
   }
 
   .input {
