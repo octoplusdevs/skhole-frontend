@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const loadingAnimated = keyframes`
   to{
@@ -10,45 +10,25 @@ const loadingAnimated = keyframes`
 `;
 
 export const Wrapper = styled.button`
-  background-color: #323232;
-  padding: 1.8rem 3.2rem;
-  color: #fff;
-  font-weight: 500;
-  font-size: 1.8rem;
-  height: 5.8rem;
+  background-color: #47fdbb;
+  padding: 1.4rem 2.4rem;
+  color: #000;
+  font-weight: 700;
+  font-size: 1.6rem;
   width: 100%;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.1s ease;
   border-radius: 4px;
   .loading {
     animation: ${loadingAnimated} 1s linear infinite;
   }
-  ${(props) =>
-    props.Primary &&
-    css`
-      background-color: #47fdbb;
-      color: #000;
-      &:hover {
-        background-color: #79fccd;
-        color: #3b3737;
-      }
-      &:disabled {
-        background-color: #323232;
-      }
-    `}
-  ${(props) =>
-    props.Destrutive &&
-    css`
-      background-color: #fd4747;
-      color: #000;
-      &:disabled {
-        background-color: #ffb0b0;
-      }
-      &:hover {
-        background-color: #fc7979;
-      }
-      &:visited {
-        background-color: #bf3636;
-      }
-    `}
+  &:hover {
+    background-color: #22e39d;
+  }
+  &:disabled {
+    background: #323232;
+    color: #fff;
+    pointer-events: none;
+  }
 `;

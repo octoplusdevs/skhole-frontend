@@ -4,6 +4,7 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 100vh;
   .container {
     display: flex;
     align-items: center;

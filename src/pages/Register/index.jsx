@@ -5,10 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaRegister } from "../../Schemas";
-import { Wrapper, Form, Header } from "./style";
+import { Wrapper, Header } from "./style";
 import { registerUser } from "../../redux/auth/auth.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Form } from "../../Components/Form";
 
 export function Register() {
   const dispatch = useDispatch();
@@ -90,7 +91,7 @@ export function Register() {
 
           <Button text="Criar conta" isLoading={isLoading} disabled={isLoading} Primary />
           <div className="links">
-            <Link to={"/Recover-Account"}>Recuperar conta</Link>
+            <Link to={"/password/reset"}>Recuperar conta</Link>
             <Link to={"/"}>Fazer Login</Link>
           </div>
         </Form>

@@ -33,21 +33,6 @@ export const Wrapper = styled.div`
           line-height: 1.6rem;
         }
       }
-      button {
-        color: #fff;
-        background-color: transparent;
-        border: 2px solid #2b3133;
-        padding: 1.6rem 2.4rem;
-        cursor: pointer;
-        border-radius: 12px;
-        transition-property: color, background-color, border-color, text-decoration-color, fill,
-          stroke;
-        transition-timing-function: linear;
-        transition-duration: 0.2s;
-        &:hover {
-          background-color: #2b3133;
-        }
-      }
     }
   }
   .form {
@@ -55,6 +40,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     gap: 3.2rem;
     margin-top: 4.8rem;
+    max-width: 480px;
     .input__line {
       display: flex;
       flex-direction: row;
@@ -64,22 +50,6 @@ export const Wrapper = styled.div`
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      button {
-        background-color: #0084ffe6;
-        padding: 1.6rem 2.4rem;
-        color: #fff;
-        border-radius: 12px;
-        font-size: 1.6rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition-property: color, background-color, border-color, text-decoration-color, fill,
-          stroke;
-        transition-timing-function: linear;
-        transition-duration: 0.2s;
-        &:hover {
-          background-color: #0084ff;
-        }
-      }
       label {
         font-size: 1.4rem;
       }
@@ -99,7 +69,7 @@ export const Wrapper = styled.div`
         transition-duration: 0.2s;
         &:focus {
           outline: none;
-          // border-color: #47fdbb;
+          border-color: #47fdbb;
           background-color: transparent;
         }
       }

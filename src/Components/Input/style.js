@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   background-color: #141313;
   padding: 0 16px;
   gap: 8px;
-  border: 1px solid transparent;
+  border: 2.5px solid transparent;
   width: 100%;
   transition: all 0.3s ease;
   border-radius: 4px;
@@ -38,13 +38,13 @@ export const Wrapper = styled.div`
     background-color: #1a1818;
   }
   &:focus-within {
-    border: 1px solid #47fdbb;
+    border-color: #47fdbb;
     .icon svg {
       color: #47fdbb;
     }
   }
   &.error {
-    border: 1px solid var(--color-red);
+    border-color: var(--color-red);
     .icon svg {
       color: var(--color-red);
     }

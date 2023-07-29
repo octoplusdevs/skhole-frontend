@@ -7,9 +7,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaLogin } from "../../Schemas";
-import { Wrapper, Form, Header } from "./style";
+import { Wrapper, Header } from "./style";
 import { loginUser } from "../../redux/auth/auth.actions";
 import { useEffect, useState } from "react";
+import { Form } from "../../Components/Form";
 
 export function Login() {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,9 +7,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
 import { SchemaRecoverPassword } from "../../Schemas";
-import { Wrapper, Form, Header, Message } from "./style";
+import { Wrapper, Header, Message } from "./style";
 import { sendForgotPasswordEmail } from "../../redux/forgotPassword/forgotPassword.actions";
 import { useEffect } from "react";
+import { Form } from "../../Components/Form";
 
 export function ForgotPassword() {
   const dispatch = useDispatch();
@@ -17,10 +18,6 @@ export function ForgotPassword() {
   const isSuccess = useSelector((state) => state.forgotPassword.isSuccess);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
-  const { token } = useParams();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get("email");
 
   const {
     register,
@@ -68,7 +65,7 @@ export function ForgotPassword() {
             <p className="message_error">{errors?.email?.message || hasError}</p>
           </div>
 
-          <Button text="Enviar link de recuperação" Primary isLoading={false} disabled={false} />
+          <Button text="Recuperar conta" Primary isLoading={false} disabled={false} />
           <div className="links">
             <Link to={"/"}>Voltar ao login</Link>
           </div>

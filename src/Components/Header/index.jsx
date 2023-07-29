@@ -28,7 +28,10 @@ export function Header() {
               <Link to={"/courses"}>Cursos</Link>
             </li>
             <li className={`${activeLocation === "bootcamps" ? "active" : ""}`}>
-              <Link to={"/bootcamps"}>Bootcamps</Link>
+              <Link to={"/bootcamps"}>Trilhas</Link>
+            </li>
+            <li className={`${activeLocation === "events" ? "active" : ""}`}>
+              <Link to={"/events"}>Aprendizados</Link>
             </li>
             <li className={`${activeLocation === "events" ? "active" : ""}`}>
               <Link to={"/events"}>Eventos</Link>
@@ -41,7 +44,7 @@ export function Header() {
             ref={userMenuRef}
             onClick={() => setUserMenuOpen((state) => !state)}
           >
-            <div className="header__user-avatar">{<User size={22} color="#47fdbb" />}</div>
+            <div className="header__user-avatar">{<User size={22} color="#ffffff" />}</div>
             <div className="header__user-info">
               <h4 className="header__user-info__name">Olá, {userLoggedInfo?.username}</h4>
               <span className="header__user-info__status">

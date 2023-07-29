@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
   body{
-    background-color:  #0A0B0A;
+    background-color: #101314;
     font-size: 16px;
   }
   *{

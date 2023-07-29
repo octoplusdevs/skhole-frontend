@@ -5,7 +5,7 @@ import { Wrapper } from "./style";
 export function Button({ className, text, isLoading, Icon, ...rest }) {
   return (
     <Wrapper {...rest} className={className}>
-      {isLoading === false ? text : <CircleNotch className="loading" size={24} />}
+      {!isLoading ? text : <CircleNotch className="loading" size={16} />}
       {Icon && <img src={Icon} />}
     </Wrapper>
   );

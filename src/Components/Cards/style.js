@@ -54,7 +54,7 @@ export const Wrapper = styled.div`
       font-size: 1.6rem;
       font-weight: 600;
       .price {
-        color: #2be19f;
+        color: #e1cb2b;
         /* font-weight: 600; */
       }
     }
