@@ -1,4 +1,5 @@
 import { Wrapper } from "./style";
+import PropTypes from "prop-types";
 
 export function Player({
   videoIdCDN = "c8fae39c-2720-4c14-8d32-50415e57ad67",
@@ -7,7 +8,9 @@ export function Player({
 }) {
   return (
     <Wrapper>
-      <div className="video__container">
+      <div className="video__container aspect-ratio-container">
+        {" "}
+        {/* Adicione a classe aspect-ratio-container aqui */}
         {!isLoading && (
           <iframe
             src={`https://iframe.mediadelivery.net/embed/44259/${videoIdCDN}?autoplay=${autoplay}`}
@@ -26,3 +29,9 @@ export function Player({
     </Wrapper>
   );
 }
+
+Player.propTypes = {
+  videoIdCDN: PropTypes.string.isRequired,
+  autoplay: PropTypes.bool,
+  isLoading: PropTypes.bool,
+};

@@ -23,9 +23,9 @@ export const Wrapper = styled.div`
       display: flex;
       align-items: center;
       gap: 4px;
-      color: #8c8c8c;
+      color: #d1d1d1;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 500;
       padding: 16px 32px;
       width: 100%;
       cursor: pointer;
@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
     }
     &.active a {
       color: #47fdbb;
-      font-weight: 700;
+      font-weight: 600;
     }
   }
   @media (min-width: 520px) {

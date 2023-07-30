@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 
 export const Module = styled.div`
   .module__header {
-    background-color: #303632;
+    background-color: #1b2022;
     width: 100%;
     padding: 16px;
     border-top: 1px solid #161817;

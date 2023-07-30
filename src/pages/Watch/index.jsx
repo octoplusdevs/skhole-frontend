@@ -15,7 +15,7 @@ export function Watch() {
     <>
       <Header />
       <Wrapper>
-        <div className="container">
+        <div className="grid">
           <div className="main">
             <Player
               title={video?.title}
@@ -30,11 +30,13 @@ export function Watch() {
               <p>{video?.description}</p>
             </div>
           </div>
+          {/* <div className="playlist"> */}
           <Playlist
             modules={modules}
             slug_course={slug_course}
             activeVideo={slug_video || video?.slug}
           />
+          {/* </div> */}
         </div>
       </Wrapper>
     </>

@@ -81,18 +81,18 @@ export const Wrapper = styled.header`
       ul {
         display: flex;
         justify-content: space-between;
-        gap: 16px;
+        gap: 14px;
         li {
           a {
-            font-weight: 600;
-            color: #8c8c8c;
+            font-weight: 500;
+            color: #d1d1d1;
             &:hover {
               color: #fff;
             }
           }
           &.active a {
-            color: #fff;
-            font-weight: 700;
+            color: #47fdbb;
+            font-weight: 600;
           }
         }
       }

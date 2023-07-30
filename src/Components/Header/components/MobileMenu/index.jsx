@@ -10,7 +10,10 @@ export function MobileMenu({ isOpen, activeLocation }) {
           <Link to={"/courses"}>Cursos</Link>
         </li>
         <li className={`${activeLocation === "bootcamps" ? "active" : ""}`}>
-          <Link to={"/bootcamps"}>Bootcamps</Link>
+          <Link to={"/bootcamps"}>Trilhas</Link>
+        </li>
+        <li className={`${activeLocation === "events" ? "active" : ""}`}>
+          <Link to={"/events"}>Aprendizados</Link>
         </li>
         <li className={`${activeLocation === "events" ? "active" : ""}`}>
           <Link to={"/events"}>Eventos</Link>
