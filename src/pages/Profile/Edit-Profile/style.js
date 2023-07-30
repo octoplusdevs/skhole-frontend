@@ -73,6 +73,9 @@ export const Wrapper = styled.div`
           background-color: transparent;
         }
       }
+      .message_error {
+        color: var(--color-red);
+      }
     }
   }
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Wrapper } from "./style";
 // import { useState } from "react";
 // import { useRef } from "react";
@@ -15,7 +15,9 @@ export function EditProfile() {
   // const fileInputRef = useRef(null);
   // const [isLoading, setLoading] = useState(false);
   // const [selectedImage, setSelectedImage] = useState(null);
-  const { mutate, isLoading } = useUpdateAccount();
+
+  const [hasError, setHasError] = useState("");
+  const { mutate, isLoading } = useUpdateAccount(setHasError, () => {});
   const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
   const { data: userInfo } = useUserInformation(userLoggedInfo?.id); // const userInfo = {}
   const {
@@ -90,7 +92,9 @@ export function EditProfile() {
             type="tel"
             className="input"
           />
-          <p className="message_error">{errors?.username?.message}</p>
+          <p className="message_error">
+            {errors?.username?.message || (hasError?.includes("Username") && hasError)}
+          </p>
         </div>
         <div className="input__line">
           <div className="input__group">
@@ -101,7 +105,9 @@ export function EditProfile() {
               type="text"
               className="input"
             />
-            <p className="message_error">{errors?.firstname?.message}</p>
+            <div className="message_error">
+              {errors?.firstname?.message || (hasError?.includes("firstname") && hasError)}
+            </div>
           </div>
           <div className="input__group">
             <label htmlFor="lastname">Sobrenome</label>
@@ -111,18 +117,30 @@ export function EditProfile() {
               type="text"
               className="input"
             />
-            <p className="message_error">{errors?.lastname?.message}</p>
+            <div className="message_error">
+              {errors?.lastname?.message || (hasError?.includes("lastname") && hasError)}
+            </div>
           </div>
         </div>
         <div className="input__group">
           <label htmlFor="email">E-mail</label>
-          <input {...register("email")} placeholder="Último nome" type="email" className="input" />
-          <p className="message_error">{errors?.email?.message}</p>
+          <input
+            {...register("email")}
+            placeholder="Último nome"
+            autoComplete="true"
+            type="email"
+            className="input"
+          />
+          <div className="message_error">
+            {errors?.email?.message || (hasError?.includes("Email") && hasError)}
+          </div>
         </div>
         <div className="input__group">
           <label htmlFor="phone">Telefone</label>
           <input {...register("phone")} placeholder="Seu telefone" type="tel" className="input" />
-          <p className="message_error">{errors?.phone?.message}</p>
+          <div className="message_error">
+            {errors?.phone?.message || (hasError?.includes("phone") && hasError)}
+          </div>
         </div>
         <div className="input__group">
           <Button

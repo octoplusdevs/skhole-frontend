@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { UserMenu } from "./components/UserMenu";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { MobileMenu } from "./components/MobileMenu";
+import { useUserInformation } from "../../hooks/useUserInformation";
 
 export function Header() {
   const location = useLocation();
   const pathSegments = location.pathname.split("/");
   const activeLocation = pathSegments[1];
   const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
+  const { data: userInfo } = useUserInformation(userLoggedInfo?.id);
   const [userMenuOpen, setUserMenuOpen, userMenuRef] = useClickOutside(false);
   const [mobileMenu, setMobileMenu, mobileMenuRef] = useClickOutside(false);
 
@@ -46,9 +48,9 @@ export function Header() {
           >
             <div className="header__user-avatar">{<User size={22} color="#ffffff" />}</div>
             <div className="header__user-info">
-              <h4 className="header__user-info__name">Olá, {userLoggedInfo?.username}</h4>
+              <h4 className="header__user-info__name">Olá, {userInfo?.username}</h4>
               <span className="header__user-info__status">
-                {userLoggedInfo?.role === "student" ? "Estudante" : "Admin"}
+                {userInfo?.role === "student" ? "Estudante" : "Admin"}
               </span>
             </div>
           </div>
