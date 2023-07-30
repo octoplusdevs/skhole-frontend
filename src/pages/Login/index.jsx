@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +8,14 @@ import { Input } from "../../Components/Input";
 import { SchemaLogin } from "../../Schemas";
 import { Wrapper, Header } from "./style";
 import { loginUser } from "../../redux/auth/auth.actions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form } from "../../Components/Form";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 
 export function Login() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const hasError = useSelector((state) => state.auth.error);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -31,9 +29,10 @@ export function Login() {
       setLoading(false);
     });
   }
-  useEffect(() => {
-    if (isAuthenticated) navigate("/courses");
-  }, [isAuthenticated]);
+
+  //faz o redirecionamento caso o usuário esteja logado
+  useAuthRedirect("/courses");
+
   return (
     <Wrapper>
       <div className="container">

@@ -6,7 +6,6 @@ export const Wrapper = styled.section`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  padding: 0 32px;
 
   .container {
     display: flex;
@@ -14,14 +13,18 @@ export const Wrapper = styled.section`
     justify-content: center;
     flex-direction: column;
     gap: 2.4rem;
+    padding: 0 16px;
+
     @media (min-width: 1024px) {
       flex-direction: row;
     }
   }
 `;
 export const Header = styled.div`
+  width: 100%;
+  max-width: 480px;
   margin-bottom: 3.2rem;
-  text-align: center;
+  text-align: left;
   h1,
   h2 {
     color: #fff;
@@ -61,7 +64,7 @@ export const Header = styled.div`
 export const Form = styled.form`
   width: 100%;
   max-width: 480px;
-  padding: 32px;
+  padding: 24px;
   background-color: #1f1f1f;
   border-radius: 1.2rem;
   @media (min-width: 1024px) {

@@ -20,7 +20,9 @@ export const Wrapper = styled.section`
 `;
 export const Header = styled.div`
   margin-bottom: 3.2rem;
-  text-align: center;
+  text-align: left;
+  width: 100%;
+  max-width: 480px;
   h1,
   h2 {
     color: #fff;

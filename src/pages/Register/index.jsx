@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { EnvelopeSimple, LockSimple, User } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
@@ -8,15 +8,14 @@ import { SchemaRegister } from "../../Schemas";
 import { Wrapper, Header } from "./style";
 import { registerUser } from "../../redux/auth/auth.actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form } from "../../Components/Form";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 
 export function Register() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const hasError = useSelector((state) => state.auth.error);
-  const navigate = useNavigate();
 
   const {
     register,
@@ -32,9 +31,8 @@ export function Register() {
     });
   }
 
-  useEffect(() => {
-    if (isAuthenticated) navigate("/courses");
-  }, [isAuthenticated]);
+  //faz o redirecionamento caso o usuário esteja logado
+  useAuthRedirect("/courses");
 
   return (
     <Wrapper>

@@ -10,12 +10,12 @@ import { SchemaResetPassword } from "../../Schemas";
 import { Wrapper, Form, Header, Message } from "./style";
 import { resetPassword } from "../../redux/resetPassword/forgotPassword.actions";
 import { useEffect, useState } from "react";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 
 export function ResetPassword() {
   const dispatch = useDispatch();
   const hasError = useSelector((state) => state.resetPassword.error);
   const isSuccess = useSelector((state) => state.resetPassword.isSuccess);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
   const { token } = useParams();
   const location = useLocation();
@@ -43,9 +43,9 @@ export function ResetPassword() {
       navigate("/");
     }
   }, [isSuccess, navigate]);
-  useEffect(() => {
-    if (isAuthenticated) navigate("/courses");
-  }, [isAuthenticated]);
+  //faz o redirecionamento caso o usuário esteja logado
+  useAuthRedirect("/courses");
+
   return (
     <Wrapper>
       <div className="container">

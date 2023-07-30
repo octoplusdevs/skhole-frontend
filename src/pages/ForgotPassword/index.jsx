@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +8,13 @@ import { Input } from "../../Components/Input";
 import { SchemaRecoverPassword } from "../../Schemas";
 import { Wrapper, Header, Message } from "./style";
 import { sendForgotPasswordEmail } from "../../redux/forgotPassword/forgotPassword.actions";
-import { useEffect } from "react";
 import { Form } from "../../Components/Form";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 
 export function ForgotPassword() {
   const dispatch = useDispatch();
   const hasError = useSelector((state) => state.forgotPassword.error);
   const isSuccess = useSelector((state) => state.forgotPassword.isSuccess);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const navigate = useNavigate();
 
   const {
     register,
@@ -29,9 +26,10 @@ export function ForgotPassword() {
     const { email } = data;
     dispatch(sendForgotPasswordEmail(email));
   }
-  useEffect(() => {
-    if (isAuthenticated) navigate("/courses");
-  }, [isAuthenticated]);
+
+  //faz o redirecionamento caso o usuário esteja logado
+  useAuthRedirect("/courses");
+
   return (
     <Wrapper>
       <div className="container">

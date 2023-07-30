@@ -39,7 +39,9 @@ export const registerUser = (userData) => async (dispatch) => {
     const response = await API.post(`/auth`, { email, password });
     dispatch(loginSuccess(response.data));
   } catch (error) {
-    console.log("REDUX REGISTER -> ", error?.response?.data?.error);
     dispatch(registerFailure(error?.response?.data?.error));
   }
+};
+export const resetErrors = () => (dispatch) => {
+  dispatch(registerRequest());
 };
