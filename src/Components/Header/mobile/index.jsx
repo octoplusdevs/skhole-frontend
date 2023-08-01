@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Wrapper } from "./style";
 
-export function MobileMenu({ isOpen, activeLocation }) {
+export default function Mobile({ isOpen, activeLocation }) {
   return (
     <Wrapper className={`${isOpen ? "show" : "hidden"}`}>
       <ul>
@@ -22,3 +23,8 @@ export function MobileMenu({ isOpen, activeLocation }) {
     </Wrapper>
   );
 }
+
+Mobile.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  activeLocation: PropTypes.string.isRequired,
+};

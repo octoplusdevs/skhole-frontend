@@ -1,11 +1,12 @@
-import { Question, SignOut, User } from "phosphor-react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { Question, SignOut, User } from "phosphor-react";
+import PropTypes from "prop-types";
 import { Wrapper } from "./style";
-import { logoutUser } from "../../../../redux/auth/auth.actions";
+import { logoutUser } from "../../../redux/auth/auth.actions";
 
-export function UserMenu({ isOpen }) {
+export default function ContextMenu({ isOpen }) {
   const dispatch = useDispatch();
 
   return (
@@ -33,3 +34,7 @@ export function UserMenu({ isOpen }) {
     </Wrapper>
   );
 }
+
+ContextMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+};

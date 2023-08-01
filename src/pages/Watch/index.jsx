@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { Header } from "../../Components/Header";
 import { Wrapper } from "./style";
 import Playlist from "../../Components/Playlist";
 import { Player } from "../../Components/Player";
@@ -11,34 +10,33 @@ export function Watch() {
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
   const { data: modules } = useModules(slug_course);
 
+  console.log("Watch foi renderizado");
+
   return (
-    <>
-      <Header />
-      <Wrapper>
-        <div className="grid">
-          <div className="main">
-            <Player
-              title={video?.title}
-              description={video?.description}
-              duration={video?.duration}
-              url={video?.url}
-              videoIdCDN={video?.videoIdCDN}
-              isLoading={isLoadingVideo}
-            />
-            <div className={`${isLoadingVideo || video?.length <= 0 ? "skeleton" : "video__info"}`}>
-              <h1>{video?.title}</h1>
-              <p>{video?.description}</p>
-            </div>
-          </div>
-          {/* <div className="playlist"> */}
-          <Playlist
-            modules={modules}
-            slug_course={slug_course}
-            activeVideo={slug_video || video?.slug}
+    <Wrapper>
+      <div className="grid">
+        <div className="main">
+          <Player
+            title={video?.title}
+            description={video?.description}
+            duration={video?.duration}
+            url={video?.url}
+            videoIdCDN={video?.videoIdCDN}
+            isLoading={isLoadingVideo}
           />
-          {/* </div> */}
+          <div className={`${isLoadingVideo || video?.length <= 0 ? "skeleton" : "video__info"}`}>
+            <h1>{video?.title}</h1>
+            <p>{video?.description}</p>
+          </div>
         </div>
-      </Wrapper>
-    </>
+        {/* <div className="playlist"> */}
+        <Playlist
+          modules={modules}
+          slug_course={slug_course}
+          activeVideo={slug_video || video?.slug}
+        />
+        {/* </div> */}
+      </div>
+    </Wrapper>
   );
 }

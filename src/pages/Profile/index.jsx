@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 // import { Redirect, useLocation } from "react-router-dom";
-import { Header } from "../../Components/Header";
 import { SidebarProfile } from "../../Components/SidebarProfile";
 import { useState } from "react";
 import { Main, Content } from "./style";
@@ -17,21 +16,19 @@ export function Profile() {
     setActiveTab(location.pathname);
   }, [location.pathname]);
 
+  console.log("Profile foi renderizado");
   return (
-    <>
-      <Header />
-      <Main>
-        <div className="container">
-          <SidebarProfile activeTab={activeTab} setActiveTab={setActiveTab} />
-          <Content>
-            {activeTab === "/me/profile" ? <EditProfile /> : null}
-            {activeTab === "/me/password" ? <ChangePassword /> : null}
-            {activeTab === "/me/certificates" ? <Certificates /> : null}
-            {activeTab === "/me/biling" ? <Biling /> : null}
-            {activeTab === "/me/apparence" ? <Apparence /> : null}
-          </Content>
-        </div>
-      </Main>
-    </>
+    <Main>
+      <div className="container">
+        <SidebarProfile activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Content>
+          {activeTab === "/me/profile" ? <EditProfile /> : null}
+          {activeTab === "/me/password" ? <ChangePassword /> : null}
+          {activeTab === "/me/certificates" ? <Certificates /> : null}
+          {activeTab === "/me/biling" ? <Biling /> : null}
+          {activeTab === "/me/apparence" ? <Apparence /> : null}
+        </Content>
+      </div>
+    </Main>
   );
 }

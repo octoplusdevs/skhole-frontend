@@ -1,5 +1,4 @@
 import Card from "../../Components/Cards";
-import { Header } from "../../Components/Header";
 import { useCourses } from "../../hooks/useCourses";
 import { Wrapper } from "./style";
 import useEnrollment from "../../hooks/useSubscribeCourse";
@@ -9,22 +8,22 @@ import { useState } from "react";
 Modal.setAppElement("#root");
 
 export function Courses() {
-  const { mutate: enroll, isLoading: isEnrolling } = useEnrollment();
+  const { mutate: enroll } = useEnrollment();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [enrollToDestroy, setEnrollToDestroy] = useState({
     id: null,
     slug_course: null,
   });
   const { mutate: destroyEnroll } = useEnrollment(true);
-  const { data: courses, isLoading } = useCourses();
+  const { data: courses, isLoading: isLoadingCourses } = useCourses();
 
-  const setEnrollmentToDestroy = (id, slug_course) => {
-    setEnrollToDestroy({
-      id,
-      slug_course,
-    });
-    setShowConfirmationModal(true);
-  };
+  // const setEnrollmentToDestroy = (id, slug_course) => {
+  //   setEnrollToDestroy({
+  //     id,
+  //     slug_course,
+  //   });
+  //   setShowConfirmationModal(true);
+  // };
   const handleConfirmationModal = (options) => {
     destroyEnroll(options);
     setEnrollToDestroy(null);
@@ -36,14 +35,13 @@ export function Courses() {
   };
   return (
     <>
-      <Header />
       <Wrapper>
         <div className="container">
-          {/* <h4>Tste {enrollToDestroy?.slug_course}</h4> */}
-          {/* <h4>Cursos</h4> */}
+          <h4>Cursos disponiveis</h4>
           <div className="cards">
-            {isLoading && "Carregando cursos..."}
-            {courses && courses.length > 0 ? (
+            {isLoadingCourses && <h4>Carregando...</h4>}
+            {courses &&
+              courses.length &&
               courses.map((course) => (
                 <Card
                   title={course?.title}
@@ -61,10 +59,7 @@ export function Courses() {
                   handleEnroll={enroll}
                   className="card"
                 />
-              ))
-            ) : (
-              <h4>Sem cursos disponíveis</h4>
-            )}
+              ))}
           </div>
         </div>
       </Wrapper>

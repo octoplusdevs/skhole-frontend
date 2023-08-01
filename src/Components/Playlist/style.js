@@ -49,6 +49,17 @@ export const Module = styled.div`
       display: flex;
       justify-content: space-between;
       padding: 8px 32px;
+      .lesson__title {
+        display: flex;
+        gap: 8px;
+        input[type="checkbox"] {
+          height: 20px;
+          width: 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          accent-color: #47fdbb;
+        }
+      }
       .active {
         color: #47fdbb;
       }

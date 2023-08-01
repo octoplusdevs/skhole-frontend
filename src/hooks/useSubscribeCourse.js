@@ -20,14 +20,11 @@ const useEnrollment = (isUpdate = false) => {
   };
 
   const mutation = useMutation(isUpdate ? destroyEnrollment : createEnrollment, {
-    // onSuccess: (data) => {
-    //   //   console.log(data);
-    // },
     // onError: (error) => {
     //   //   alert("there was an error");
     //   //   console.log(error);
     // },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries("courses");
     },
   });

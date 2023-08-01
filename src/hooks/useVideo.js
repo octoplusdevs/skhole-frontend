@@ -17,6 +17,7 @@ export function useVideo(slug_course, slug_module, slug_video) {
         response = await API.get(`/modules/course/${slug_course}/module/${slug_module}`);
         video = response.data?.videos?.find((v) => v.slug === slug_video);
       }
+      video = video || {};
     }
 
     return video;

@@ -31,12 +31,15 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
             <div className={`module__lessons ${activeModule === module.slug ? "isOpen" : ""}`}>
               {module?.videos?.map((video) => (
                 <div key={video?.slug} className="lesson" onClick={(e) => e.stopPropagation()}>
-                  <Link
-                    to={`${slug_course}/${module?.slug}/${video?.slug}`}
-                    className={activeVideo === video?.slug ? "active" : ""}
-                  >
-                    {video?.title}
-                  </Link>
+                  <div className="lesson__title">
+                    <input type="checkbox" />
+                    <Link
+                      to={`${slug_course}/${module?.slug}/${video?.slug}`}
+                      className={activeVideo === video?.slug ? "active" : ""}
+                    >
+                      {video?.title}
+                    </Link>
+                  </div>
                   <span>{video?.duration} min</span>
                 </div>
               ))}

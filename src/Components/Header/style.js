@@ -92,7 +92,6 @@ export const Wrapper = styled.header`
           }
           &.active a {
             color: #47fdbb;
-            font-weight: 600;
           }
         }
       }
