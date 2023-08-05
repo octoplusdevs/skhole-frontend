@@ -16,7 +16,6 @@ export function Profile() {
     setActiveTab(location.pathname);
   }, [location.pathname]);
 
-  console.log("Profile foi renderizado");
   return (
     <Main>
       <div className="container">

@@ -53,8 +53,8 @@ export function EditProfile() {
   useEffect(() => {
     if (userInfo) {
       setValue("username", userInfo?.username);
-      setValue("firstname", userInfo?.firstname);
-      setValue("lastname", userInfo?.lastname);
+      setValue("first_name", userInfo?.first_name);
+      setValue("last_name", userInfo?.last_name);
       setValue("email", userInfo?.email);
       setValue("phone", userInfo?.phone);
     }
@@ -98,27 +98,27 @@ export function EditProfile() {
         </div>
         <div className="input__line">
           <div className="input__group">
-            <label htmlFor="firstname">Nome</label>
+            <label htmlFor="first_name">Nome</label>
             <input
-              {...register("firstname")}
+              {...register("first_name")}
               placeholder="Primeiro nome"
               type="text"
               className="input"
             />
             <div className="message_error">
-              {errors?.firstname?.message || (hasError?.includes("firstname") && hasError)}
+              {errors?.first_name?.message || (hasError?.includes("first_name") && hasError)}
             </div>
           </div>
           <div className="input__group">
-            <label htmlFor="lastname">Sobrenome</label>
+            <label htmlFor="last_name">Sobrenome</label>
             <input
-              {...register("lastname")}
+              {...register("last_name")}
               placeholder="Último nome"
               type="text"
               className="input"
             />
             <div className="message_error">
-              {errors?.lastname?.message || (hasError?.includes("lastname") && hasError)}
+              {errors?.last_name?.message || (hasError?.includes("last_name") && hasError)}
             </div>
           </div>
         </div>

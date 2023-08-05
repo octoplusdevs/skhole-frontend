@@ -26,5 +26,5 @@ export default function Mobile({ isOpen, activeLocation }) {
 
 Mobile.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  activeLocation: PropTypes.string.isRequired,
+  activeLocation: PropTypes.string,
 };

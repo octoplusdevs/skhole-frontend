@@ -25,7 +25,7 @@ export function Login() {
   function onSubmit(data) {
     const { email, password } = data;
     setLoading(true);
-    dispatch(loginUser(email, password)).finally(() => {
+    dispatch(loginUser(email, password)).then(() => {
       setLoading(false);
     });
   }

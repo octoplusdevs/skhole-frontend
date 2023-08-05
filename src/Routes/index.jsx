@@ -10,6 +10,7 @@ import { ForgotPassword } from "../pages/ForgotPassword";
 import { ResetPassword } from "../pages/ResetPassword";
 import { Profile } from "../pages/Profile";
 import { Layout } from "../Components/Layout";
+import { ConfirmAccount } from "../pages/confirmAccount";
 
 export default function () {
   return (
@@ -33,6 +34,7 @@ export default function () {
       <Route path="/register" element={<Register />} />
       <Route path="/password/reset/:token" element={<ResetPassword />} />
       <Route path="/password/reset/" element={<ForgotPassword />} />
+      <Route path="/account/confirm/:token" element={<ConfirmAccount />} />
       <Route path="/login" element={<Login />} />
     </Routes>
   );

@@ -31,7 +31,7 @@ export function Player({
 }
 
 Player.propTypes = {
-  videoIdCDN: PropTypes.string.isRequired,
+  videoIdCDN: PropTypes.string,
   autoplay: PropTypes.bool,
   isLoading: PropTypes.bool,
 };

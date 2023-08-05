@@ -6,7 +6,6 @@ function Navigation() {
   const location = useLocation();
   const pathSegments = location.pathname.split("/");
   const activeLocation = pathSegments[1];
-  console.log("Navigation foi renderizado");
 
   return (
     <nav className="header__nav ">

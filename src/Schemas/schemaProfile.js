@@ -19,7 +19,7 @@ const Profile = yup.object({
     .min(5, "O nome de usuário deve ter no mínimo 5 caracteres.")
     .max(15, "O nome de usuário deve ter no máximo 15 caracteres."),
   email: yup.string().email("E-mail inválido.").required("Informe o seu e-mail atual."),
-  firstname: yup
+  first_name: yup
     .string()
     .max(15)
     .test("firstname-validation", "Nome inválido.", (value) => {
@@ -36,7 +36,7 @@ const Profile = yup.object({
 
       return false;
     }),
-  lastname: yup
+  last_name: yup
     .string()
     .max(15)
     .test("lastname-validation", "Sobrenome inválido.", (value) => {
