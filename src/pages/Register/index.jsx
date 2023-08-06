@@ -30,10 +30,17 @@ export function Register() {
   function onSubmit(data) {
     const { username, email, password } = data;
     setLoading(true);
-    dispatch(registerUser({ username, email, password })).then(() => {
-      toast.success("Conta criada com sucesso!");
-      setAccountCreated(true);
-    });
+    dispatch(
+      registerUser(
+        { username, email, password },
+        () => {
+          setAccountCreated(true);
+        },
+        () => {
+          toast.error("Erro ao criar conta");
+        },
+      ),
+    ).finally(() => setLoading(false));
   }
 
   //faz o redirecionamento caso o usuário esteja logado

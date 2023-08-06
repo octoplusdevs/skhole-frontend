@@ -33,14 +33,15 @@ export const updateUser = (userData) => async (dispatch) => {
   dispatch(loginSuccess(userData));
 };
 
-export const registerUser = (userData) => async (dispatch) => {
+export const registerUser = (userData, onSuccess, onError) => async (dispatch) => {
   const { username, email, password } = userData;
   dispatch(registerRequest());
   try {
-    await API.post("/accounts", { username, email, password });
+    const response = await API.post("/accounts", { username, email, password });
     dispatch(registerSuccess());
+    onSuccess(response.data);
   } catch (error) {
-    toast.error(error?.response?.data?.error);
+    onError(error?.response?.data?.error);
     dispatch(registerFailure(error?.response?.data?.error));
   }
 };

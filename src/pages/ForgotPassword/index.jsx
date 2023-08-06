@@ -10,9 +10,12 @@ import { Wrapper, Header, Message } from "./style";
 import { sendForgotPasswordEmail } from "../../redux/forgotPassword/forgotPassword.actions";
 import { Form } from "../../Components/Form";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
+import { useState } from "react";
 
 export function ForgotPassword() {
   const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const hasError = useSelector((state) => state.forgotPassword.error);
   const isSuccess = useSelector((state) => state.forgotPassword.isSuccess);
 
@@ -24,7 +27,13 @@ export function ForgotPassword() {
 
   function onSubmit(data) {
     const { email } = data;
-    dispatch(sendForgotPasswordEmail(email));
+    setLoading(true);
+
+    dispatch(
+      sendForgotPasswordEmail(email, () => {
+        setEmailSent(true);
+      }),
+    ).finally(() => setLoading(false));
   }
 
   //faz o redirecionamento caso o usuário esteja logado
@@ -63,7 +72,12 @@ export function ForgotPassword() {
             <p className="message_error">{errors?.email?.message || hasError}</p>
           </div>
 
-          <Button text="Recuperar conta" Primary isLoading={false} disabled={false} />
+          <Button
+            text={emailSent ? "Email enviado" : "Enviar email"}
+            Primary
+            isLoading={isLoading}
+            disabled={isLoading || emailSent}
+          />
           <div className="links">
             <Link to={"/"}>Voltar ao login</Link>
           </div>
