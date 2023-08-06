@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const EnrollmentStatus = ({ status, onClick }) => {
   const statusText = {
     active: "Inscrito",
@@ -6,6 +8,11 @@ const EnrollmentStatus = ({ status, onClick }) => {
   };
 
   return <h1 onClick={onClick}>{statusText[status]}</h1>;
+};
+
+EnrollmentStatus.propTypes = {
+  status: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
 
 export const ButtonEnroll = ({ course, enrollment, handleEnrollmentDestroy, handleEnroll }) => {
@@ -27,4 +34,11 @@ export const ButtonEnroll = ({ course, enrollment, handleEnrollmentDestroy, hand
   };
 
   return <>{renderEnrollmentStatus()}</>;
+};
+
+ButtonEnroll.propTypes = {
+  course: PropTypes.object.isRequired,
+  enrollment: PropTypes.object.isRequired,
+  handleEnrollmentDestroy: PropTypes.func.isRequired,
+  handleEnroll: PropTypes.func.isRequired,
 };

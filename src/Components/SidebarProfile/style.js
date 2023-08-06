@@ -2,14 +2,13 @@ import styled from "styled-components";
 
 export const Wrapper = styled.aside`
   background-color: #1b2022;
-  width: 380px;
-  height: 520px;
+  width: 100%;
   color: #fff;
   padding: 4rem 2.4rem;
   margin-top: 4.4rem;
   border-radius: 5px;
-  position: sticky;
-  top: 100px;
+
+  display: block;
   .sidebar > ul {
     list-style: none;
     display: flex;
@@ -20,6 +19,12 @@ export const Wrapper = styled.aside`
         background-color: red;
       }
     }
+  }
+  @media (min-width: 800px) {
+    position: sticky;
+    top: 100px;
+    width: 380px;
+    height: 520px;
   }
 `;
 export const Button = styled.button`

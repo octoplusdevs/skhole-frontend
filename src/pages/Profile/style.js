@@ -6,6 +6,10 @@ export const Main = styled.main`
   padding-top: 56px;
   .container {
     display: flex;
+    flex-direction: column;
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
   }
 `;
 

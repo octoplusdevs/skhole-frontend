@@ -9,7 +9,7 @@ import { Input } from "../../Components/Input";
 import { SchemaResetPassword } from "../../Schemas";
 import { Wrapper, Form, Header, Message } from "./style";
 import { resetPassword } from "../../redux/resetPassword/forgotPassword.actions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 import { toast } from "react-toastify";
 

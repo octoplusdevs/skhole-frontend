@@ -4,6 +4,7 @@ import { GlobalStyle } from "./Styles/global";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-widgets/styles.css";
 import Routes from "./Routes";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux";

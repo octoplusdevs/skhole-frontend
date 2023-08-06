@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Wrapper } from "./style";
-// import { useState } from "react";
-// import { useRef } from "react";
 import { useUserInformation } from "../../../hooks/useUserInformation";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -9,17 +7,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SchemaProfile } from "../../../Schemas";
 import { Button } from "../../../Components/Button";
 import useUpdateAccount from "../../../hooks/useUpdateAccount";
-// import avatarImg from "../../../assets/avatar.png";
 
 export function EditProfile() {
-  // const fileInputRef = useRef(null);
-  // const [isLoading, setLoading] = useState(false);
-  // const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const [hasError, setHasError] = useState("");
-  const { mutate, isLoading } = useUpdateAccount(setHasError, () => {});
+  const { mutate, isLoadingUpdate } = useUpdateAccount(setHasError, () => {});
   const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
-  const { data: userInfo } = useUserInformation(userLoggedInfo?.id); // const userInfo = {}
+  const { data: userInfo } = useUserInformation(userLoggedInfo?.id);
   const {
     register,
     handleSubmit,
@@ -30,40 +26,41 @@ export function EditProfile() {
     mode: "onChange",
   });
 
-  // const handleButtonClick = () => {
-  //   fileInputRef.current.click();
-  // };
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
 
   function onSubmit(data) {
-    // console.log(userInfo);
-    mutate({ id: userInfo?.id, data });
+    const formData = new FormData();
+    formData.append("file", selectedImage);
+    formData.append("data", JSON.stringify(data));
+    mutate({ formData, id: userInfo?.id });
   }
 
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setSelectedImage(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-  // console.log(isDirty, isValid, errors);
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   useEffect(() => {
     if (userInfo) {
       setValue("username", userInfo?.username);
       setValue("first_name", userInfo?.first_name);
       setValue("last_name", userInfo?.last_name);
       setValue("email", userInfo?.email);
-      setValue("phone", userInfo?.phone);
+      if (userInfo?.phone) setValue("phone", userInfo?.phone);
     }
   }, [userInfo, setValue]);
 
   return (
     <Wrapper>
       <h2>Informações de Perfil</h2>
-      {/* <div className="avatar">
+      <div className="avatar">
         <div className="user__avatar">
           <img src={selectedImage || userInfo?.avatar?.url} alt={userInfo?.username} />
         </div>
@@ -78,18 +75,20 @@ export function EditProfile() {
           />
           <button onClick={handleButtonClick}>Carregar Imagem</button>
           <div className="captions">
-            <span>At least 800x800 px recommended.</span> <br />
-            <span>JPG or PNG and GIF is allowed.</span>
+            <span>Formatos suportados: JPEG, PNG, GIF</span>
+            <br />
+            <span>Tamanho máximo do arquivo: 1MB</span>
+            <br />
           </div>
         </div>
-      </div> */}
+      </div>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <div className="input__group">
           <label htmlFor="username">Nome de usuário</label>
           <input
             {...register("username")}
             placeholder="Nome de usuário"
-            type="tel"
+            type="text"
             className="input"
           />
           <p className="message_error">
@@ -145,8 +144,8 @@ export function EditProfile() {
         <div className="input__group">
           <Button
             text={"Salvar"}
-            isLoading={isLoading}
-            disabled={!isDirty || !isValid || isLoading}
+            isLoading={isLoadingUpdate}
+            disabled={!isDirty || !isValid || isLoadingUpdate}
           />
         </div>
       </form>

@@ -56,11 +56,13 @@ export const Wrapper = styled.header`
       display: grid;
       place-items: center;
       color: #fff;
-      /* img {
+      img {
         max-width: 100%;
         height: auto;
-        background-color: red;
-      } */
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        object-fit: cover;
+      }
     }
   }
   .user__mobile {
@@ -110,13 +112,6 @@ export const Wrapper = styled.header`
       .header__user-avatar {
         height: 40px;
         width: 40px;
-        img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 50%;
-          border: 2px solid #ddd;
-          object-fit: cover;
-        }
       }
     }
     .user__mobile {

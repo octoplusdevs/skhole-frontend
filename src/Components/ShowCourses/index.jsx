@@ -4,7 +4,7 @@ import { useCourses } from "../../hooks/useCourses";
 import useEnrollment from "../../hooks/useSubscribeCourse";
 
 function ShowCourses() {
-  const { mutate: enroll } = useEnrollment();
+  const { mutate: enroll, isLoading } = useEnrollment();
 
   const { data: courses } = useCourses();
 
@@ -24,6 +24,7 @@ function ShowCourses() {
             course?.enrollment?.status === "active" || course?.enrollment?.status === "completed"
           }
           handleEnroll={enroll}
+          isEnrolling={isLoading}
           className="card"
         />
       ))}

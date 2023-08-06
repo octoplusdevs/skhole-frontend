@@ -27,9 +27,22 @@ export const Wrapper = styled.div`
       input[type="file"] {
         display: none;
       }
+      button {
+        border: 2px solid transparent;
+        border-radius: 30px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 1.6rem;
+        font-weight: 600;
+        padding: 12px 24px;
+        background-color: #47fdbb;
+        color: #000;
+        cursor: pointer;
+      }
       .captions {
         span {
-          font-size: 1.2rem;
+          font-size: 1.4rem;
           line-height: 1.6rem;
         }
       }
@@ -40,18 +53,21 @@ export const Wrapper = styled.div`
     flex-direction: column;
     gap: 3.2rem;
     margin-top: 4.8rem;
-    max-width: 480px;
+    max-width: 100%;
     .input__line {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       gap: 3.2rem;
+      @media (min-width: 768px) {
+        flex-direction: row;
+      }
     }
     .input__group {
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
       label {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
       }
       .input {
         border: 2px solid #191919;

@@ -14,6 +14,7 @@ export default function Card({
   slug,
   rate = 4.4,
   handleEnroll,
+  isEnrolling,
   ...rest
 }) {
   return (
@@ -62,8 +63,12 @@ export default function Card({
       ) : subscribed ? (
         <button className="card__button noverify">Em verificação</button>
       ) : (
-        <button onClick={() => handleEnroll(slug)} className={"card__button"}>
-          Inscrever
+        <button
+          onClick={() => handleEnroll(slug)}
+          className={"card__button"}
+          disabled={isEnrolling}
+        >
+          {isEnrolling ? "Aguarde..." : "Inscrever"}
         </button>
       )}
     </Wrapper>

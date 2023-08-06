@@ -56,6 +56,8 @@ const Profile = yup.object({
     .string()
     .nullable()
     .test("phone-validation", "Número de telefone inválido.", (value) => {
+      if (!value) return true; // Permite campo vazio (nulo)
+
       // Expressão regular para validação de números de telefone de forma genérica
       const phoneRegex = /^[+]*[(]?[0-9]+[)]?[-\s./0-9]$/;
 
