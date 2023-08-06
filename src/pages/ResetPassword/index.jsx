@@ -11,17 +11,19 @@ import { Wrapper, Form, Header, Message } from "./style";
 import { resetPassword } from "../../redux/resetPassword/forgotPassword.actions";
 import { useEffect, useState } from "react";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
+import { toast } from "react-toastify";
 
 export function ResetPassword() {
   const dispatch = useDispatch();
   const hasError = useSelector((state) => state.resetPassword.error);
-  const isSuccess = useSelector((state) => state.resetPassword.isSuccess);
   const navigate = useNavigate();
   const { token } = useParams();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const emailFromURL = queryParams.get("email");
   const [email, setEmail] = useState(emailFromURL || "");
+  const [isLoading, setLoading] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -35,14 +37,17 @@ export function ResetPassword() {
 
   function onSubmit(data) {
     const { email, password, confirmPassword } = data;
-    console.log({ token, email, password, confirmPassword });
-    dispatch(resetPassword(token, email, password, confirmPassword));
+    setLoading(true);
+    dispatch(
+      resetPassword({ token, email, password, confirmPassword }, () => {
+        toast.success("Senha alterada com sucesso!");
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      }),
+    ).finally(() => setLoading(false));
   }
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/");
-    }
-  }, [isSuccess, navigate]);
   //faz o redirecionamento caso o usuário esteja logado
   useAuthRedirect("/courses");
 
@@ -111,7 +116,12 @@ export function ResetPassword() {
               {errors?.email?.password || (hasError?.includes("confirmPassword") && hasError)}
             </p>
           </div>
-          <Button text="Alterar senha" Primary isLoading={false} disabled={false} />
+          <Button
+            text={isSuccess ? "Senha alterada" : "Alterar senha"}
+            Primary
+            isLoading={isLoading}
+            disabled={isLoading || isSuccess}
+          />
           <div className="links">
             <Link to={"/"}>Voltar ao login</Link>
             <Link to={"/password/reset"}>Solicitar novo link de recuperação</Link>

@@ -5,7 +5,7 @@ import {
   resetPasswordSuccess,
 } from "./forgotPassword.slice";
 
-export const resetPassword = (token, email, password, confirmPassword) => {
+export const resetPassword = ({ token, email, password, confirmPassword }, onSuccess) => {
   return async (dispatch) => {
     dispatch(resetPasswordRequest());
     try {
@@ -16,6 +16,7 @@ export const resetPassword = (token, email, password, confirmPassword) => {
         confirmPassword,
       });
       dispatch(resetPasswordSuccess(response.data?.message));
+      onSuccess();
     } catch (error) {
       dispatch(resetPasswordFailure(error.response.data?.error));
     }
