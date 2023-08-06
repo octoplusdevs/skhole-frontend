@@ -2,26 +2,27 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { API } from "../services/api";
 import { toast } from "react-toastify";
 
-async function updateAccountData(userId, data, onError, onSuccess) {
+async function updateAccountData(userId, data) {
   try {
-    const response = await API.put(`/accounts/${userId}`, data);
+    const response = await API.put(`/accounts/${userId}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     toast.success("Perfil atualizado com sucesso!");
-    onSuccess(response.data);
     return response.data;
   } catch (error) {
-    // toast.error("Erro ao atualizar dados da conta");
     toast.error(error.response.data.error);
-    onError(error.response.data.error);
     throw new Error("Erro ao atualizar o perfil!");
   }
 }
 
-function useUpdateAccount(onError, onSuccess) {
+function useUpdateAccount() {
   const queryClient = useQueryClient();
 
   return useMutation(
     (data) => {
-      updateAccountData(data.id, data.data, onError, onSuccess);
+      updateAccountData(data.id, data.data);
     },
     {
       onSuccess: () => {
