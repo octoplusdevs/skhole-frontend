@@ -10,16 +10,18 @@ import {
   registerFailure,
 } from "./auth.slice";
 
-export const loginUser = (email, password) => async (dispatch) => {
+export const loginUser = (email, password, onSuccess) => async (dispatch) => {
   dispatch(loginRequest());
   try {
     const response = await API.post(`/auth`, { email, password });
     dispatch(loginSuccess(response.data));
+    onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
     if (error?.response?.data?.error === "User not confirmed.") {
       toast.error("Usuário não confirmado. Verifique seu e-mail.");
     }
+    toast.error(error?.response?.data?.error);
   }
 };
 

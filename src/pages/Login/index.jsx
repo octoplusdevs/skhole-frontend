@@ -11,6 +11,7 @@ import { loginUser } from "../../redux/auth/auth.actions";
 import { useState } from "react";
 import { Form } from "../../Components/Form";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
+import { queryClient } from "../../services/query";
 
 export function Login() {
   const dispatch = useDispatch();
@@ -25,7 +26,11 @@ export function Login() {
   function onSubmit(data) {
     const { email, password } = data;
     setLoading(true);
-    dispatch(loginUser(email, password)).then(() => {
+    dispatch(
+      loginUser(email, password, () => {
+        queryClient.invalidateQueries(["account"]);
+      }),
+    ).then(() => {
       setLoading(false);
     });
   }
