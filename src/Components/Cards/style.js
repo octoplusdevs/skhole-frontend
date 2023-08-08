@@ -9,13 +9,16 @@ export const Wrapper = styled.div`
   gap: 1.6rem;
   .card__thumbnail {
     border: none;
+    height: 180px;
     img {
-      min-width: 100%;
-      min-height: 100%;
       background-color: #394d55;
       border: none;
       border-radius: 12px;
       width: 100%;
+      min-height: 100%;
+      max-height: 180px;
+      min-width: 100%;
+      object-fit: cover;
     }
   }
   .card__details {
