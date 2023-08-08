@@ -45,7 +45,7 @@ export function EditProfile() {
       console.log(formData);
       mutate({ id: userInfo?.id, data: formData });
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     } finally {
       setIsLoading(false);
     }

@@ -23,18 +23,26 @@ API.interceptors.request.use(
   },
 );
 
+let isLogoutInProgress = false;
+
 API.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
     const originalRequest = error.config;
-    if (error?.response?.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry && !isLogoutInProgress) {
       originalRequest._retry = true;
-      // toast.error("Sessão expirada, faça login novamente");
-      setTimeout(() => {
-        store.dispatch(logout());
-      }, 3000);
+      if (
+        error?.response?.data?.error === "Token invalid" ||
+        error?.response?.data?.error === "User not exists"
+      ) {
+        toast.error("Sessão expirada, faça login novamente");
+        isLogoutInProgress = true;
+        store.dispatch(logout()).finally(() => {
+          isLogoutInProgress = false;
+        });
+      }
     }
     return Promise.reject(error);
   },

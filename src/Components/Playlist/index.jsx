@@ -43,7 +43,7 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
                     <input
                       type="checkbox"
                       // defaultChecked={!video?.progress}
-                      checked={!video?.progress}
+                      checked={video?.progress?.isViewed}
                       onChange={() => markedAsWatched(video?.slug)}
                       disabled={isLoading}
                     />
