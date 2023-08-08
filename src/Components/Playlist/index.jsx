@@ -2,9 +2,17 @@ import { Wrapper, Module } from "./style";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { CaretDown, CaretUp } from "phosphor-react";
+import propTypes from "prop-types";
+import { useVideoMarkAsWatched } from "../../hooks/useVideoMarkAsWatched";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
+  const { mutate: markAsWatched, isLoading, error, data } = useVideoMarkAsWatched();
+
+  function markedAsWatched(slug_video) {
+    markAsWatched(slug_video);
+    console.log({ isLoading, error, data });
+  }
 
   const toggleModule = (slug) => {
     setActiveModule(activeModule === slug ? null : slug);
@@ -32,7 +40,13 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
               {module?.videos?.map((video) => (
                 <div key={video?.slug} className="lesson" onClick={(e) => e.stopPropagation()}>
                   <div className="lesson__title">
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      // defaultChecked={!video?.progress}
+                      checked={!video?.progress}
+                      onChange={() => markedAsWatched(video?.slug)}
+                      disabled={isLoading}
+                    />
                     <Link
                       to={`${slug_course}/${module?.slug}/${video?.slug}`}
                       className={activeVideo === video?.slug ? "active" : ""}
@@ -49,3 +63,9 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
     </Wrapper>
   );
 }
+
+Playlist.propTypes = {
+  modules: propTypes.array,
+  slug_course: propTypes.string,
+  activeVideo: propTypes.string,
+};

@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
       background-color: #394d55;
       border: none;
       border-radius: 12px;
+      width: 100%;
     }
   }
   .card__details {
