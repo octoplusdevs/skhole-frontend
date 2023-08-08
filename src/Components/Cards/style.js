@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 1.6rem;
   .card__thumbnail {
-    height: 164px;
     border: none;
     img {
       min-width: 100%;
