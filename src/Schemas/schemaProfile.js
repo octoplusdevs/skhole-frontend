@@ -59,7 +59,7 @@ const Profile = yup.object({
       if (!value) return true; // Permite campo vazio (nulo)
 
       // Expressão regular para validação de números de telefone de forma genérica
-      const phoneRegex = /^[+]*[(]?[0-9]+[)]?[-\s./0-9]$/;
+      const phoneRegex = /^(\+?[0-9]{2,3}?)?([0-9]{9})$/;
 
       // Verificar se o número de telefone coincide com a expressão regular
       if (value.match(phoneRegex)) {

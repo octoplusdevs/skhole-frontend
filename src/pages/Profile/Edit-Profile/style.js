@@ -4,9 +4,11 @@ export const Wrapper = styled.div`
   .avatar {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
     gap: 2.4rem;
     margin-top: 2.4rem;
+
     .user__avatar {
       width: 140px;
       height: 140px;
@@ -35,7 +37,7 @@ export const Wrapper = styled.div`
         align-items: center;
         font-size: 1.6rem;
         font-weight: 600;
-        padding: 12px 24px;
+        padding: 8px 16px;
         background-color: #47fdbb;
         color: #000;
         cursor: pointer;
@@ -45,6 +47,14 @@ export const Wrapper = styled.div`
           font-size: 1.4rem;
           line-height: 1.6rem;
         }
+      }
+    }
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      .input__file button {
+        padding: 12px 24px;
       }
     }
   }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "../redux";
 import { logout } from "../redux/auth/auth.slice";
+import { toast } from "react-toastify";
 
 const API = axios.create({
   baseURL: "https://skhole.onrender.com/api/v1",
@@ -30,7 +31,10 @@ API.interceptors.response.use(
     const originalRequest = error.config;
     if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      store.dispatch(logout());
+      // toast.error("Sessão expirada, faça login novamente");
+      setTimeout(() => {
+        store.dispatch(logout());
+      }, 3000);
     }
     return Promise.reject(error);
   },
