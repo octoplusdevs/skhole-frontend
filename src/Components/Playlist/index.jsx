@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CaretDown, CaretUp } from "phosphor-react";
 import propTypes from "prop-types";
 import { useVideoMarkAsWatched } from "../../hooks/useVideoMarkAsWatched";
+import { formatSecondsToHMS } from "../../utils";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
@@ -54,7 +55,7 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
                       {video?.title}
                     </Link>
                   </div>
-                  <span>{video?.duration} min</span>
+                  <span>{formatSecondsToHMS(video?.duration)}</span>
                 </div>
               ))}
             </div>
