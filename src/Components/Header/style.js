@@ -58,7 +58,7 @@ export const Wrapper = styled.header`
       color: #fff;
       img {
         max-width: 100%;
-        height: auto;
+        height: 100%;
         border-radius: 50%;
         border: 2px solid #ddd;
         object-fit: cover;

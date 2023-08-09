@@ -8,11 +8,10 @@ import { formatSecondsToHMS } from "../../utils";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
-  const { mutate: markAsWatched, isLoading, error, data } = useVideoMarkAsWatched();
+  const { mutate: markAsWatched, isLoading } = useVideoMarkAsWatched();
 
   function markedAsWatched(slug_video) {
     markAsWatched(slug_video);
-    console.log({ isLoading, error, data });
   }
 
   const toggleModule = (slug) => {
