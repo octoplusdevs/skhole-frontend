@@ -11,11 +11,11 @@ import useUpdateAccount from "../../../hooks/useUpdateAccount";
 export function EditProfile() {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [myFile, setMyFile] = useState(null);
+  const [isLoadedFile, setIsLoadedFile] = useState(false);
 
   const [hasError, setHasError] = useState("");
-  const { mutate } = useUpdateAccount(setHasError, () => {});
+  const { mutate, isLoading } = useUpdateAccount(setHasError, () => {});
   const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
   const { data: userInfo } = useUserInformation(userLoggedInfo?.id);
   const {
@@ -34,7 +34,6 @@ export function EditProfile() {
 
   function onSubmit(data) {
     try {
-      setIsLoading(true);
       const formData = new FormData();
       formData.append("file", myFile);
       formData.append("username", data.username);
@@ -46,13 +45,19 @@ export function EditProfile() {
       mutate({ id: userInfo?.id, data: formData });
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoading(false);
     }
   }
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    setIsLoadedFile(true);
+    console.log({
+      isDirty: isDirty,
+      isValid: isValid,
+      isLoading: isLoading,
+      isLoadedFile: isLoadedFile,
+    });
+
     setMyFile(file);
 
     if (file) {
@@ -85,7 +90,7 @@ export function EditProfile() {
             type="file"
             id="avatar"
             accept="image/*"
-            {...register("avatar")}
+            {...register("file")}
             ref={fileInputRef}
             onChange={handleImageChange}
           />
@@ -158,11 +163,16 @@ export function EditProfile() {
           </div>
         </div>
         <div className="input__group">
-          <Button
-            text={"Atualizar"}
-            isLoading={isLoading}
-            disabled={!isDirty || !isValid || isLoading}
-          />
+          <p>{isLoading ? "Atualizando..." : "Atualizar"}</p>
+          {!isDirty || !isValid ? (
+            <Button
+              text={"Atualizar"}
+              isLoading={isLoading}
+              disabled={!isLoadedFile || isLoading}
+            />
+          ) : (
+            <Button text={"Atualizar"} isLoading={isLoading} disabled={isLoading} />
+          )}
         </div>
       </form>
     </Wrapper>
