@@ -20,7 +20,12 @@ export const Wrapper = styled.header`
     gap: 0px;
     width: fit-content;
   }
-  .header__logo h3 {
+  .header__logo .link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3 {
     color: #fff;
     font-size: 20px;
     font-weight: bold;
@@ -87,13 +92,15 @@ export const Wrapper = styled.header`
         li {
           a {
             font-weight: 500;
-            color: #d1d1d1;
+            color: #6a6666;
+            transition: 0.8s;
             &:hover {
               color: #fff;
             }
           }
           &.active a {
             color: #47fdbb;
+            font-weight: 700;
           }
         }
       }
