@@ -49,7 +49,7 @@ export const Wrapper = styled.header`
       .header__user-info__status {
         color: #47fdbb;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 600;
       }
     }
 
@@ -111,6 +111,7 @@ export const Wrapper = styled.header`
       align-items: center;
       gap: 4px;
       padding: 8px 24px 8px 8px;
+      width: 180px;
 
       .header__user-info {
         display: block;

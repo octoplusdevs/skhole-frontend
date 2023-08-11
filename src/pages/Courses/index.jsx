@@ -4,6 +4,7 @@ import { Wrapper } from "./style";
 import useEnrollment from "../../hooks/useSubscribeCourse";
 import Modal from "react-modal";
 import { useState } from "react";
+import Loader from "../../Components/Loader";
 
 Modal.setAppElement("#root");
 
@@ -38,11 +39,11 @@ export function Courses() {
       <Wrapper>
         <div className="container">
           <h4>Cursos disponiveis</h4>
-          <div className="cards">
-            {isLoadingCourses && <h4>Carregando...</h4>}
-            {courses &&
-              courses.length &&
-              courses.map((course) => (
+          {courses?.length <= 0 && <h4>Ainda sem cursos disponíveis</h4>}
+          {isLoadingCourses && <Loader />}
+          {courses?.length > 0 && (
+            <div className="cards">
+              {courses.map((course) => (
                 <Card
                   title={course?.title}
                   duration={course?.duration}
@@ -60,7 +61,8 @@ export function Courses() {
                   className="card"
                 />
               ))}
-          </div>
+            </div>
+          )}
         </div>
       </Wrapper>
 
