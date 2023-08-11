@@ -163,7 +163,6 @@ export function EditProfile() {
           </div>
         </div>
         <div className="input__group">
-          <p>{isLoading ? "Atualizando..." : "Atualizar"}</p>
           {!isDirty || !isValid ? (
             <Button
               text={"Atualizar"}
