@@ -54,16 +54,16 @@ export const Wrapper = styled.header`
     }
 
     .header__user-avatar {
-      height: 32px;
-      width: 32px;
       background: #101010;
       border-radius: 50%;
       display: grid;
       place-items: center;
       color: #fff;
+      height: 40px;
+      width: 40px;
       img {
-        max-width: 100%;
-        height: 100%;
+        height: 32px;
+        width: 32px;
         border-radius: 50%;
         border: 2px solid #ddd;
         object-fit: cover;
@@ -119,6 +119,10 @@ export const Wrapper = styled.header`
       .header__user-avatar {
         height: 40px;
         width: 40px;
+        img {
+          height: 40px;
+          width: 40px;
+        }
       }
     }
     .user__mobile {
