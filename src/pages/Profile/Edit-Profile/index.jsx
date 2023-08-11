@@ -83,7 +83,11 @@ export function EditProfile() {
       <h2>Informações de Perfil</h2>
       <div className="avatar">
         <div className="user__avatar">
-          <img src={selectedImage || userInfo?.avatar?.url} alt={userInfo?.username} />
+          <img
+            onClick={handleButtonClick}
+            src={selectedImage || userInfo?.avatar?.url}
+            alt={userInfo?.username}
+          />
         </div>
         <div className="input__file">
           <input

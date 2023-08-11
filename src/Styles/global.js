@@ -97,6 +97,9 @@ export const GlobalStyle = createGlobalStyle`
     color: #fff;
     cursor: pointer;
   }
+  img {
+    user-drag: none;
+  }
   @media (max-width:1060px){
     html{
         font-size: 58%;

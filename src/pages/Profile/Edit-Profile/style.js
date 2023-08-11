@@ -20,6 +20,7 @@ export const Wrapper = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        cursor: pointer;
       }
     }
     .input__file {
@@ -48,6 +49,7 @@ export const Wrapper = styled.div`
         span {
           font-size: 1.4rem;
           line-height: 1.6rem;
+          user-select: none;
         }
       }
     }
