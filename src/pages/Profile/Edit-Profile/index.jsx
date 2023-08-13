@@ -37,14 +37,18 @@ export function EditProfile() {
       const formData = new FormData();
       formData.append("file", myFile);
       formData.append("username", data.username);
-      formData.append("first_name", data.first_name);
-      formData.append("last_name", data.last_name);
+
+      if (data.last_name != null && data.last_name != "") {
+        formData.append("last_name", data.last_name);
+      }
+      if (data.first_name != null && data.first_name != "") {
+        formData.append("first_name", data.first_name);
+      }
       formData.append("email", data.email);
       formData.append("phone", data.phone);
-      console.log(formData);
       mutate({ id: userInfo?.id, data: formData });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 
