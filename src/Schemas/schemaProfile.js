@@ -22,7 +22,6 @@ const Profile = yup.object({
   first_name: yup
     .string()
     .max(15)
-    .nullable()
     .test("firstname-validation", "Nome inválido.", (value) => {
       if (!value) return true; // Permite campo vazio (nulo)
 
@@ -40,7 +39,6 @@ const Profile = yup.object({
   last_name: yup
     .string()
     .max(15)
-    .nullable()
     .test("lastname-validation", "Sobrenome inválido.", (value) => {
       if (!value) return true; // Permite campo vazio (nulo)
 
