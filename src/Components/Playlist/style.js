@@ -58,16 +58,20 @@ export const Module = styled.div`
           border-radius: 5px;
           cursor: pointer;
           accent-color: #47fdbb;
+          background-color: yellow;
         }
       }
       .active {
+        color: #fff;
+      }
+      .isViewed {
         color: #47fdbb;
       }
       a {
         font-weight: 600;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         line-height: 1.9rem;
-        color: #fff;
+        color: #737272;
       }
       span {
         font-weight: 400;

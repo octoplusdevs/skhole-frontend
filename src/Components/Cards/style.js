@@ -73,6 +73,7 @@ export const Wrapper = styled.div`
     border-radius: 8px;
     /* text-transform: uppercase; */
     letter-spacing: 0.8px;
+
     &:hover {
       transform: translateY(-3px);
       background-color: #2be19f;

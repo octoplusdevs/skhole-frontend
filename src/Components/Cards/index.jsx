@@ -2,6 +2,7 @@ import { Clock, FileVideo, Star } from "phosphor-react";
 import { Wrapper } from "./style";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils";
+import useEnrollment from "../../hooks/useSubscribeCourse";
 
 export default function Card({
   title,
@@ -13,10 +14,13 @@ export default function Card({
   description,
   slug,
   rate = 4.4,
-  handleEnroll,
-  isEnrolling,
   ...rest
 }) {
+  const { mutate, isLoading: isEnrolling } = useEnrollment();
+
+  function handleEnroll(slug) {
+    mutate(slug);
+  }
   return (
     <Wrapper {...rest}>
       <div className="card__thumbnail">
@@ -65,7 +69,7 @@ export default function Card({
       ) : (
         <button
           onClick={() => handleEnroll(slug)}
-          className={"card__button"}
+          className={`card__button ${isEnrolling ? "noverify" : ""}`}
           disabled={isEnrolling}
         >
           {isEnrolling ? "Aguarde..." : "Inscrever"}

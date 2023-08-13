@@ -1,14 +1,14 @@
 import { Wrapper, Module } from "./style";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { CaretDown, CaretUp } from "phosphor-react";
+import { CaretDown, CaretUp, Lock, WarningCircle } from "phosphor-react";
 import propTypes from "prop-types";
 import { useVideoMarkAsWatched } from "../../hooks/useVideoMarkAsWatched";
 import { formatSecondsToHMS } from "../../utils";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
-  const { mutate: markAsWatched, isLoading } = useVideoMarkAsWatched();
+  const { mutate: markAsWatched } = useVideoMarkAsWatched();
 
   function markedAsWatched(slug_video) {
     markAsWatched(slug_video);
@@ -26,7 +26,7 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
             <div className="module__header">
               <div className="module__title">
                 <h1>{module?.title}</h1>
-                <p>6 aulas - 32:16min</p>
+                {/* <p>6 aulas - 32:16min</p> */}
               </div>
               <div className="module__state">
                 {activeModule === module?.slug ? (
@@ -39,22 +39,45 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
             <div className={`module__lessons ${activeModule === module.slug ? "isOpen" : ""}`}>
               {module?.videos?.map((video) => (
                 <div key={video?.slug} className="lesson" onClick={(e) => e.stopPropagation()}>
-                  <div className="lesson__title">
-                    <input
-                      type="checkbox"
-                      // defaultChecked={!video?.progress}
-                      checked={video?.progress?.isViewed}
-                      onChange={() => markedAsWatched(video?.slug)}
-                      disabled={isLoading}
-                    />
-                    <Link
-                      to={`${slug_course}/${module?.slug}/${video?.slug}`}
-                      className={activeVideo === video?.slug ? "active" : ""}
-                    >
-                      {video?.title}
-                    </Link>
-                  </div>
-                  <span>{formatSecondsToHMS(video?.duration)}</span>
+                  {video?.isAvailable === true ? (
+                    <>
+                      <div className="lesson__title">
+                        <input
+                          type="checkbox"
+                          // defaultChecked={!video?.progress}
+                          checked={video?.progress?.isViewed}
+                          onChange={() => markedAsWatched(video?.slug)}
+                        />
+                        <Link
+                          to={`${slug_course}/${module?.slug}/${video?.slug}`}
+                          className={`${activeVideo === video?.slug ? "active" : ""} ${
+                            video?.progress?.isViewed ? "isViewed" : ""
+                          }`}
+                        >
+                          {video?.title}
+                        </Link>
+                      </div>
+                      <span>{formatSecondsToHMS(video?.duration)}</span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="lesson__title" title="Aula indisponível">
+                        <a>{video?.title}</a>
+                      </div>
+                      <span
+                        style={{
+                          color: "yellow",
+                          fontWeight: "600",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "4px",
+                        }}
+                      >
+                        <Lock color="yellow" size={18} weight="fill" />
+                        Retido
+                      </span>
+                    </>
+                  )}
                 </div>
               ))}
             </div>

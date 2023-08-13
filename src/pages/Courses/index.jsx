@@ -9,7 +9,6 @@ import Loader from "../../Components/Loader";
 Modal.setAppElement("#root");
 
 export function Courses() {
-  const { mutate: enroll } = useEnrollment();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [enrollToDestroy, setEnrollToDestroy] = useState({
     id: null,
@@ -38,7 +37,7 @@ export function Courses() {
     <>
       <Wrapper>
         <div className="container">
-          <h4>Cursos disponiveis</h4>
+          <h4>Cursos disponiveis </h4>
           {courses?.length <= 0 && <h4>Ainda sem cursos disponíveis</h4>}
           {isLoadingCourses && <Loader />}
           {courses?.length > 0 && (
@@ -57,7 +56,6 @@ export function Courses() {
                     course?.enrollment?.status === "active" ||
                     course?.enrollment?.status === "completed"
                   }
-                  handleEnroll={enroll}
                   className="card"
                 />
               ))}
