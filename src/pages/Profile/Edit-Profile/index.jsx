@@ -44,8 +44,14 @@ export function EditProfile() {
       if (data.first_name != null && data.first_name != "") {
         formData.append("first_name", data.first_name);
       }
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
+      if (data.email != null && data.email != "") {
+        formData.append("email", data.email);
+      }
+
+      if (data.phone != null && data.phone != "") {
+        formData.append("phone", data.phone);
+      }
+
       mutate({ id: userInfo?.id, data: formData });
     } catch (err) {
       // console.log(err);
