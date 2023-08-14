@@ -3,9 +3,9 @@ import React from "react";
 function SkholeLogo() {
   return (
     <svg
-      width="401"
-      height="435"
-      viewBox="0 0 401 435"
+      width="30"
+      height="40"
+      viewBox="0 0 133 145"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
