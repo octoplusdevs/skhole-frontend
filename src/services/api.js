@@ -4,8 +4,8 @@ import { logout } from "../redux/auth/auth.slice";
 import { toast } from "react-toastify";
 
 const API = axios.create({
-  baseURL: "https://skhole.onrender.com/api/v1",
-  // baseURL: "http://localhost:3000/api/v1",
+  // baseURL: "https://api.skholepro.com/api/v1",
+  baseURL: "http://localhost:3001/api/v1",
 });
 
 API.interceptors.request.use(

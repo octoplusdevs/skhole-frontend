@@ -1,7 +1,7 @@
 import { Wrapper, Module } from "./style";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { CaretDown, CaretUp, Lock, WarningCircle } from "phosphor-react";
+import { CaretDown, CaretUp, Lock } from "phosphor-react";
 import propTypes from "prop-types";
 import { useVideoMarkAsWatched } from "../../hooks/useVideoMarkAsWatched";
 import { formatSecondsToHMS } from "../../utils";

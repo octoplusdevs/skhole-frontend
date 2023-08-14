@@ -1,15 +1,16 @@
-import Card from "../../Components/Cards";
 import { useCourses } from "../../hooks/useCourses";
 import { Wrapper } from "./style";
 import useEnrollment from "../../hooks/useSubscribeCourse";
 import Modal from "react-modal";
 import { useState } from "react";
 import Loader from "../../Components/Loader";
+import { CourseCard } from "../../Components/card";
 
 Modal.setAppElement("#root");
 
 export function Courses() {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
   const [enrollToDestroy, setEnrollToDestroy] = useState({
     id: null,
     slug_course: null,
@@ -43,21 +44,27 @@ export function Courses() {
           {courses?.length > 0 && (
             <div className="cards">
               {courses.map((course) => (
-                <Card
-                  title={course?.title}
-                  duration={course?.duration}
-                  thumbnail={course?.thumbnail?.url}
-                  description={course?.description}
-                  key={course?.slug}
-                  slug={course?.slug}
-                  confirmed={course?.enrollment?.confirmed}
-                  price={course?.price}
-                  subscribed={
-                    course?.enrollment?.status === "active" ||
-                    course?.enrollment?.status === "completed"
-                  }
-                  className="card"
-                />
+                <CourseCard.Root
+                  key={course.slug}
+                  slug={course.slug}
+                  confirmed={course?.enrollment?.confirmed || false}
+                  subscribed={course?.subscribed || false}
+                  status={course?.status || "inativo"}
+                >
+                  <CourseCard.Thumbnail
+                    src={course?.thumbnail?.url || ""}
+                    alt={course?.description}
+                    confirmed={course?.enrollment?.confirmed || false}
+                    slug={course?.slug}
+                  />
+                  <CourseCard.Title
+                    confirmed={course?.enrollment?.confirmed || false}
+                    title={course?.title}
+                    slug={course?.slug}
+                  />
+                  <CourseCard.Price price={course?.price} />
+                  <CourseCard.Details />
+                </CourseCard.Root>
               ))}
             </div>
           )}
