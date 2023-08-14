@@ -12,7 +12,7 @@ export default function Root({ children, slug, confirmed, subscribed, status }) 
   return (
     <Wrapper>
       {children}
-      {!subscribed && (
+      {!subscribed && status === "ativo" && (
         <Button.Default
           disabled={isEnrolling}
           onClick={() => handleEnroll(slug)}
