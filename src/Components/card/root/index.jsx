@@ -25,8 +25,8 @@ export default function Root({ children, slug, confirmed, subscribed, status }) 
       {subscribed && !confirmed && status === "ativo" && (
         <Button.Link className="noverify" text={"Em verificação..."} />
       )}
-      {subscribed && !confirmed && status === "inativo" && (
-        <Button.Link className="noverify" text={"Brevemente"} />
+      {status === "inativo" && (
+        <Button.Link className="noverify" style={{ color: "#fff" }} text={"Brevemente"} />
       )}
     </Wrapper>
   );
