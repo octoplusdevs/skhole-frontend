@@ -23,8 +23,9 @@ const Register = yup.object({
   }),
   password: yup
     .string()
-    .min(6, "* A senha deve conter no mínimo 6 caracteres")
-    .required("* Informe a sua nova senha"),
+    .required("Senha é obrigatória.")
+    .min(6, "Senha deve ter pelo menos 6 caracteres.")
+    .test("Senha tem espaço", "Senha não deve ter espaços.", (value) => !/\s+/.test(value)),
 });
 
 export default Register;
