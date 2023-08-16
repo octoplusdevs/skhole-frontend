@@ -3,22 +3,40 @@ import * as yup from "yup";
 const Profile = yup.object({
   username: yup
     .string()
-    .required("O nome de usuário é obrigatório.")
-    .matches(
-      /^[a-zA-Z][a-zA-Z0-9_]*$/,
-      "O nome de usuário deve começar com letras e pode conter underscore (_) no meio ou no final.",
+    .nullable()
+    .test(
+      "Nome de usuário deve conter no mínimo 5 caracteres.",
+      "Nome de usuário deve conter no mínimo 5 caracteres.",
+      (value) => {
+        if (!value) return true;
+        if (value.length >= 4) return true;
+      },
     )
-    .matches(
-      /^[a-zA-Z0-9][a-zA-Z0-9_]*_?$/,
-      "O nome de usuário não pode terminar com caracteres especiais ou hífen (_).",
+    .test(
+      "Nome de usuário deve conter no máximo 12 caracteres.",
+      "Nome de usuário deve conter no máximo 12 caracteres.",
+      (value) => {
+        if (!value) return true;
+        if (value.length >= 4) return true;
+      },
     )
-    .matches(
-      /^[a-zA-Z][a-zA-Z0-9_]*$/,
-      "O nome de usuário não pode conter caracteres especiais no meio.",
-    )
-    .min(5, "O nome de usuário deve ter no mínimo 5 caracteres.")
-    .max(15, "O nome de usuário deve ter no máximo 15 caracteres."),
-  email: yup.string().email("E-mail inválido.").required("Informe o seu e-mail atual."),
+    .test("Nome de usuário não é válido.", "Nome de usuário não é válido.", (value) => {
+      if (!value) return true;
+      const regex = /^(?!.*\.\.)(?!.*\.$)[a-zA-Z]+[_.]?[a-zA-Z0-9]+[_.]{0,29}$/;
+      if (value.match(regex)) return true;
+    })
+    .test(
+      "Nome de usuário tem espaços.",
+      "Nome de usuário não pode ter apenas números.",
+      (value) => !/^[0-9]+/.test(value),
+    ),
+  email: yup.string().test("Email inválido.", "Email inválido.", (value) => {
+    if (!value) return true;
+    const emailRegex =
+      /^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/;
+    if (value.match(emailRegex)) return true;
+  }),
+
   first_name: yup
     .string()
     .max(15)
@@ -28,7 +46,7 @@ const Profile = yup.object({
 
       // Expressão regular para validação de nomes de forma genérica
 
-      const firstnameRegex = /^[a-zA-Z]{4,}$/;
+      const firstnameRegex = /^[a-zA-ZÀ-ÿ]{4,12}$/;
 
       // Verificar se o nome coincide com a expressão regular
       if (value.match(firstnameRegex)) {
@@ -45,7 +63,7 @@ const Profile = yup.object({
       if (!value) return true; // Permite campo vazio (nulo)
 
       // Expressão regular para validação de sobrenomes de forma genérica
-      const lastnameRegex = /^[a-zA-Z]{4,}$/;
+      const lastnameRegex = /^[a-zA-ZÀ-ÿ]{4,12}$/;
 
       // Verificar se o sobrenome coincide com a expressão regular
       if (value.match(lastnameRegex)) {

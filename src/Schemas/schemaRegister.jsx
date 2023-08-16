@@ -3,14 +3,24 @@ import * as yup from "yup";
 const Register = yup.object({
   username: yup
     .string()
-    .required("O nome de usuário é obrigatório.")
-    .min(5, "* O nome de usuário deve ter no mínimo 5 caracteres")
-    .max(15, "* O nome de usuário deve ter no máximo 15 caracteres")
-    .matches(
-      /^[a-zA-Z][a-zA-Z0-9_-]*[a-zA-Z0-9]$/,
-      "O nome de usuário deve conter apenas letras, e não pode ter espaços, exceto por hífens e sublinhados.",
+    .nullable()
+    .min(5, "Nome de usuário deve conter no mínimo 5 caracteres.")
+    .max(12, "Nome de usuário deve conter no máximo 12 caracteres.")
+    .test("Nome de usuário não é válido.", "Nome de usuário não é válido.", (value) => {
+      if (!value) return true;
+      const regex = /^(?!.*\.\.)(?!.*\.$)[a-zA-Z]+[_.]?[a-zA-Z0-9]+[_.]{0,29}$/;
+      if (value.match(regex)) return true;
+    })
+    .test(
+      "Nome de usuário tem espaços.",
+      "Nome de usuário não pode ter apenas números.",
+      (value) => !/^[0-9]+/.test(value),
     ),
-  email: yup.string().email("* Este e-mail não é válido").required("* Informe o seu email atual"),
+  email: yup.string().test("Email inválido.", "Email inválido.", (value) => {
+    const emailRegex =
+      /^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/;
+    if (value.match(emailRegex)) return true;
+  }),
   password: yup
     .string()
     .min(6, "* A senha deve conter no mínimo 6 caracteres")

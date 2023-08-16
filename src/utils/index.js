@@ -24,3 +24,16 @@ export function formatSecondsToHMS(seconds) {
     return `${formattedSeconds} s`;
   }
 }
+
+export function isObjectEmpty(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+
+      if (value !== undefined && value !== null && value !== "") {
+        return false;
+      }
+    }
+  }
+  return true;
+}

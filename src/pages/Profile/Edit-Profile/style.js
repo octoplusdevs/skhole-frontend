@@ -12,10 +12,16 @@ export const Wrapper = styled.div`
     margin-top: 2.4rem;
 
     .user__avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #000;
       width: 140px;
       height: 140px;
       border-radius: 50%;
       overflow: hidden;
+      cursor: pointer;
       img {
         width: 100%;
         height: 100%;

@@ -7,13 +7,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SchemaProfile } from "../../../Schemas";
 import { Button } from "../../../Components/Button";
 import useUpdateAccount from "../../../hooks/useUpdateAccount";
+import { User } from "phosphor-react";
+import { isObjectEmpty } from "../../../utils";
 
 export function EditProfile() {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [myFile, setMyFile] = useState(null);
-  const [isLoadedFile, setIsLoadedFile] = useState(false);
-
+  const [isEmpty, setIsEmpty] = useState(null);
   const [hasError, setHasError] = useState("");
   const { mutate, isLoading } = useUpdateAccount(setHasError, () => {});
   const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
@@ -21,7 +22,9 @@ export function EditProfile() {
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
+    watch,
     formState: { errors, isDirty, isValid },
   } = useForm({
     resolver: yupResolver(SchemaProfile),
@@ -35,8 +38,12 @@ export function EditProfile() {
   function onSubmit(data) {
     try {
       const formData = new FormData();
-      formData.append("file", myFile);
-      formData.append("username", data.username);
+      if (myFile) {
+        formData.append("file", myFile);
+      }
+      if (data.username != null && data.username != "") {
+        formData.append("username", data.username);
+      }
 
       if (data.last_name != null && data.last_name != "") {
         formData.append("last_name", data.last_name);
@@ -53,20 +60,17 @@ export function EditProfile() {
       }
 
       mutate({ id: userInfo?.id, data: formData });
+      reset();
     } catch (err) {
       // console.log(err);
     }
   }
-
+  const handleCancelImageLoad = () => {
+    setMyFile(null);
+    setSelectedImage(null);
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setIsLoadedFile(true);
-    console.log({
-      isDirty: isDirty,
-      isValid: isValid,
-      isLoading: isLoading,
-      isLoadedFile: isLoadedFile,
-    });
 
     setMyFile(file);
 
@@ -78,26 +82,29 @@ export function EditProfile() {
       reader.readAsDataURL(file);
     }
   };
+  const handleInputChange = (event) => {
+    const fieldName = event.target.name;
+    const fieldValue = event.target.value;
+    setValue(fieldName, fieldValue);
+  };
+
   useEffect(() => {
-    if (userInfo) {
-      setValue("username", userInfo?.username);
-      setValue("first_name", userInfo?.first_name);
-      setValue("last_name", userInfo?.last_name);
-      setValue("email", userInfo?.email);
-      if (userInfo?.phone) setValue("phone", userInfo?.phone);
-    }
-  }, [userInfo, setValue]);
+    const subscription = watch((value, { name, type }) =>
+      setIsEmpty(isObjectEmpty(value, name, type)),
+    );
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <Wrapper>
       <h2>Informações de Perfil</h2>
       <div className="avatar">
-        <div className="user__avatar">
-          <img
-            onClick={handleButtonClick}
-            src={selectedImage || userInfo?.avatar?.url}
-            alt={userInfo?.username}
-          />
+        <div className="user__avatar" onClick={handleButtonClick}>
+          {selectedImage || userInfo?.avatar?.url ? (
+            <img src={selectedImage || userInfo?.avatar?.url} alt={userInfo?.username} />
+          ) : (
+            <User size={56} color="#fff" />
+          )}
         </div>
         <div className="input__file">
           <input
@@ -108,7 +115,9 @@ export function EditProfile() {
             ref={fileInputRef}
             onChange={handleImageChange}
           />
-          <button onClick={handleButtonClick}>Carregar Imagem</button>
+          <button onClick={!myFile ? handleButtonClick : handleCancelImageLoad}>
+            {myFile != null ? "Cancelar" : "Carregar Imagem"}
+          </button>
           <div className="captions">
             <span>Formatos suportados: JPEG, PNG, GIF</span>
             <br />
@@ -122,7 +131,8 @@ export function EditProfile() {
           <label htmlFor="username">Nome de usuário</label>
           <input
             {...register("username")}
-            placeholder="Nome de usuário"
+            onChange={handleInputChange}
+            placeholder={userInfo?.username}
             type="text"
             className="input"
           />
@@ -135,7 +145,7 @@ export function EditProfile() {
             <label htmlFor="first_name">Nome</label>
             <input
               {...register("first_name")}
-              placeholder="Primeiro nome"
+              placeholder={userInfo?.first_name}
               type="text"
               className="input"
             />
@@ -147,7 +157,7 @@ export function EditProfile() {
             <label htmlFor="last_name">Sobrenome</label>
             <input
               {...register("last_name")}
-              placeholder="Último nome"
+              placeholder={userInfo?.last_name}
               type="text"
               className="input"
             />
@@ -160,7 +170,7 @@ export function EditProfile() {
           <label htmlFor="email">E-mail</label>
           <input
             {...register("email")}
-            placeholder="Último nome"
+            placeholder={userInfo?.email}
             autoComplete="true"
             type="email"
             className="input"
@@ -171,21 +181,22 @@ export function EditProfile() {
         </div>
         <div className="input__group">
           <label htmlFor="phone">Telefone</label>
-          <input {...register("phone")} placeholder="Seu telefone" type="tel" className="input" />
+          <input
+            {...register("phone")}
+            placeholder={userInfo?.phone}
+            type="tel"
+            className="input"
+          />
           <div className="message_error">
             {errors?.phone?.message || (hasError?.includes("phone") && hasError)}
           </div>
         </div>
         <div className="input__group">
-          {!isDirty || !isValid ? (
-            <Button
-              text={"Atualizar"}
-              isLoading={isLoading}
-              disabled={!isLoadedFile || isLoading}
-            />
-          ) : (
-            <Button text={"Atualizar"} isLoading={isLoading} disabled={isLoading} />
-          )}
+          <Button
+            text={"Atualizar"}
+            isLoading={isLoading}
+            disabled={!isDirty || !isValid || isLoading || isEmpty}
+          />
         </div>
       </form>
     </Wrapper>
