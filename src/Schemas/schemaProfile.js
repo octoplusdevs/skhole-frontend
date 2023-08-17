@@ -17,7 +17,7 @@ const Profile = yup.object({
       "Nome de usuário deve conter no máximo 12 caracteres.",
       (value) => {
         if (!value) return true;
-        if (value.length >= 4) return true;
+        if (value.length >= 12) return false;
       },
     )
     .test("Nome de usuário não é válido.", "Nome de usuário não é válido.", (value) => {
