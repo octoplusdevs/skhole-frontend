@@ -82,9 +82,7 @@ export function ResetPassword() {
               value={email}
               onChange={handleEmailChange}
             />
-            <p className="message_error">
-              {errors?.email?.message || (hasError?.includes("email") && hasError)}
-            </p>
+            <p className="message_error">{errors?.email?.message}</p>
           </div>
           <div className="input">
             <label htmlFor="password">Nova senha</label>
@@ -97,9 +95,7 @@ export function ResetPassword() {
               id="password"
               autoComplete="current-password"
             />
-            <p className="message_error">
-              {errors?.email?.password || (hasError?.includes("Password") && hasError)}
-            </p>
+            <p className="message_error">{errors?.password?.message}</p>
           </div>
           <div className="input">
             <label htmlFor="password">Repita a senha</label>
@@ -112,15 +108,14 @@ export function ResetPassword() {
               id="confirmPassword"
               autoComplete="current-password"
             />
-            <p className="message_error">
-              {errors?.email?.password || (hasError?.includes("confirmPassword") && hasError)}
-            </p>
+            <p className="message_error">{errors?.confirmPassword?.message}</p>
           </div>
           <Button
             text={isSuccess ? "Senha alterada" : "Alterar senha"}
             Primary
             isLoading={isLoading}
             disabled={isLoading || isSuccess}
+            onClick={() => console.log(errors.confirmPassword)}
           />
           <div className="links">
             <Link to={"/"}>Voltar ao login</Link>
