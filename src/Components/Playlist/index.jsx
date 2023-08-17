@@ -5,6 +5,7 @@ import { CaretDown, CaretUp, Lock } from "phosphor-react";
 import propTypes from "prop-types";
 import { useVideoMarkAsWatched } from "../../hooks/useVideoMarkAsWatched";
 import { formatSecondsToHMS } from "../../utils";
+import CheckBox from "../Check";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
@@ -42,12 +43,16 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
                   {video?.isAvailable === true ? (
                     <>
                       <div className="lesson__title">
-                        <input
+                        <CheckBox
+                          checked={video?.progress?.isViewed}
+                          onChange={() => markedAsWatched(video?.slug)}
+                        />
+                        {/* <input
                           type="checkbox"
                           // defaultChecked={!video?.progress}
                           checked={video?.progress?.isViewed}
                           onChange={() => markedAsWatched(video?.slug)}
-                        />
+                        /> */}
                         <Link
                           to={`${slug_course}/${module?.slug}/${video?.slug}`}
                           className={`${activeVideo === video?.slug ? "active" : ""} ${
