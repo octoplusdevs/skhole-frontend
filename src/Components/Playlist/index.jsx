@@ -11,8 +11,8 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
   const { mutate: markAsWatched } = useVideoMarkAsWatched();
 
-  function markedAsWatched(slug_video) {
-    markAsWatched(slug_video);
+  function markedAsWatched(slug_course, slug_video) {
+    markAsWatched(slug_course, slug_video);
   }
 
   const toggleModule = (slug) => {
@@ -45,7 +45,7 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
                       <div className="lesson__title">
                         <CheckBox
                           checked={video?.progress?.isViewed}
-                          onChange={() => markedAsWatched(video?.slug)}
+                          onChange={() => markedAsWatched(module?.slug_course, video?.slug)}
                         />
                         {/* <input
                           type="checkbox"
