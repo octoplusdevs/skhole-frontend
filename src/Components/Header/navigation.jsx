@@ -14,13 +14,13 @@ function Navigation() {
           <Link to={"/courses"}>Cursos</Link>
         </li>
         <li className={`${activeLocation === "bootcamps" ? "active" : ""}`}>
-          <Link to={"/bootcamps"}>Trilhas</Link>
+          <Link>Especialidades</Link>
         </li>
         <li className={`${activeLocation === "learn" ? "active" : ""}`}>
-          <Link to={"/learn"}>Aprendizados</Link>
+          <Link>Aprendizados</Link>
         </li>
         <li className={`${activeLocation === "events" ? "active" : ""}`}>
-          <Link to={"/events"}>Eventos</Link>
+          <Link>Eventos</Link>
         </li>
       </ul>
     </nav>

@@ -15,8 +15,8 @@ import { ConfirmAccount } from "../pages/confirmAccount";
 export default function () {
   return (
     <Routes>
-      <Route element={<Layout />}>
-        <Route element={<PrivateRoute />}>
+      <Route element={<PrivateRoute />}>
+        <Route element={<Layout />}>
           <Route path="/me" element={<Profile />} />
           <Route path="/me/:tab" element={<Profile />} />
           <Route path="/" element={<Courses />} />
@@ -29,8 +29,8 @@ export default function () {
             </Route>
           </Route>
         </Route>
-        <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
       <Route path="/register" element={<Register />} />
       <Route path="/password/reset/:token" element={<ResetPassword />} />
       <Route path="/password/reset/" element={<ForgotPassword />} />

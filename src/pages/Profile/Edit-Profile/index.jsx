@@ -61,6 +61,7 @@ export function EditProfile() {
 
       mutate({ id: userInfo?.id, data: formData });
       reset();
+      setMyFile(null);
     } catch (err) {
       // console.log(err);
     }
@@ -110,7 +111,7 @@ export function EditProfile() {
           <input
             type="file"
             id="avatar"
-            accept="image/*"
+            accept="image/png,image/jpeg"
             {...register("file")}
             ref={fileInputRef}
             onChange={handleImageChange}
@@ -192,11 +193,15 @@ export function EditProfile() {
           </div>
         </div>
         <div className="input__group">
-          <Button
-            text={"Atualizar"}
-            isLoading={isLoading}
-            disabled={!isDirty || !isValid || isLoading || isEmpty}
-          />
+          {myFile ? (
+            <Button text={"Atualizar"} isLoading={isLoading} disabled={!myFile} />
+          ) : (
+            <Button
+              text={"Atualizar"}
+              isLoading={isLoading}
+              disabled={!isDirty || !isValid || isLoading || isEmpty}
+            />
+          )}
         </div>
       </form>
     </Wrapper>
