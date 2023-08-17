@@ -41,6 +41,7 @@ export const Module = styled.div`
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-in-out 0s;
+    padding-bottom: 40px;
     &.isOpen {
       max-height: 500px;
       overflow: initial;
@@ -48,7 +49,8 @@ export const Module = styled.div`
     .lesson {
       display: flex;
       justify-content: space-between;
-      padding: 8px 32px;
+      align-items: center;
+      padding: 16px;
       .lesson__title {
         display: flex;
         gap: 8px;
@@ -69,12 +71,13 @@ export const Module = styled.div`
       }
       a {
         font-weight: 600;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         line-height: 1.9rem;
         color: #737272;
       }
       span {
         font-weight: 400;
+        font-size: 1.5rem;
         color: #737272;
       }
       &:first-of-type {
@@ -82,6 +85,20 @@ export const Module = styled.div`
       }
       &:last-of-type {
         padding-bottom: 24px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .module__lessons {
+      .lesson {
+        padding: 8px 16px;
+        a {
+          font-size: 1.4rem;
+        }
+        span {
+          font-size: 1.4rem;
+        }
       }
     }
   }

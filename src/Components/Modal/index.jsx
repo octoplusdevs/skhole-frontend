@@ -1,5 +1,11 @@
-import Confirmation from "./Confirmation";
+import Button from "./Button";
+import Content from "./Content";
+import Root from "./Root";
+import Footer from "./Footer";
 
 export const Modal = {
-  Confirmation,
+  Root,
+  Content,
+  Button,
+  Footer,
 };

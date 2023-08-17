@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Question, SignOut, User } from "phosphor-react";
+import { Question, SignOut, User, WarningCircle } from "phosphor-react";
 import PropTypes from "prop-types";
 import { Wrapper } from "./style";
 import { logoutUser } from "../../../redux/auth/auth.actions";
@@ -43,11 +43,17 @@ export default function ContextMenu({ isOpen }) {
           </button>
         </li>
       </ul>
-      <Modal.Confirmation
-        isOpen={isOpenModal}
-        onRequestClose={handleCloseModal}
-        onRequestConfirm={handleConfirmModal}
-      />
+      <Modal.Root isOpen={isOpenModal}>
+        <Modal.Content
+          icon={<WarningCircle size={40} color="#059949" weight="duotone" />}
+          title="Terminar Sessão"
+          body="Deseja realmente terminar esta sessão ?"
+        />
+        <Modal.Footer>
+          <Modal.Button className="default" onClick={handleCloseModal} text={"Cancelar"} />
+          <Modal.Button className="confirm" onClick={handleConfirmModal} text={"Confirmar"} />
+        </Modal.Footer>
+      </Modal.Root>
     </Wrapper>
   );
 }

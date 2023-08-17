@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.section`
   padding-top: 56px;
+  padding-bottom: 100px;
   .grid {
     display: flex;
     flex-direction: column;
@@ -72,10 +73,10 @@ export const Wrapper = styled.section`
       color: #f2f2f2;
     }
     p {
-      font-weight: 500;
+      font-weight: 400;
       font-size: 1.6rem;
       line-height: 150%;
-      color: #bfbfbf;
+      color: #5d5d5d;
     }
   }
   @media (min-width: 768px) {

@@ -1,9 +1,8 @@
 import React from "react";
 import { Wrapper } from "./styles";
-import { WarningCircle } from "phosphor-react";
 import propTypes from "prop-types";
 
-function Confirmation({ isOpen, onRequestClose, onRequestConfirm, ...rest }) {
+function Root({ isOpen, onRequestClose, children, ...rest }) {
   return (
     <Wrapper
       {...rest}
@@ -33,26 +32,15 @@ function Confirmation({ isOpen, onRequestClose, onRequestConfirm, ...rest }) {
         },
       }}
     >
-      <div className="modal__information">
-        <WarningCircle size={40} color="#059949" weight="duotone" />
-        <h2>Terminando Sessão</h2>
-        <p>Se clicar em confirmar poderás entrar novamente com o seu email e senha!</p>
-      </div>
-      <div className="modal__footer">
-        <button className="default" onClick={onRequestClose}>
-          Cancelar
-        </button>
-        <button className="confirm" onClick={onRequestConfirm}>
-          Confirmar
-        </button>
-      </div>
+      {children}
     </Wrapper>
   );
 }
-Confirmation.propTypes = {
+Root.propTypes = {
   isOpen: propTypes.bool.isRequired,
   onRequestClose: propTypes.func.isRequired,
   onRequestConfirm: propTypes.func.isRequired,
+  children: propTypes.node.isRequired,
 };
 
-export default Confirmation;
+export default Root;

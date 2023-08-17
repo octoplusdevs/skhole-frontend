@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { ArrowRight } from "phosphor-react";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -40,6 +41,7 @@ const StyledLink = styled(Link)`
   font-weight: 500;
   text-decoration: none;
   transition: 0.1s linear;
+  width: fit-content;
   .icon {
     transition: 0.3s linear;
   }
@@ -54,9 +56,13 @@ const StyledLink = styled(Link)`
 function AccountCreated({ username }) {
   return (
     <Wrapper>
-      <span>🥳 {username},</span>
-      <h1>Parabéns a sua nova conta foi criada com sucesso!</h1>
-      <p>Verifique o seu email para concluir o processo de criação de conta</p>
+      <span>🥳 Parabéns, {username}!</span>
+      <h1>Verifique o seu email!</h1>
+      <p>
+        Antes de continuar, verifique seu e-mail em busca de um link de verificação.
+        <br />
+        Ou verifique na caixa de SPAM.
+      </p>
       <StyledLink to={"/login"}>
         Ir para o login
         <ArrowRight size={24} className="icon" />
@@ -64,5 +70,8 @@ function AccountCreated({ username }) {
     </Wrapper>
   );
 }
+AccountCreated.propTypes = {
+  username: PropTypes.string,
+};
 
 export default AccountCreated;
