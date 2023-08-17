@@ -41,7 +41,6 @@ export const Module = styled.div`
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-in-out 0s;
-    padding-bottom: 40px;
     &.isOpen {
       max-height: 500px;
       overflow: initial;
