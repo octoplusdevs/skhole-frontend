@@ -1,6 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { API } from "../services/api";
 import { toast } from "react-toastify";
+import { queryClient } from "../services/query";
 
 async function updateAccountData(userId, data) {
   try {
@@ -18,11 +19,10 @@ async function updateAccountData(userId, data) {
 }
 
 function useUpdateAccount() {
-  const queryClient = useQueryClient();
-
   return useMutation(
-    (data) => {
-      updateAccountData(data.id, data.data);
+    (params) => {
+      const { id, data } = params;
+      updateAccountData(id, data);
     },
     {
       onSuccess: () => {
