@@ -12,6 +12,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./services/query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>

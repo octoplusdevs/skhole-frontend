@@ -7,17 +7,17 @@ export default function Mobile({ isOpen, activeLocation }) {
   return (
     <Wrapper className={`${isOpen ? "show" : "hidden"}`}>
       <ul>
-        <li className={`${activeLocation === "courses" ? "active" : ""}`}>
+        <li className={`${activeLocation === "courses" || activeLocation === "" ? "active" : ""}`}>
           <Link to={"/courses"}>Cursos</Link>
         </li>
         <li className={`${activeLocation === "bootcamps" ? "active" : ""}`}>
-          <Link to={"/bootcamps"}>Trilhas</Link>
+          <Link>Especialidades</Link>
         </li>
         <li className={`${activeLocation === "events" ? "active" : ""}`}>
-          <Link to={"/events"}>Aprendizados</Link>
+          <Link>Eventos</Link>
         </li>
-        <li className={`${activeLocation === "events" ? "active" : ""}`}>
-          <Link to={"/events"}>Eventos</Link>
+        <li className={`${activeLocation === "learn" ? "active" : ""}`}>
+          <Link to={"/learn"}>Meu Aprendizado</Link>
         </li>
       </ul>
     </Wrapper>

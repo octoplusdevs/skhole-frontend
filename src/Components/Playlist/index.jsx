@@ -47,12 +47,6 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
                           checked={video?.progress}
                           onChange={() => markedAsWatched(module?.slug_course, video?.slug)}
                         />
-                        {/* <input
-                          type="checkbox"
-                          // defaultChecked={!video?.progress}
-                          checked={video?.progress?.isViewed}
-                          onChange={() => markedAsWatched(video?.slug)}
-                        /> */}
                         <Link
                           to={`${slug_course}/${module?.slug}/${video?.slug}`}
                           className={`${activeVideo === video?.slug ? "active" : ""} ${

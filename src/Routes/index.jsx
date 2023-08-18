@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import { Routes, Route } from "react-router-dom";
 import { Courses } from "../pages/Courses";
+import { Learning } from "../pages/Learning";
 import { NotFound } from "../pages/NotFound";
 import { Watch } from "../pages/Watch";
 import { Login } from "../pages/Login";
@@ -19,6 +20,7 @@ export default function () {
         <Route element={<Layout />}>
           <Route path="/me" element={<Profile />} />
           <Route path="/me/:tab" element={<Profile />} />
+          <Route path="/learn" element={<Learning />} />
           <Route path="/" element={<Courses />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/watch/" element={<Watch />}>
