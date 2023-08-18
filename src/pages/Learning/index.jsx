@@ -11,7 +11,7 @@ export function Learning() {
       <Wrapper>
         <div className="container">
           <h4>Meu Aprendizado </h4>
-          {enrollments?.length <= 0 && <h4>Ainda sem cursos disponíveis</h4>}
+          {enrollments?.length <= 0 && <h4>Ainda não estás inscrito em nenhum curso.</h4>}
           {isLoadingCourses && <Loader />}
           {enrollments?.length > 0 && (
             <div className="cards">
