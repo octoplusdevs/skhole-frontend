@@ -22,9 +22,11 @@ function Avatar() {
       >
         <div className="header__user-avatar">
           {userInfo?.avatar ? (
-            <img src={userInfo?.avatar?.url} alt="avatar" />
+            <img className="avatar" src={userInfo?.avatar?.url} alt="avatar" />
           ) : (
-            <User size={22} color="#ffffff" />
+            <div className="avatar">
+              <User size={22} color="#ffffff" />
+            </div>
           )}
         </div>
         <div className="header__user-info">

@@ -36,15 +36,20 @@ export const Wrapper = styled.header`
     cursor: pointer;
     padding: 8px;
     position: relative;
-    :hover {
-      border-radius: 8px;
-    }
+    transition: background 0.4s ease;
+    border-radius: 8px;
+
     .header__user-info {
       display: none;
       .header__user-info__name {
         color: #fff;
         font-size: 16px;
         font-weight: 600;
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 130px;
       }
       .header__user-info__status {
         color: #47fdbb;
@@ -73,6 +78,7 @@ export const Wrapper = styled.header`
   .user__mobile {
     color: #fff;
     padding: 8px;
+    cursor: pointer;
   }
 
   @media (min-width: 768px) {
@@ -92,7 +98,7 @@ export const Wrapper = styled.header`
         li {
           a {
             font-weight: 500;
-            color: #6a6666;
+            color: #adb3b5;
             transition: 0.8s;
             &:hover {
               color: #fff;
@@ -109,10 +115,12 @@ export const Wrapper = styled.header`
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
       padding: 8px 24px 8px 8px;
       width: 180px;
-
+      &:hover {
+        background-color: #252e31;
+      }
       .header__user-info {
         display: block;
       }
@@ -120,9 +128,12 @@ export const Wrapper = styled.header`
       .header__user-avatar {
         height: 40px;
         width: 40px;
-        img {
+        .avatar {
           height: 40px;
           width: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
