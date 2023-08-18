@@ -76,7 +76,7 @@ export const Wrapper = styled.section`
       font-weight: 400;
       font-size: 1.6rem;
       line-height: 150%;
-      color: #5d5d5d;
+      color: #dddddd;
     }
   }
   @media (min-width: 768px) {
