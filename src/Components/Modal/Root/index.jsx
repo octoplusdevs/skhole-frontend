@@ -38,8 +38,8 @@ function Root({ isOpen, onRequestClose, children, ...rest }) {
 }
 Root.propTypes = {
   isOpen: propTypes.bool.isRequired,
-  onRequestClose: propTypes.func.isRequired,
-  onRequestConfirm: propTypes.func.isRequired,
+  onRequestClose: propTypes.func,
+  onRequestConfirm: propTypes.func,
   children: propTypes.node.isRequired,
 };
 

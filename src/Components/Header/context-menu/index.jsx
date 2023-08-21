@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Question, SignOut, User, WarningCircle } from "phosphor-react";
 import PropTypes from "prop-types";
 import { Wrapper } from "./style";
@@ -10,6 +10,7 @@ import { Modal } from "../../Modal";
 export default function ContextMenu({ isOpen }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleCloseModal() {
     setIsOpenModal((isOpen) => !isOpen);
@@ -18,7 +19,9 @@ export default function ContextMenu({ isOpen }) {
     setIsOpenModal(true);
   }
   function handleConfirmModal() {
-    dispatch(logoutUser());
+    dispatch(logoutUser()).finally(() => {
+      navigate("/login");
+    });
   }
 
   return (

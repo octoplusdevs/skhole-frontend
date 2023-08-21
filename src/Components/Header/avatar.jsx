@@ -2,14 +2,12 @@ import { List, User } from "phosphor-react";
 import React from "react";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { useUserInformation } from "../../hooks/useUserInformation";
-import { useSelector } from "react-redux";
 import Mobile from "./mobile";
 import ContextMenu from "./context-menu";
+import Cookies from "js-cookie";
 
 function Avatar() {
-  const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
-
-  const { data: userInfo } = useUserInformation(userLoggedInfo?.id);
+  const { data: userInfo } = useUserInformation(Cookies.get("userId"));
 
   const [userMenuOpen, setUserMenuOpen, userMenuRef] = useClickOutside(false);
   const [mobileMenu, setMobileMenu, mobileMenuRef] = useClickOutside(false);

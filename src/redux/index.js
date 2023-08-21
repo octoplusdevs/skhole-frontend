@@ -11,24 +11,24 @@ import { forgotPasswordReducer } from "./forgotPassword/forgotPassword.slice";
 import { resetPasswordReducer } from "./resetPassword/forgotPassword.slice";
 // import { skholeApi } from "../services/skhole";
 
-const authPersistConfig = {
-  key: "auth",
-  storage: storage,
-  blacklist: ["error"],
-};
+// const authPersistConfig = {
+//   key: "auth",
+//   storage: storage,
+//   blacklist: ["error"],
+// };
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["courses", "modules"],
-  blacklist: ["auth"],
+  whitelist: ["courses", "modules", "auth"],
+  // blacklist: ["auth"],
 };
 // const logger = createLogger({
 //   // ...options
 // });
 
 const rooReducer = combineReducers({
-  auth: persistReducer(authPersistConfig, authReducer),
+  auth: authReducer,
   courses: courseReducer,
   modules: ModuleReducer,
   forgotPassword: forgotPasswordReducer,

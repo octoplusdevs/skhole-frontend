@@ -22,7 +22,7 @@ export const Header = styled.div`
   h2 {
     color: #fff;
     font-size: 2.4rem;
-    font-family: "Inter";
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     line-height: 140%;
     margin: 2.4rem 0;
     text-align: center;
@@ -31,7 +31,7 @@ export const Header = styled.div`
     color: #47fdbb;
   }
   p {
-    font-family: "Inter";
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 1.4rem;
     color: #bfbfbf;

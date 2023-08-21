@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
   html{
     font-size: 62.5%;
+    font-family: 'Inter',Arial, Helvetica, sans-serif;
   }
   body{
     background-color: #101314;
@@ -12,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
   *{
     margin: 0;
     padding: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter',Arial, Helvetica, sans-serif;
     box-sizing: border-box;
     ::-webkit-scrollbar {
       width: 6px;

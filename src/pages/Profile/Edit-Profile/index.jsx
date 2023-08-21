@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Wrapper } from "./style";
 import { useUserInformation } from "../../../hooks/useUserInformation";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SchemaProfile } from "../../../Schemas";
@@ -9,6 +8,7 @@ import { Button } from "../../../Components/Button";
 import useUpdateAccount from "../../../hooks/useUpdateAccount";
 import { User } from "phosphor-react";
 import { isObjectEmpty } from "../../../utils";
+import Cookies from "js-cookie";
 
 export function EditProfile() {
   const fileInputRef = useRef(null);
@@ -17,8 +17,7 @@ export function EditProfile() {
   const [isEmpty, setIsEmpty] = useState(null);
   const [hasError, setHasError] = useState("");
   const { mutate, isLoading } = useUpdateAccount(setHasError, () => {});
-  const userLoggedInfo = useSelector((state) => state?.auth?.user?.user);
-  const { data: userInfo } = useUserInformation(userLoggedInfo?.id);
+  const { data: userInfo } = useUserInformation(Cookies.get("userId"));
   const {
     register,
     handleSubmit,
