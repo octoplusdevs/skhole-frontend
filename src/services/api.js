@@ -2,8 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const API = axios.create({
-  // baseURL: "https://api.skholepro.com/api/v1",
-  baseURL: "http://localhost:3001/api/v1",
+  baseURL: "https://api.skholepro.com/api/v1",
+  // baseURL: "http://localhost:3001/api/v1",
 });
 
 API.interceptors.request.use(
