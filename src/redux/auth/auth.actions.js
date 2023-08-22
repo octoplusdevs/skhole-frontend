@@ -18,6 +18,7 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
     Cookies.set("accessToken", accessToken, { secure: true, sameSite: "strict" });
     Cookies.set("refreshToken", refreshToken, { secure: true, httpOnly: true, sameSite: "strict" });
     Cookies.set("userId", user_id, { secure: true, sameSite: "strict" });
+    console.log(accessToken, refreshToken);
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
