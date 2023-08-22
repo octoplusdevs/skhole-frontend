@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     transform: translateY(0px);
   }
   &.hidden {
-    visibility: invisible;
+    visibility: hidden;
     opacity: 0;
     transform: translateY(10px);
   }

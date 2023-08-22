@@ -14,11 +14,11 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
   dispatch(loginRequest());
   try {
     const response = await API.post(`/auth`, { email, password });
+    console.log("response", response);
     const { accessToken, refreshToken, user_id } = response.data;
     Cookies.set("accessToken", accessToken, { secure: true, sameSite: "strict" });
     Cookies.set("refreshToken", refreshToken, { secure: true, httpOnly: true, sameSite: "strict" });
     Cookies.set("userId", user_id, { secure: true, sameSite: "strict" });
-    console.log(accessToken, refreshToken);
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
