@@ -28,7 +28,6 @@ const forgotPasswordSlice = createSlice({
       state.isSuccess = false;
       state.isError = true;
       state.error = action.payload;
-      console.log(action.payload);
     },
   },
 });

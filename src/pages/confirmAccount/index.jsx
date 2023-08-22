@@ -79,7 +79,6 @@ export function ConfirmAccount() {
   const [accountWasConfirmed, setAccountWasConfirmed] = useState(false);
   const { token } = useParams();
 
-  console.log(token);
   async function confirmAccount() {
     try {
       await API.get(`/accounts/confirm/${token}`);

@@ -5,7 +5,6 @@ import { CourseCard } from "../../Components/card";
 
 export function Learning() {
   const { data: enrollments, isLoading: isLoadingCourses } = useUserEnrollments();
-  console.log(enrollments);
   return (
     <>
       <Wrapper>

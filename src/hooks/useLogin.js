@@ -15,7 +15,7 @@ export const useLogin = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await api.post("/auth", {
+      const response = await API.post("/auth", {
         username,
         password,
       });
@@ -30,13 +30,11 @@ export const useLogin = () => {
         type: "LOGIN",
         payload: userData,
       });
-      api.defaults.headers["Authorization"] = `Bearer ${token}`;
+      API.defaults.headers["Authorization"] = `Bearer ${token}`;
       toast.success("Login feito!");
       navigate("/discover");
-      console.log("SSSaa");
     } catch (error) {
       setError(error);
-      console.log(error);
       toast.error(error);
     } finally {
       setIsLoading(false);

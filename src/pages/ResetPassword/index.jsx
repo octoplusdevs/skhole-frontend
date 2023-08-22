@@ -115,7 +115,6 @@ export function ResetPassword() {
             Primary
             isLoading={isLoading}
             disabled={isLoading || isSuccess}
-            onClick={() => console.log(errors.confirmPassword)}
           />
           <div className="links">
             <Link to={"/"}>Voltar ao login</Link>

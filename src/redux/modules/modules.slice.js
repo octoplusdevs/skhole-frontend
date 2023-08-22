@@ -25,7 +25,6 @@ const moduleSlice = createSlice({
       state.error = action.payload;
     },
     toggleVideo: (state, action) => {
-      console.log("SSSSSPPP", action.payload);
       state.isLoading = true;
       state.error = null;
       state.selectedVideo = state.modules

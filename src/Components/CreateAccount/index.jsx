@@ -17,8 +17,7 @@ export default function CreateAnAcount() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schemaRegister) });
 
-  function onSubmit(data) {
-    console.log(data);
+  function onSubmit() {
     setIsLoading(!isLoading);
     setClicked(!clicked);
   }

@@ -31,7 +31,7 @@ export const logoutUser = () => async (dispatch) => {
   Cookies.remove("refreshToken");
   Cookies.remove("userId");
   dispatch(logout());
-  window.location.href = "/login";
+  // window.location.href = "/login";
 };
 
 export const updateUser = (userData) => async (dispatch) => {

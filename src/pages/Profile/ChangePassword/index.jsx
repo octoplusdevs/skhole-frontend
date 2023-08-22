@@ -20,7 +20,6 @@ export function ChangePassword() {
   });
 
   function onSubmit(data) {
-    console.log(data);
     mutate({ id: userLoggedInfo?.id, data });
   }
 
