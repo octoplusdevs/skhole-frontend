@@ -15,25 +15,9 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
   try {
     const response = await API.post(`/auth`, { email, password });
     const { accessToken, refreshToken, user_id } = response.data;
-    Cookies.set("accessToken", accessToken, {
-      secure: true,
-      sameSite: "strict",
-      domain: ".skholepro.com",
-      path: "/",
-    });
-    Cookies.set("refreshToken", refreshToken, {
-      secure: true,
-      httpOnly: true,
-      sameSite: "strict",
-      domain: ".skholepro.com",
-      path: "/",
-    });
-    Cookies.set("userId", user_id, {
-      secure: true,
-      sameSite: "strict",
-      domain: ".skholepro.com",
-      path: "/",
-    });
+    Cookies.set("accessToken", accessToken, { secure: true, sameSite: "strict" });
+    Cookies.set("refreshToken", refreshToken, { secure: true, httpOnly: true, sameSite: "strict" });
+    Cookies.set("userId", user_id, { secure: true, sameSite: "strict" });
     console.log(accessToken, refreshToken);
     onSuccess();
   } catch (error) {
