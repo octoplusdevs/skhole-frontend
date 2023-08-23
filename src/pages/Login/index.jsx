@@ -13,13 +13,17 @@ import { Form } from "../../Components/Form";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 import { queryClient } from "../../services/query";
 import { Modal } from "../../Components/Modal";
+import Cookies from "js-cookie";
 
 export function Login() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const hasError = useSelector((state) => state.auth.error);
+  const isAuthenticated =
+    Cookies.get("accessToken") != undefined && Cookies.get("accessToken") != "undefined";
 
+  console.log("isAuthenticated", isAuthenticated);
   const {
     register,
     handleSubmit,

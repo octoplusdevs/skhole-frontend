@@ -29,7 +29,7 @@ API.interceptors.request.use(async (config) => {
   if (accessToken) {
     const decodedToken = jwtDecode(accessToken);
     const currentTime = Date.now() / 1000;
-    console.log(decodedToken);
+
     if (
       decodedToken.exp &&
       decodedToken.exp < currentTime &&
@@ -44,8 +44,10 @@ API.interceptors.request.use(async (config) => {
         setAuthToken({ accessToken: newAccessToken });
         config.headers.Authorization = `Bearer ${newAccessToken}`;
       } catch (error) {
-        await API.post(`/auth/logout`);
-        removeAuthToken();
+        await API.post(`/auth/logout`).then(() => {
+          removeAuthToken();
+        });
+
         // window.location.href = "/login";
         Promise.reject(new Error("REFRESH_TOKEN_ERROR", { cause: "REFRESH_TOKEN_ERROR" }));
       }
