@@ -38,9 +38,9 @@ API.interceptors.request.use(async (config) => {
     ) {
       config.isRetry = true;
       const { refreshToken } = getAuthToken();
-      await refreshNewToken(refreshToken);
-      // setAuthToken({ accessToken: newAccessToken });
-      // config.headers.Authorization = `Bearer ${newAccessToken}`;
+      const newAccessToken = await refreshNewToken(refreshToken);
+      setAuthToken({ accessToken: newAccessToken });
+      config.headers.Authorization = `Bearer ${newAccessToken}`;
     }
   }
 
