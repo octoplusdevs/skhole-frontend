@@ -10,6 +10,7 @@ export function PrivateRoute() {
   useEffect(() => {
     const checkAuthStatus = () => {
       const accessToken = Cookies.get("accessToken");
+      console.log("AAACCC", accessToken);
       const newIsAuthenticated =
         accessToken !== undefined && accessToken !== null && accessToken !== "undefined";
       setIsAuthenticated(newIsAuthenticated);
