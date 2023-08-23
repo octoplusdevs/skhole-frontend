@@ -1,6 +1,6 @@
 import axios, { AxiosError, isAxiosError } from "axios";
 import jwtDecode from "jwt-decode";
-import { getAuthToken, setAuthToken } from "../utils/auth";
+import { getAuthToken, removeAuthToken, setAuthToken } from "../utils/auth";
 import { refreshNewToken } from "./auth";
 
 // const BASE_URL = import.meta.env.VITE_API_URL;
@@ -29,7 +29,7 @@ API.interceptors.request.use(async (config) => {
   if (accessToken) {
     const decodedToken = jwtDecode(accessToken);
     const currentTime = Date.now() / 1000;
-
+    console.log(decodedToken);
     if (
       decodedToken.exp &&
       decodedToken.exp < currentTime &&
@@ -37,10 +37,18 @@ API.interceptors.request.use(async (config) => {
       !config.isRetry
     ) {
       config.isRetry = true;
-      const { refreshToken } = getAuthToken();
-      const newAccessToken = await refreshNewToken(refreshToken);
-      setAuthToken({ accessToken: newAccessToken });
-      config.headers.Authorization = `Bearer ${newAccessToken}`;
+
+      try {
+        const { refreshToken } = getAuthToken();
+        const newAccessToken = await refreshNewToken(refreshToken);
+        setAuthToken({ accessToken: newAccessToken });
+        config.headers.Authorization = `Bearer ${newAccessToken}`;
+      } catch (error) {
+        await API.post(`/auth/logout`);
+        removeAuthToken();
+        // window.location.href = "/login";
+        Promise.reject(new Error("REFRESH_TOKEN_ERROR", { cause: "REFRESH_TOKEN_ERROR" }));
+      }
     }
   }
 
