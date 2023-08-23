@@ -46,6 +46,7 @@ API.interceptors.request.use(async (config) => {
       } catch (error) {
         await API.post(`/auth/logout`).then(() => {
           removeAuthToken();
+          window.location.href = "/login";
         });
 
         // window.location.href = "/login";
