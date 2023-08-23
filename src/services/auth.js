@@ -9,7 +9,6 @@ export const refreshNewToken = async (refreshToken) => {
     await API.post(`/auth/logout`);
     removeAuthToken();
     window.location.href = "/login";
-
     Promise.reject(new Error("REFRESH_TOKEN_ERROR", { cause: "REFRESH_TOKEN_ERROR" }));
   }
 };

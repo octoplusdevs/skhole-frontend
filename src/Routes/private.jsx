@@ -1,29 +1,9 @@
 import Cookies from "js-cookie";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 export function PrivateRoute() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    Cookies.get("accessToken") !== undefined && Cookies.get("accessToken") !== null,
-  );
-
-  useEffect(() => {
-    const checkAuthStatus = () => {
-      const accessToken = Cookies.get("accessToken");
-      console.log("AAACCC", accessToken);
-      const newIsAuthenticated =
-        accessToken !== undefined && accessToken !== null && accessToken !== "undefined";
-      setIsAuthenticated(newIsAuthenticated);
-    };
-
-    // Adicionar um listener para o evento "change" nos cookies
-    window.addEventListener("storage", checkAuthStatus);
-
-    // Remove o listener quando o componente é desmontado
-    return () => {
-      window.removeEventListener("storage", checkAuthStatus);
-    };
-  }, []);
-
+  const isAuthenticated =
+    Cookies.get("accessToken") != undefined || Cookies.get("accessToken") != "undefined";
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 }
