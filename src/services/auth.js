@@ -1,4 +1,4 @@
-import { logoutUser } from "../redux/auth/auth.actions";
+import { removeAuthToken } from "../utils/auth";
 import { API } from "./api";
 
 export const refreshNewToken = async (refreshToken) => {
@@ -6,7 +6,8 @@ export const refreshNewToken = async (refreshToken) => {
     const response = await API.post("/refresh-token", { refreshToken }, { withCredentials: true });
     return response.data.accessToken;
   } catch (error) {
-    logoutUser();
+    await API.post(`/auth/logout`);
+    removeAuthToken();
     console.log("refresh-logout");
     Promise.reject(new Error("REFRESH_TOKEN_ERROR", { cause: "REFRESH_TOKEN_ERROR" }));
   }
