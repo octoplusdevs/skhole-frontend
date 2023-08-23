@@ -14,8 +14,8 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
   dispatch(loginRequest());
   try {
     const response = await API.post(`/auth`, { email, password }, { withCredentials: true });
-    const { user_id } = response.data;
-    setAuthToken({ user_id });
+    const { user_id, accessToken, refreshToken } = response.data;
+    setAuthToken({ user_id, accessToken, refreshToken });
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
