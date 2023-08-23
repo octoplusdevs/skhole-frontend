@@ -6,9 +6,9 @@ export const getAuthToken = () => {
   return { accessToken, refreshToken };
 };
 
-export const setAuthToken = ({ user_id }) => {
-  // Cookies.set("accessToken", accessToken, { secure: true, sameSite: "strict" });
-  // Cookies.set("refreshToken", refreshToken, { secure: true, sameSite: "strict" });
+export const setAuthToken = ({ refreshToken, accessToken, user_id }) => {
+  Cookies.set("accessToken", accessToken, { secure: true, sameSite: "strict" });
+  Cookies.set("refreshToken", refreshToken, { secure: true, sameSite: "strict" });
   Cookies.set("userId", user_id, { secure: true, sameSite: "strict" });
 };
 

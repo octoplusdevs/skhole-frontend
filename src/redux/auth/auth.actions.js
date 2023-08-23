@@ -13,7 +13,7 @@ import { removeAuthToken, setAuthToken } from "../../utils/auth";
 export const loginUser = (email, password, onSuccess, onError) => async (dispatch) => {
   dispatch(loginRequest());
   try {
-    const response = await API.post(`/auth`, { email, password });
+    const response = await API.post(`/auth`, { email, password }, { withCredentials: true });
     const { user_id } = response.data;
     setAuthToken({ user_id });
     onSuccess();
