@@ -7,7 +7,7 @@ export const refreshNewToken = async (refreshToken) => {
     return response.data.accessToken;
   } catch (error) {
     logoutUser();
-    console.log("refresh-logou");
+    console.log("refresh-logout");
     Promise.reject(new Error("REFRESH_TOKEN_ERROR", { cause: "REFRESH_TOKEN_ERROR" }));
   }
 };
