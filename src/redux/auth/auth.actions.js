@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { API } from "../../services/api";
 import {
   loginRequest,
@@ -9,16 +8,14 @@ import {
   registerSuccess,
   registerFailure,
 } from "./auth.slice";
+import { removeAuthToken, setAuthToken } from "../../utils/auth";
 
 export const loginUser = (email, password, onSuccess, onError) => async (dispatch) => {
   dispatch(loginRequest());
   try {
     const response = await API.post(`/auth`, { email, password });
-    console.log("response", response);
     const { accessToken, refreshToken, user_id } = response.data;
-    Cookies.set("accessToken", accessToken, { secure: true, sameSite: "strict" });
-    Cookies.set("refreshToken", refreshToken, { secure: true, httpOnly: true, sameSite: "strict" });
-    Cookies.set("userId", user_id, { secure: true, sameSite: "strict" });
+    setAuthToken({ accessToken, refreshToken, user_id });
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
@@ -28,9 +25,7 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
 
 export const logoutUser = () => async (dispatch) => {
   await API.post(`/auth/logout`);
-  Cookies.remove("accessToken");
-  Cookies.remove("refreshToken");
-  Cookies.remove("userId");
+  removeAuthToken();
   dispatch(logout());
   // window.location.href = "/login";
 };
@@ -54,23 +49,4 @@ export const registerUser = (userData, onSuccess, onError) => async (dispatch) =
 };
 export const resetErrors = () => (dispatch) => {
   dispatch(registerRequest());
-};
-
-export const refreshAccessToken = async () => {
-  const refreshToken = Cookies.get("refresh_token");
-  if (refreshToken) {
-    try {
-      const newAccessToken = await API.refreshToken(refreshToken);
-      if (newAccessToken) {
-        Cookies.set("access_token", newAccessToken);
-        return newAccessToken;
-      } else {
-        throw new Error("Failed to refresh access token");
-      }
-    } catch (error) {
-      //return error;
-    }
-  } else {
-    //throw new Error("Refresh token not found");
-  }
 };
