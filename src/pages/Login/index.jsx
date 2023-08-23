@@ -19,6 +19,7 @@ export function Login() {
   const [isLoading, setLoading] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const hasError = useSelector((state) => state.auth.error);
+
   const {
     register,
     handleSubmit,
