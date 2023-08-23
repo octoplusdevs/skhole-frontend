@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 
 export const getAuthToken = () => {
-  Cookies.get("accessToken");
+  return Cookies.get("accessToken");
 };
 
 export const setAuthToken = ({ refreshToken, accessToken, user_id }) => {
