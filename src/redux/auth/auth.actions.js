@@ -27,6 +27,8 @@ export const logoutUser = () => async (dispatch) => {
   await API.post(`/auth/logout`);
   removeAuthToken();
   dispatch(logout());
+  console.log("refresh-logout-user");
+
   // window.location.href = "/login";
 };
 
