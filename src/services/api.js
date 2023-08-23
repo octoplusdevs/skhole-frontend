@@ -23,11 +23,11 @@ const pathnamesMatches = ["/refresh-token", "/auth/logout", "/auth"];
 // interceptor request
 API.interceptors.request.use(async (config) => {
   const pathname = config.url ?? "";
-  const token = getAuthToken();
-  config.headers.Authorization = `Bearer ${token}`;
+  const { accessToken } = getAuthToken();
+  config.headers.Authorization = `Bearer ${accessToken}`;
 
-  if (token) {
-    const decodedToken = jwtDecode(token);
+  if (accessToken) {
+    const decodedToken = jwtDecode(accessToken);
     const currentTime = Date.now() / 1000;
 
     if (
@@ -37,9 +37,10 @@ API.interceptors.request.use(async (config) => {
       !config.isRetry
     ) {
       config.isRetry = true;
-      const { accessToken } = await refreshNewToken();
-      setAuthToken(accessToken);
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      const { refreshToken } = getAuthToken();
+      const { accessToken: newAccessToken } = await refreshNewToken(refreshToken);
+      setAuthToken(newAccessToken);
+      config.headers.Authorization = `Bearer ${newAccessToken}`;
     }
   }
 
