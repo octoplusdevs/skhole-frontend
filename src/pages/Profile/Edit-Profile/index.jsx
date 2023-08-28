@@ -17,7 +17,7 @@ export function EditProfile() {
   const [isEmpty, setIsEmpty] = useState(null);
   const [hasError, setHasError] = useState("");
   const { mutate, isLoading } = useUpdateAccount(setHasError, () => {});
-  const { data: userInfo } = useUserInformation(Cookies.get("userId"));
+  const { data: userInfo } = useUserInformation(Cookies.get("skhole.user.id"));
   const {
     register,
     handleSubmit,

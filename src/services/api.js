@@ -1,100 +1,96 @@
-import axios, { AxiosError, isAxiosError } from "axios";
-import jwtDecode from "jwt-decode";
-import { getAuthToken, removeAuthToken, setAuthToken } from "../utils/auth";
-import { refreshNewToken } from "./auth";
+import axios from "axios";
+import { store } from "../redux";
+import { logout } from "../redux/auth/auth.slice";
+import { toast } from "react-toastify";
+import { getAuthToken, setAuthToken,removeAuthToken } from "../utils/auth";
+import Cookies from "js-cookie";
+import { logoutUser } from "../redux/auth/auth.actions";
 
-// const BASE_URL = import.meta.env.VITE_API_URL;
-
-const commonOptions = {
-  baseURL: "https://api.skholepro.com/api/v1",
+const API = axios.create({
+  baseURL: "https://skhole.onrender.com/api/v1",
   // baseURL: "http://localhost:3001/api/v1",
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+});
 
-// create two instances of axios to avoid infinite loop
-export const API = axios.create(commonOptions);
-export const axiosRefreshTokenInstance = axios.create(commonOptions);
+let isRefreshing = false; // Track if a token refresh is already in progress
+let refreshSubscribers = []; // Queue of requests waiting for token refresh
 
-const pathnamesMatches = ["/refresh-token", "/auth/logout", "/auth"];
-
-// interceptor request
-API.interceptors.request.use(async (config) => {
-  const pathname = config.url ?? "";
-  const { accessToken } = getAuthToken();
-  config.headers.Authorization = `Bearer ${accessToken}`;
-
-  if (accessToken) {
-    const decodedToken = jwtDecode(accessToken);
-    const currentTime = Date.now() / 1000;
-
-    if (
-      decodedToken.exp &&
-      decodedToken.exp < currentTime &&
-      !pathnamesMatches.includes(pathname) &&
-      !config.isRetry
-    ) {
-      config.isRetry = true;
-
-      try {
-        const { refreshToken } = getAuthToken();
-        const newAccessToken = await refreshNewToken(refreshToken);
-        setAuthToken({ accessToken: newAccessToken });
-        config.headers.Authorization = `Bearer ${newAccessToken}`;
-      } catch (error) {
-        await API.post(`/auth/logout`).then(() => {
-          removeAuthToken();
-          window.location.href = "/login";
-        });
-
-        // window.location.href = "/login";
-        Promise.reject(new Error("REFRESH_TOKEN_ERROR", { cause: "REFRESH_TOKEN_ERROR" }));
-      }
+API.interceptors.request.use(
+  (config) => {
+    const token = getAuthToken().accessToken;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-  }
 
-  return config;
-}, undefined);
-
-export const DEFAULT_ERROR_MESSAGES = {
-  somethingMessage: "🤯 Ops! Something went wrong, please try again later.",
-  networkError: "📡 Network error, please try again later.",
-  unauthorizedMessage: "🔐 Unauthorized, please login again.",
-};
-
-const mappedErrors = {
-  500: DEFAULT_ERROR_MESSAGES.somethingMessage,
-  401: DEFAULT_ERROR_MESSAGES.unauthorizedMessage,
-};
-
-// interceptor response and add custom error message if needed
-API.interceptors.response.use(
-  (response) => response,
+    return config;
+  },
   (error) => {
-    const newResponse = { ...error };
+    return Promise.reject(error);
+  },
+);
 
-    if (isAxiosError(error)) {
-      if (error.code === AxiosError.ERR_NETWORK) {
-        newResponse.message = DEFAULT_ERROR_MESSAGES.networkError;
-        return Promise.reject(newResponse);
+const redirectToLogin = () => {
+  // Aqui você pode redirecionar o usuário para a tela de login
+  // ou executar outras ações necessárias
+  // store.dispatch(logout());
+  store.dispatch(logoutUser())
+  document.location.href = "/login"
+};
+
+API.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (error?.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      if (
+        error?.response?.data?.error === "The token is missing!" ||
+        error?.response?.data?.error === "User not exists" ||
+        error?.response?.data?.error === "Invalid Token!"
+      ) {
+        if (!isRefreshing) {
+          isRefreshing = true;
+          const refreshToken = getAuthToken().refreshToken;
+          try {
+            const response = await API.post("/refresh-token", { refreshToken });
+            const newToken = response.data.accessToken;
+            var inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+            Cookies.set("skhole.token", newToken, {
+              secure: true,
+              sameSite: "strict",
+              expires: inFifteenMinutes,
+            });
+            API.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+            refreshSubscribers.forEach((callback) => callback(newToken));
+            refreshSubscribers = [];
+            originalRequest.headers.Authorization = `Bearer ${newToken}`;
+            return API(originalRequest);
+          } catch (refreshError) {
+            store.dispatch(logout());
+          } finally {
+            isRefreshing = false;
+          }
+        } else {
+          return new Promise((resolve) => {
+            refreshSubscribers.push((token) => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(API(originalRequest));
+            });
+          });
+        }
       }
+    } else if (
+      error?.response?.status === 403 &&
+      error?.response?.data?.error === "Refresh Token Inválido." ||
+      error?.response?.data?.error === "Refresh Token Em Falta."
 
-      if (error.response && !error.response.data.message) {
-        newResponse.message = DEFAULT_ERROR_MESSAGES.somethingMessage;
-        return Promise.reject(newResponse);
-      }
-
-      if (error.response?.status && error.response.status in mappedErrors) {
-        newResponse.message = mappedErrors[error.response?.status];
-        return Promise.reject(newResponse);
-      }
-
-      newResponse.message = error.response?.data.message ?? newResponse.message;
-      return Promise.reject(newResponse);
+    ) {
+      redirectToLogin();
     }
 
     return Promise.reject(error);
   },
 );
+
+export { API };

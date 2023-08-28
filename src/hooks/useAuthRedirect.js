@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetErrors } from "../redux/auth/auth.actions";
-import Cookies from "js-cookie";
+import {getAuthToken} from "../utils/auth"
 
 export const useAuthRedirect = (redirectPath) => {
-  const isAuthenticated = Cookies.get("accessToken") !== undefined;
+  const isAuthenticated = !!getAuthToken().accessToken;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

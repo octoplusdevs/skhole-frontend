@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+import {removeAuthToken, setAuthToken} from "../../utils/auth"
 import { API } from "../../services/api";
 import {
   loginRequest,
@@ -8,26 +10,28 @@ import {
   registerSuccess,
   registerFailure,
 } from "./auth.slice";
-import { removeAuthToken, setAuthToken } from "../../utils/auth";
 
-export const loginUser = (email, password, onSuccess, onError) => async (dispatch) => {
+export const loginUser = (email, password, onSuccess) => async (dispatch) => {
   dispatch(loginRequest());
   try {
-    const response = await API.post(`/auth`, { email, password }, { withCredentials: true });
-    const { user_id, accessToken, refreshToken } = response.data;
-    setAuthToken({ user_id, accessToken, refreshToken });
+    const response = await API.post(`/auth`, { email, password });
+    const {data} = response;
+    dispatch(loginSuccess(data));
+    setAuthToken(data)
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
-    onError(error);
+    if (error?.response?.data?.error === "User not confirmed.") {
+      toast.error("Usuário não confirmado. Verifique seu e-mail.");
+    }
+    toast.error(error?.response?.data?.error);
   }
 };
 
 export const logoutUser = () => async (dispatch) => {
   await API.post(`/auth/logout`);
   removeAuthToken();
-  dispatch(logout());
-
+  // dispatch(logout());
   // window.location.href = "/login";
 };
 

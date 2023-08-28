@@ -7,7 +7,7 @@ import ContextMenu from "./context-menu";
 import Cookies from "js-cookie";
 
 function Avatar() {
-  const { data: userInfo } = useUserInformation(Cookies.get("userId"));
+  const { data: userInfo } = useUserInformation(Cookies.get("skhole.user.id"));
 
   const [userMenuOpen, setUserMenuOpen, userMenuRef] = useClickOutside(false);
   const [mobileMenu, setMobileMenu, mobileMenuRef] = useClickOutside(false);

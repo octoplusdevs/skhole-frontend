@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth/auth.slice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+// import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import { setupListeners } from "@reduxjs/toolkit/query";
 // import { createLogger } from "redux-logger";
@@ -17,12 +17,12 @@ import { resetPasswordReducer } from "./resetPassword/forgotPassword.slice";
 //   blacklist: ["error"],
 // };
 
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["courses", "modules", "auth"],
-  // blacklist: ["auth"],
-};
+// const persistConfig = {
+//   key: "root",
+//   storage,
+//   whitelist: [],
+//   blacklist: ["auth", "courses", "modules", "auth"],
+// };
 // const logger = createLogger({
 //   // ...options
 // });
@@ -35,14 +35,14 @@ const rooReducer = combineReducers({
   resetPassword: resetPasswordReducer,
   // [skholeApi.reducerPath]: skholeApi.reducer,
 });
-const persistedReducer = persistReducer(persistConfig, rooReducer);
+// const persistedReducer = persistReducer(persistConfig, rooReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rooReducer,
   // eslint-disable-next-line no-undef
   devTools: process.env.NODE_ENV !== "production",
   middleware: [thunk],
 });
 setupListeners(store.dispatch);
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
