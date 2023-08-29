@@ -1,94 +1,110 @@
 import axios from "axios";
 import { store } from "../redux";
-import { logout } from "../redux/auth/auth.slice";
-import { toast } from "react-toastify";
 import { getAuthToken, setAuthToken,removeAuthToken } from "../utils/auth";
 import Cookies from "js-cookie";
 import { logoutUser } from "../redux/auth/auth.actions";
 
+const BASE_URL = [
+  "https://skhole.onrender.com/api/v1",
+  "http://localhost:3001/api/v1"
+]
+
+
+// Variavel para informar se está acontecendo uma requisição de refresh token
+let isRefreshing = false;
+// Variavel para armazenar a fila de requisições que falharam por token expirado
+let failedRequestQueue = [];
+
+// Cria as configurações iniciais do Axios
 const API = axios.create({
-  baseURL: "https://skhole.onrender.com/api/v1",
-  // baseURL: "http://localhost:3001/api/v1",
+  baseURL: BASE_URL[0],
+  headers: {
+    Authorization: `Bearer ${getAuthToken().accessToken}`,
+  },
 });
 
-let isRefreshing = false; // Track if a token refresh is already in progress
-let refreshSubscribers = []; // Queue of requests waiting for token refresh
-
-API.interceptors.request.use(
-  (config) => {
-    const token = getAuthToken().accessToken;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
-
-const redirectToLogin = () => {
-  // Aqui você pode redirecionar o usuário para a tela de login
-  // ou executar outras ações necessárias
-  // store.dispatch(logout());
-  store.dispatch(logoutUser())
-  // document.location.href = "/login"
-};
-
+// Cria um interceptor para interceptar todas as requisições que forem feitas
 API.interceptors.response.use(
   (response) => {
+    // Se a requisição der sucesso, retorna a resposta
     return response;
   },
-  async (error) => {
-    const originalRequest = error.config;
-    if (error?.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      if (
-        error?.response?.data?.error === "The token is missing!" ||
-        error?.response?.data?.error === "User not exists" ||
-        error?.response?.data?.error === "Invalid Token!"
-      ) {
-        if (!isRefreshing) {
-          isRefreshing = true;
-          const refreshToken = getAuthToken().refreshToken;
-          try {
-            const response = await API.post("/refresh-token", { refreshToken });
-            const newToken = response.data.accessToken;
-            var inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
-            Cookies.set("skhole.token", newToken, {
-              secure: true,
-              sameSite: "strict",
-              expires: inFifteenMinutes,
-            });
-            API.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
-            refreshSubscribers.forEach((callback) => callback(newToken));
-            refreshSubscribers = [];
-            originalRequest.headers.Authorization = `Bearer ${newToken}`;
-            return API(originalRequest);
-          } catch (refreshError) {
-            store.dispatch(logout());
-          } finally {
-            isRefreshing = false;
-          }
-        } else {
-          return new Promise((resolve) => {
-            refreshSubscribers.push((token) => {
-              originalRequest.headers.Authorization = `Bearer ${token}`;
-              resolve(API(originalRequest));
-            });
-          });
-        }
-      }
-    } else if (
-      error?.response?.status === 403 &&
-      error?.response?.data?.error === "Refresh Token Inválido." ||
-      error?.response?.data?.error === "Refresh Token Em Falta."
+  (error) => {
+    // Se a requisição der erro, verifica se o erro é de autenticação
+    if (error.response.status === 401) {
+      // Se o erro for de autenticação, verifica se o erro foi de token expirado
+      if (error.response.data?.code === "token.expired") {
+        // Recupera o refresh token do localStorage
+        const refreshToken = getAuthToken().refreshToken;
+        // Recupera toda a requisição que estava sendo feita e deu erro para ser refeita após o refresh token
+        const originalConfig = error.config;
 
-    ) {
-      redirectToLogin();
+        // Verifica se já existe uma request de refreshToken acontecendo
+        if (!isRefreshing) {
+          // Se não existir, inicia a requisição de refreshToken
+          isRefreshing = true;
+
+          // Faz uma requisição de refreshToken
+          API.post("/refresh-token", {
+            refreshToken,
+          })
+            .then((response) => {
+              // Recupera os dados do response e cria o newRefreshToken por que já está sendo utilizado a variável refreshToken
+              const { accessToken } = response.data;
+
+              // Salva o token nos cookies
+              Cookies.set("skhole.token", accessToken)
+              // Salva o refreshToken nos cookies
+              // Cookies.set("skhole.refresh", newRefreshToken)
+              // Define novamente o header de autorização nas requisições
+              API.defaults.headers["Authorization"] = `Bearer ${token}`;
+
+              // Faz todas as requisições que estavam na fila e falharam
+              failedRequestQueue.forEach((request) => request.onSuccess(token));
+              // Limpa a fila de requisições que falharam
+              failedRequestQueue = [];
+            })
+            .catch((err) => {
+              // Retorna os erros que estão salvos na fila de requisições que falharam
+              failedRequestQueue.forEach((request) => request.onFailure(err));
+              // Limpa a fila de requisições que falharam
+              failedRequestQueue = [];
+
+              // Caso der erro desloga o usuário
+              signOut();
+            })
+            .finally(() => {
+              // Indica que a requisição de refreshToken acabou
+              isRefreshing = false;
+            });
+        }
+
+        // Usando a Promise no lugar do async await, para que a requisição seja feita após o refresh token
+        return new Promise((resolve, reject) => {
+          // Adiciona a requisição na fila de requisições que falharam com as informações necessárias para refazer a requisição novamente
+          failedRequestQueue.push({
+            // Se a requisição der sucesso, chama o onSuccess
+            onSuccess: (token) => {
+              // Adiciona o novo token gerado no refresh token no header de autorização
+              originalConfig.headers["Authorization"] = `Bearer ${token}`;
+
+              // Faz a requisição novamente passando as informações originais da requisição que falhou
+              resolve(API(originalConfig));
+            },
+            // Se a requisição der erro, chama o onFailure
+            onFailure: (err) => {
+              // Se não for possivel refazer a requisição, retorna o erro
+              reject(err);
+            },
+          });
+        });
+      } else {
+        // Caso der erro desloga o usuário
+        store.dispatch(logoutUser())
+      }
     }
 
+    // Se não cair em nenhum if retorna um error padrão
     return Promise.reject(error);
   },
 );
