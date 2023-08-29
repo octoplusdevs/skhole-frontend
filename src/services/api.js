@@ -33,7 +33,7 @@ const redirectToLogin = () => {
   // ou executar outras ações necessárias
   // store.dispatch(logout());
   store.dispatch(logoutUser())
-  document.location.href = "/login"
+  // document.location.href = "/login"
 };
 
 API.interceptors.response.use(
