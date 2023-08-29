@@ -15,10 +15,21 @@ let failedRequestQueue = [];
 // Cria as configurações iniciais do Axios
 const API = axios.create({
   baseURL: BASE_URL[0],
-  headers: {
-    Authorization: `Bearer ${getAuthToken().accessToken}`,
-  },
 });
+
+API.interceptors.request.use(
+  (config) => {
+    const token = getAuthToken().accessToken;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
 
 // Cria um interceptor para interceptar todas as requisições que forem feitas
 API.interceptors.response.use(
@@ -30,7 +41,7 @@ API.interceptors.response.use(
     // Se a requisição der erro, verifica se o erro é de autenticação
     if (error.response.status === 401) {
       // Se o erro for de autenticação, verifica se o erro foi de token expirado
-      console.log("RES -> ", error.response)
+      console.log("RES -> ", error.response);
       if (error.response.data?.code === "token.expired") {
         // Recupera o refresh token do localStorage
         const refreshToken = getAuthToken().refreshToken;
