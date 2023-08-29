@@ -1,14 +1,11 @@
 import axios from "axios";
 import { store } from "../redux";
-import { getAuthToken, setAuthToken,removeAuthToken } from "../utils/auth";
+import { getAuthToken, setAuthToken, removeAuthToken } from "../utils/auth";
 import Cookies from "js-cookie";
 import { logoutUser } from "../redux/auth/auth.actions";
 
-const BASE_URL = [
-  "https://skhole.onrender.com/api/v1",
-  "http://localhost:3001/api/v1"
-]
-
+const BASE_URL = ["https://skhole.onrender.com/api/v1", "http://localhost:3001/api/v1"];
+let inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
 
 // Variavel para informar se está acontecendo uma requisição de refresh token
 let isRefreshing = false;
@@ -53,14 +50,18 @@ API.interceptors.response.use(
               const { accessToken } = response.data;
 
               // Salva o token nos cookies
-              Cookies.set("skhole.token", accessToken)
+              Cookies.set("skhole.token", accessToken, {
+                secure: true,
+                sameSite: "strict",
+                expires: inFifteenMinutes,
+              });
               // Salva o refreshToken nos cookies
               // Cookies.set("skhole.refresh", newRefreshToken)
               // Define novamente o header de autorização nas requisições
-              API.defaults.headers["Authorization"] = `Bearer ${token}`;
+              API.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
 
               // Faz todas as requisições que estavam na fila e falharam
-              failedRequestQueue.forEach((request) => request.onSuccess(token));
+              failedRequestQueue.forEach((request) => request.onSuccess(accessToken));
               // Limpa a fila de requisições que falharam
               failedRequestQueue = [];
             })
@@ -71,7 +72,8 @@ API.interceptors.response.use(
               failedRequestQueue = [];
 
               // Caso der erro desloga o usuário
-              store.dispatch(logoutUser())
+              store.dispatch(logoutUser());
+              console.log("ERROR LOGOUT 1");
             })
             .finally(() => {
               // Indica que a requisição de refreshToken acabou
@@ -84,9 +86,9 @@ API.interceptors.response.use(
           // Adiciona a requisição na fila de requisições que falharam com as informações necessárias para refazer a requisição novamente
           failedRequestQueue.push({
             // Se a requisição der sucesso, chama o onSuccess
-            onSuccess: (token) => {
+            onSuccess: (accessToken) => {
               // Adiciona o novo token gerado no refresh token no header de autorização
-              originalConfig.headers["Authorization"] = `Bearer ${token}`;
+              originalConfig.headers["Authorization"] = `Bearer ${accessToken}`;
 
               // Faz a requisição novamente passando as informações originais da requisição que falhou
               resolve(API(originalConfig));
@@ -100,7 +102,8 @@ API.interceptors.response.use(
         });
       } else {
         // Caso der erro desloga o usuário
-        store.dispatch(logoutUser())
+        store.dispatch(logoutUser());
+        console.log("LOGOUT 2");
       }
     }
 
