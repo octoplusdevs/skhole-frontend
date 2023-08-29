@@ -71,7 +71,7 @@ API.interceptors.response.use(
               failedRequestQueue = [];
 
               // Caso der erro desloga o usuário
-              signOut();
+              store.dispatch(logoutUser())
             })
             .finally(() => {
               // Indica que a requisição de refreshToken acabou
