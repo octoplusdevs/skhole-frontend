@@ -103,8 +103,8 @@ API.interceptors.response.use(
         });
       } else {
         // Caso der erro desloga o usuário
-        store.dispatch(logoutUser());
-        console.log("LOGOUT 2");
+        // store.dispatch(logoutUser());
+        console.log("LOGOUT 2", error.response.data);
       }
     }
 
