@@ -118,8 +118,11 @@ API.interceptors.response.use(
         });
       } else {
         // Caso der erro desloga o usuário
-        // store.dispatch(logoutUser());
-        console.log("LOGOUT 2", error.response.data);
+        if(error.response.data?.code === "refresh_token.expired"){
+          console.log("LOGOUT 2", error.response.data);
+          store.dispatch(logoutUser());
+
+        }
       }
     }
 
