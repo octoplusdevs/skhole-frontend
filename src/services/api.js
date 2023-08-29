@@ -41,11 +41,12 @@ API.interceptors.response.use(
     // Se a requisição der erro, verifica se o erro é de autenticação
     if (error.response.status === 401) {
       // Se o erro for de autenticação, verifica se o erro foi de token expirado
-      console.log("RES -> ", error.response);
       if (
         error.response.data?.code === "token.expired" ||
         error.response.data?.code === "token.invalid"
       ) {
+        console.log("token invalid or expired -> ", error.response.data);
+
         // Recupera o refresh token do localStorage
         const refreshToken = getAuthToken().refreshToken;
         // Recupera toda a requisição que estava sendo feita e deu erro para ser refeita após o refresh token
