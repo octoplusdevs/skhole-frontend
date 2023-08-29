@@ -12,7 +12,7 @@ const Profile = yup.object({
         if (value.length >= 4) return true;
       },
     )
-    .max(12, "Nome de usuário deve conter no mínimo 5 caracteres.")
+    .max(12, "Nome de usuário deve conter no máximo 12 caracteres.")
     .test("Nome de usuário não é válido.", "Nome de usuário não é válido.", (value) => {
       if (!value) return true;
       const regex = /^(?!.*\.\.)(?!.*\.$)[a-zA-Z]+[_.]?[a-zA-Z0-9]+[_.]{0,29}$/;
