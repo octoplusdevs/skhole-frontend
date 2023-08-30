@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Wrapper } from "./styles";
 
 function CheckBox({ checked, ...rest }) {
@@ -10,8 +9,5 @@ function CheckBox({ checked, ...rest }) {
     </Wrapper>
   );
 }
-CheckBox.propTypes = {
-  checked: PropTypes.bool,
-};
 
 export default CheckBox;

@@ -3,6 +3,7 @@ import { store } from "../redux";
 import { getAuthToken, setAuthToken, removeAuthToken } from "../utils/auth";
 import Cookies from "js-cookie";
 import { logoutUser } from "../redux/auth/auth.actions";
+import { toast } from "react-toastify";
 
 const BASE_URL = ["https://skhole.onrender.com/api/v1", "http://localhost:3001/api/v1"];
 let inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
@@ -119,7 +120,10 @@ API.interceptors.response.use(
       } else {
         // Caso der erro desloga o usuário
         if(error.response.data?.code === "refresh_token.expired"){
-          console.log("LOGOUT 2", error.response.data);
+          toast.error("Sessão expirada, faça login!")
+          setTimeout(()=>{
+            window.location.href = "/login";
+          }, 5000)
           store.dispatch(logoutUser());
 
         }

@@ -10,6 +10,7 @@ import {
   registerSuccess,
   registerFailure,
 } from "./auth.slice";
+import history from "../../services/history";
 
 export const loginUser = (email, password, onSuccess) => async (dispatch) => {
   dispatch(loginRequest());
@@ -29,10 +30,11 @@ export const loginUser = (email, password, onSuccess) => async (dispatch) => {
 };
 
 export const logoutUser = () => async (dispatch) => {
-  await API.post(`/auth/logout`);
+  // await API.post(`/auth/logout`);
   removeAuthToken();
+  // history.push("/login");
   // dispatch(logout());
-  // window.location.href = "/login";
+
 };
 
 export const updateUser = (userData) => async (dispatch) => {
