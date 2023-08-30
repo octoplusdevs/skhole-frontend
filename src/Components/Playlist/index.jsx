@@ -4,13 +4,13 @@ import { useState } from "react";
 import { CaretDown, CaretUp, Lock } from "phosphor-react";
 import propTypes from "prop-types";
 import { useVideoMarkAsWatched } from "../../hooks/useVideoMarkAsWatched";
-import { formatSecondsToHMS } from "../../utils";
+import { calculateTotalProgresseViewedVideos, formatSecondsToHMS } from "../../utils";
 import CheckBox from "../Check";
+import CircularProgress from "../CircularProgress";
 
 export default function Playlist({ modules = [], slug_course, activeVideo }) {
   const [activeModule, setActiveModule] = useState(null);
   const { mutate: markAsWatched } = useVideoMarkAsWatched();
-
   function markedAsWatched(slug_course, slug_video) {
     markAsWatched({ slug_course, slug_video });
   }
@@ -26,8 +26,19 @@ export default function Playlist({ modules = [], slug_course, activeVideo }) {
           <Module key={module?.slug} onClick={() => toggleModule(module?.slug)}>
             <div className="module__header">
               <div className="module__title">
-                <h1>{module?.title}</h1>
-                {/* <p>6 aulas - 32:16min</p> */}
+                <div className="progress">
+                  <CircularProgress progress={calculateTotalProgresseViewedVideos(module)} />
+                </div>
+                <div className="content">
+                  <h1>{module?.title}</h1>
+                  <p>
+                    {module?.videos.length > 0
+                      ? `${module.videos.length} aulas - ${formatSecondsToHMS(
+                          module.videos.reduce((sum, video) => sum + parseInt(video.duration), 0),
+                        )}`
+                      : "Sem aulas disponíves"}
+                  </p>
+                </div>
               </div>
               <div className="module__state">
                 {activeModule === module?.slug ? (

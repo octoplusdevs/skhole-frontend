@@ -46,7 +46,7 @@ API.interceptors.response.use(
         error.response.data?.code === "token.expired" ||
         error.response.data?.code === "token.invalid"
       ) {
-        console.log("token invalid or expired -> ", error.response.data);
+        // console.log("token invalid or expired -> ", error.response.data);
 
         // Recupera o refresh token do localStorage
         const refreshToken = getAuthToken().refreshToken;
@@ -90,7 +90,7 @@ API.interceptors.response.use(
 
               // Caso der erro desloga o usuário
               store.dispatch(logoutUser());
-              console.log("ERROR LOGOUT 1");
+              // console.log("ERROR LOGOUT 1");
             })
             .finally(() => {
               // Indica que a requisição de refreshToken acabou

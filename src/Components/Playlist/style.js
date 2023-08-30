@@ -26,14 +26,19 @@ export const Module = styled.div`
     cursor: pointer;
     .module__title {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
       h1 {
         font-size: 16px;
         color: #fff;
+        padding-bottom: 4px;
       }
       p {
         color: #c4c4c4;
+        font-size: 13px;
+        font-weight: 600;
       }
     }
   }
