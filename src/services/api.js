@@ -44,6 +44,7 @@ API.interceptors.response.use(
       // Se o erro for de autenticação, verifica se o erro foi de token expirado
       if (
         error.response.data?.code === "token.expired" ||
+        error.response.data?.code === "token.missed" ||
         error.response.data?.code === "token.invalid"
       ) {
         // console.log("token invalid or expired -> ", error.response.data);
