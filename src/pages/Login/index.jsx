@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { EnvelopeSimple, LockSimple } from "phosphor-react";
+import { Envelope, EnvelopeSimple, Info, LockSimple } from "phosphor-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "../../Components/Button";
 import { Input } from "../../Components/Input";
@@ -12,10 +12,12 @@ import { useState } from "react";
 import { Form } from "../../Components/Form";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 import { queryClient } from "../../services/query";
+import { Modal } from "../../Components/Modal";
 
 export function Login() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
+  const [isModalAtivationAccountOpen, setIsModalAtivationAccountOpen] = useState(false);
   const hasError = useSelector((state) => state.auth.error);
   const {
     register,
@@ -23,13 +25,25 @@ export function Login() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(SchemaLogin) });
 
+  function handleCloseModal() {
+    setIsModalAtivationAccountOpen(false);
+  }
   function onSubmit(data) {
     const { email, password } = data;
     setLoading(true);
     dispatch(
-      loginUser(email, password, () => {
-        queryClient.invalidateQueries(["account"]);
-      }),
+      loginUser(
+        email,
+        password,
+        () => {
+          queryClient.invalidateQueries(["account"]);
+        },
+        (err) => {
+          if (err?.response?.data?.error === "Conta não confirmada.") {
+            setIsModalAtivationAccountOpen(true);
+          }
+        },
+      ),
     ).then(() => {
       setLoading(false);
     });
@@ -75,7 +89,7 @@ export function Login() {
               autoComplete="current-password"
             />
             <p className="message_error">
-              {errors?.email?.password || (hasError?.includes("Password") && hasError)}
+              {errors?.email?.password || (hasError?.includes("senha") && hasError)}
             </p>
           </div>
 
@@ -86,6 +100,17 @@ export function Login() {
           </div>
         </Form>
       </div>
+      <Modal.Root isOpen={isModalAtivationAccountOpen}>
+        <Modal.Content
+          title="Verifique seu e-mail"
+          body="Verifique também a pasta de spam se não o encontrar na sua caixa de entrada."
+          icon={<Envelope size={32} color="orange" />}
+        />
+        <Modal.Footer>
+          {/* <Modal.Button className="default" text={"Receber novo email"} /> */}
+          <Modal.Button className="confirm" text={"Fechar"} onClick={handleCloseModal} />
+        </Modal.Footer>
+      </Modal.Root>
     </Wrapper>
   );
 }

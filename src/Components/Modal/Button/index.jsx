@@ -10,8 +10,8 @@ function Button({ text, onClick, ...rest }) {
 }
 
 Button.propTypes = {
-  text: propTypes.string.isRequired,
-  onClick: propTypes.func.isRequired,
+  text: propTypes.string,
+  onClick: propTypes.func,
 };
 
 export default Button;

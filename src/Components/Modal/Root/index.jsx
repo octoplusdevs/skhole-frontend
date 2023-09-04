@@ -21,7 +21,7 @@ function Root({ isOpen, onRequestClose, children, ...rest }) {
           width: "100%",
           maxWidth: "380px",
           height: "100%",
-          maxHeight: "220px",
+          maxHeight: "240px",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",

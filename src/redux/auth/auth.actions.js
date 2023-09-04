@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import {removeAuthToken, setAuthToken} from "../../utils/auth"
+import { removeAuthToken, setAuthToken } from "../../utils/auth";
 import { API } from "../../services/api";
 import {
   loginRequest,
@@ -10,22 +10,18 @@ import {
   registerSuccess,
   registerFailure,
 } from "./auth.slice";
-import history from "../../services/history";
 
-export const loginUser = (email, password, onSuccess) => async (dispatch) => {
+export const loginUser = (email, password, onSuccess, onError) => async (dispatch) => {
   dispatch(loginRequest());
   try {
     const response = await API.post(`/auth`, { email, password });
-    const {data} = response;
+    const { data } = response;
     dispatch(loginSuccess(data));
-    setAuthToken(data)
+    setAuthToken(data);
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
-    if (error?.response?.data?.error === "User not confirmed.") {
-      toast.error("Usuário não confirmado. Verifique seu e-mail.");
-    }
-    toast.error(error?.response?.data?.error);
+    onError(error);
   }
 };
 
@@ -34,7 +30,6 @@ export const logoutUser = () => async (dispatch) => {
   removeAuthToken();
   // history.push("/login");
   // dispatch(logout());
-
 };
 
 export const updateUser = (userData) => async (dispatch) => {
