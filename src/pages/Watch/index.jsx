@@ -8,7 +8,9 @@ import { useVideo } from "../../hooks/useVideo";
 export function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
-  const { data: modules } = useModules(slug_course);
+
+  // Obtenha todos os vídeos dos módulos
+  //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
 
   return (
     <Wrapper>
@@ -29,9 +31,10 @@ export function Watch() {
         </div>
         {/* <div className="playlist"> */}
         <Playlist
-          modules={modules}
-          slug_course={slug_course}
+          // modules={modules}
+          // slug_course={slug_course}
           activeVideo={slug_video || video?.slug}
+          // status={status}
         />
         {/* </div> */}
       </div>

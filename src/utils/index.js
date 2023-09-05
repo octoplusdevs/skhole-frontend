@@ -42,6 +42,7 @@ export function calculateTotalProgresseViewedVideos(module) {
   const viewedVideos = module?.videos?.filter((video) => video.progress.isViewed);
   const totalVideos = module?.videos?.length;
 
-  const averageViewPercentage = totalVideos > 0 ? Math.round((100 / totalVideos) * viewedVideos.length) : 0
+  const averageViewPercentage =
+    totalVideos > 0 ? Math.round((100 / totalVideos) * viewedVideos.length) : 0;
   return averageViewPercentage;
 }
