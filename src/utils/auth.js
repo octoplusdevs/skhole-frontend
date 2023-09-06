@@ -8,6 +8,7 @@ export const getAuthToken = () => {
 
 export const setAuthToken = ({ refreshToken, accessToken, user_id }) => {
   var inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+  const inSevenDays = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
 
   Cookies.set("skhole.token", accessToken, {
     secure: true,
@@ -17,7 +18,7 @@ export const setAuthToken = ({ refreshToken, accessToken, user_id }) => {
   Cookies.set("skhole.refresh", refreshToken, {
     secure: true,
     sameSite: "strict",
-    expires: 7
+    expires: inSevenDays,
   });
   Cookies.set("skhole.user.id", user_id, { secure: true, sameSite: "strict" });
 };
