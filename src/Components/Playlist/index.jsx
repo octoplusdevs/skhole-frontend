@@ -47,9 +47,7 @@ const AvailableLesson = ({
       />
       <Link
         to={`${slug_course}/${slug_module}/${video.slug}`}
-        className={`${activeVideo === video.slug ? "active" : ""} ${
-          video.progress.isViewed && "isViewed"
-        }`}
+        className={`${activeVideo === video.slug ? "active" : ""} `}
       >
         {video.title}
       </Link>
