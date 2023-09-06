@@ -57,21 +57,25 @@ export const Module = styled.div`
       padding: 16px;
       .lesson__title {
         display: flex;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
         gap: 8px;
-        input[type="checkbox"] {
+        /* input[type="checkbox"] {
           height: 20px;
           width: 20px;
           border-radius: 5px;
           cursor: pointer;
           accent-color: #47fdbb;
           background-color: yellow;
-        }
+        } */
       }
       .active {
         color: #fff;
       }
       .isViewed {
-        color: #47fdbb;
+        /* color: #47fdbb; */
+        color: #737373;
       }
       a {
         font-weight: 600;
