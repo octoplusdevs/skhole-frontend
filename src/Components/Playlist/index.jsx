@@ -9,7 +9,7 @@ import CircularProgress from "../CircularProgress";
 import { Wrapper, Module } from "./style";
 import { useModules } from "../../hooks/useModules";
 
-function Video({ video, slug_course, markedAsWatched, activeVideo }) {
+function Video({ video, slug_course, slug_module, markedAsWatched, activeVideo }) {
   // Aqui estou assumindo que `video.progress` sempre existe
   const isViewed = video.progress.isViewed || false;
 
@@ -22,6 +22,7 @@ function Video({ video, slug_course, markedAsWatched, activeVideo }) {
           markedAsWatched={markedAsWatched}
           activeVideo={activeVideo}
           isViewed={isViewed}
+          slug_module={slug_module}
         />
       ) : (
         <LockedLesson title={video.title} />
@@ -30,7 +31,14 @@ function Video({ video, slug_course, markedAsWatched, activeVideo }) {
   );
 }
 
-const AvailableLesson = ({ video, slug_course, markedAsWatched, activeVideo, isViewed }) => (
+const AvailableLesson = ({
+  video,
+  slug_course,
+  slug_module,
+  markedAsWatched,
+  activeVideo,
+  isViewed,
+}) => (
   <>
     <div className="lesson__title">
       <CheckBox
@@ -38,7 +46,7 @@ const AvailableLesson = ({ video, slug_course, markedAsWatched, activeVideo, isV
         onChange={() => markedAsWatched(slug_course, video.slug, !isViewed)}
       />
       <Link
-        to={`${slug_course}/${video.slug}`}
+        to={`${slug_course}/${slug_module}/${video.slug}`}
         className={`${activeVideo === video.slug ? "active" : ""} ${
           video.progress.isViewed && "isViewed"
         }`}
@@ -173,6 +181,7 @@ function Playlist({ activeVideo }) {
                   slug_course={slug_course}
                   markedAsWatched={markedAsWatchedCallback}
                   activeVideo={activeVideo}
+                  slug_module={activeModule}
                 />
               ))}
             </div>
