@@ -1,13 +1,19 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { getAuthToken } from "../utils/auth";
+import AuthTokenManager from "../utils/auth";
 
 export const PrivateRoute = () => {
-  const { accessToken, refreshToken } = getAuthToken();
+  const { accessToken, refreshToken } = AuthTokenManager.getAuthToken();
 
-  const isAuthenticated = accessToken != null || refreshToken != null;
+  // console.log(useSelector((state) => state));
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  const hasTokens = accessToken != null || refreshToken != null;
+
+  if (hasTokens) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/login" />;
+  }
 };
 
 export default PrivateRoute;

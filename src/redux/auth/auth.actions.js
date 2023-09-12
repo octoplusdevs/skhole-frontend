@@ -1,5 +1,4 @@
-import { toast } from "react-toastify";
-import { removeAuthToken, setAuthToken } from "../../utils/auth";
+import AuthTokenManager from "../../utils/auth";
 import { API } from "../../services/api";
 import {
   loginRequest,
@@ -10,6 +9,8 @@ import {
   registerSuccess,
   registerFailure,
 } from "./auth.slice";
+import history from "../../services/history";
+import { toast } from "react-toastify";
 
 export const loginUser = (email, password, onSuccess, onError) => async (dispatch) => {
   dispatch(loginRequest());
@@ -17,7 +18,7 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
     const response = await API.post(`/auth`, { email, password });
     const { data } = response;
     dispatch(loginSuccess(data));
-    setAuthToken(data);
+    AuthTokenManager.setAuthToken(data);
     onSuccess();
   } catch (error) {
     dispatch(loginFailure(error?.response?.data?.error));
@@ -27,9 +28,9 @@ export const loginUser = (email, password, onSuccess, onError) => async (dispatc
 
 export const logoutUser = () => async (dispatch) => {
   // await API.post(`/auth/logout`);
-  removeAuthToken();
-  // history.push("/login");
-  // dispatch(logout());
+  AuthTokenManager.removeAuthToken();
+  history.push("/login");
+  dispatch(logout());
 };
 
 export const updateUser = (userData) => async (dispatch) => {

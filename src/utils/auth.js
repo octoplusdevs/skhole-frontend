@@ -1,30 +1,63 @@
 import Cookies from "js-cookie";
 
-export const getAuthToken = () => {
-  const accessToken = Cookies.get("skhole.token");
-  const refreshToken = Cookies.get("skhole.refresh");
-  return { accessToken, refreshToken };
-};
+const TOKEN_COOKIE = "skhole.token";
+const REFRESH_TOKEN_COOKIE = "skhole.refresh";
+const USER_ID_COOKIE = "skhole.user.id";
 
-export const setAuthToken = ({ refreshToken, accessToken, user_id }) => {
-  var inFifteenMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
-  const inSevenDays = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
+const ONE_HOUR = 60 * 60 * 1000;
+const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
-  Cookies.set("skhole.token", accessToken, {
-    secure: true,
-    sameSite: "strict",
-    expires: inFifteenMinutes,
-  });
-  Cookies.set("skhole.refresh", refreshToken, {
-    secure: true,
-    sameSite: "strict",
-    expires: inSevenDays,
-  });
-  Cookies.set("skhole.user.id", user_id, { secure: true, sameSite: "strict" });
-};
+class AuthTokenManager {
+  getAuthToken() {
+    return {
+      accessToken: this._getCookie(TOKEN_COOKIE),
+      refreshToken: this._getCookie(REFRESH_TOKEN_COOKIE),
+    };
+  }
 
-export const removeAuthToken = () => {
-  Cookies.remove("skhole.user.id");
-  Cookies.remove("skhole.refresh");
-  Cookies.remove("skhole.token");
-};
+  setAuthToken({ refreshToken, accessToken, user_id }) {
+    this.setAccessToken(accessToken);
+    this.setRefreshToken(refreshToken);
+    this._setUserId(user_id);
+  }
+
+  setRefreshToken(refreshToken) {
+    this._setCookie(REFRESH_TOKEN_COOKIE, refreshToken, SEVEN_DAYS);
+  }
+
+  setAccessToken(accessToken) {
+    this._setCookie(TOKEN_COOKIE, accessToken, ONE_HOUR);
+  }
+
+  removeAuthToken() {
+    this._removeCookie(USER_ID_COOKIE);
+    this._removeCookie(REFRESH_TOKEN_COOKIE);
+    this._removeCookie(TOKEN_COOKIE);
+  }
+
+  _getExpiryTime(duration) {
+    return new Date(new Date().getTime() + duration);
+  }
+
+  _setCookie(name, value, duration) {
+    Cookies.set(name, value, {
+      secure: true,
+      sameSite: "strict",
+      expires: this._getExpiryTime(duration),
+    });
+  }
+
+  _getCookie(name) {
+    return Cookies.get(name);
+  }
+
+  _removeCookie(name) {
+    Cookies.remove(name);
+  }
+
+  _setUserId(user_id) {
+    this._setCookie(USER_ID_COOKIE, user_id, SEVEN_DAYS);
+  }
+}
+
+export default new AuthTokenManager();
