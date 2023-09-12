@@ -18,7 +18,13 @@ const requestInterceptor = (config) => {
 };
 
 const responseInterceptor = async (error) => {
-  if (error.response.status === 401) {
+  if (
+    error.response.status === 401 ||
+    error.response.status === "Invalid token." ||
+    error.response.status === "Authorization token missing." ||
+    error.response.status === "Token missing in authorization header." ||
+    error.response.status === "Token has expired."
+  ) {
     const originalConfig = error.config;
 
     if (!isRefreshing) {
@@ -52,7 +58,7 @@ const responseInterceptor = async (error) => {
   if (
     [400, 404, 401, 500].includes(error.response.status) &&
     [
-      "refresh_token.expired",
+      "Expired or invalid refresh token.",
       "Missing refresh token.",
       "Token verification failed.",
       "Refresh token not found.",

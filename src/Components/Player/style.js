@@ -17,7 +17,8 @@ export const Wrapper = styled.div`
     width: 100%;
     padding-top: 56.25%; /* Proporção de aspecto 16:9 (9 / 16 * 100) */
 
-    iframe {
+    iframe,
+    .player-wrapper {
       position: absolute;
       top: 0;
       left: 0;
