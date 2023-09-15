@@ -19,7 +19,7 @@ const requestInterceptor = (config) => {
 
 const responseInterceptor = async (error) => {
   if (
-    error.response.status === 401 ||
+    // error.response.status === 401 ||
     error.response.status === "Invalid token." ||
     error.response.status === "Authorization token missing." ||
     error.response.status === "Token missing in authorization header." ||
