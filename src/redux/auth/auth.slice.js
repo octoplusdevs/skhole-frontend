@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import AuthTokenManager from "../../utils/auth";
 
 const initialState = {
   user: null,
   error: null,
-  isAuthenticated: false,
+  isAuthenticated: checkTokenExistence(),
 };
+
+function checkTokenExistence() {
+  const { accessToken, refreshToken } = AuthTokenManager.getAuthToken();
+  return accessToken != null || refreshToken != null;
+}
 
 const authSlice = createSlice({
   name: "auth",

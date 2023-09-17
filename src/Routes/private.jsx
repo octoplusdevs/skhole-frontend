@@ -1,17 +1,25 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import AuthTokenManager from "../utils/auth";
+import { useSelector } from "react-redux";
+import { toast, Slide } from "react-toastify";
 
 export const PrivateRoute = () => {
-  const { accessToken, refreshToken } = AuthTokenManager.getAuthToken();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  // console.log(useSelector((state) => state));
-
-  const hasTokens = accessToken != null || refreshToken != null;
-
-  if (hasTokens) {
+  if (isAuthenticated) {
     return <Outlet />;
   } else {
+    toast.info("Sessão expirada", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+      transition: Slide,
+    });
     return <Navigate to="/login" />;
   }
 };

@@ -17,64 +17,79 @@ const requestInterceptor = (config) => {
   return config;
 };
 
-const responseInterceptor = async (error) => {
-  if (
-    // error.response.status === 401 ||
-    error.response.status === "Invalid token." ||
-    error.response.status === "Authorization token missing." ||
-    error.response.status === "Token missing in authorization header." ||
-    error.response.status === "Token has expired."
-  ) {
-    const originalConfig = error.config;
+const TOKEN_ERRORS = [
+  "Invalid token.",
+  "Authorization token missing.",
+  "Token missing in authorization header.",
+  "Token has expired.",
+];
 
-    if (!isRefreshing) {
-      isRefreshing = true;
-      try {
-        const accessToken = await refreshTokenService();
-        failedRequestQueue.forEach((request) => request.onSuccess(accessToken));
-        failedRequestQueue = [];
-      } catch (err) {
-        failedRequestQueue.forEach((request) => request.onFailure(err));
-        failedRequestQueue = [];
-        store.dispatch(logoutUser());
-      } finally {
-        isRefreshing = false;
-      }
+const REFRESH_TOKEN_ERRORS = [
+  "Expired or invalid refresh token.",
+  "Missing refresh token.",
+  "Token verification failed.",
+  "Refresh token not found.",
+];
+
+let pendingRequests = [];
+
+const processQueue = (error, accessToken = null) => {
+  pendingRequests.forEach((callback) => {
+    if (accessToken) {
+      callback(accessToken);
+    } else {
+      callback(error);
     }
+  });
+  pendingRequests = [];
+};
 
-    return new Promise((resolve, reject) => {
-      failedRequestQueue.push({
-        onSuccess: (accessToken) => {
-          originalConfig.headers["Authorization"] = `Bearer ${accessToken}`;
-          resolve(API(originalConfig));
-        },
-        onFailure: (err) => {
-          reject(err);
-        },
-      });
+const handleTokenRefresh = async (originalConfig) => {
+  const retryOriginalRequest = new Promise((resolve, reject) => {
+    pendingRequests.push((accessTokenOrError) => {
+      if (accessTokenOrError instanceof Error) {
+        reject(accessTokenOrError);
+      } else {
+        originalConfig.headers["Authorization"] = `Bearer ${accessTokenOrError}`;
+        resolve(API(originalConfig));
+      }
     });
+  });
+  if (!isRefreshing) {
+    isRefreshing = true;
+    try {
+      const accessToken = await refreshTokenService();
+      processQueue(null, accessToken);
+    } catch (err) {
+      processQueue(err);
+      store.dispatch(logoutUser());
+    } finally {
+      isRefreshing = false;
+    }
+  }
+
+  return retryOriginalRequest;
+};
+
+const handleSessionExpiry = async (error) => {
+  if (!logoutTriggered) {
+    logoutTriggered = true;
+  }
+  return Promise.reject(error);
+};
+
+const responseInterceptor = async (error) => {
+  const errorData = error.response.data?.error;
+
+  if (TOKEN_ERRORS.includes(errorData)) {
+    return handleTokenRefresh(error.config);
   }
 
   if (
     [400, 404, 401, 500].includes(error.response.status) &&
-    [
-      "Expired or invalid refresh token.",
-      "Missing refresh token.",
-      "Token verification failed.",
-      "Refresh token not found.",
-    ].includes(error.response.data?.error)
+    REFRESH_TOKEN_ERRORS.includes(errorData)
   ) {
-    if (!logoutTriggered) {
-      logoutTriggered = true;
-
-      toast.error("Sessão expirada", {
-        autoClose: 5000,
-        onClose: () => {
-          document.location.reload();
-        },
-      });
-    }
-    return Promise.reject(error);
+    return handleSessionExpiry(error);
   }
 
   return Promise.reject(error);

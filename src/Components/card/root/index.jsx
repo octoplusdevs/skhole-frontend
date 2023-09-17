@@ -35,7 +35,7 @@ export default function Root({ children, slug, confirmed, subscribed, status }) 
 Root.propTypes = {
   children: PropTypes.node.isRequired,
   slug: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
+  status: PropTypes.any,
   confirmed: PropTypes.bool.isRequired,
   subscribed: PropTypes.bool.isRequired,
 };
