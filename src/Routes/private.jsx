@@ -9,16 +9,9 @@ export const PrivateRoute = () => {
   if (isAuthenticated) {
     return <Outlet />;
   } else {
-    toast.info("Sessão expirada", {
-      position: "top-right",
-      autoClose: 5000,
+    toast.info("Sessão Terminada", {
       hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
       draggable: false,
-      progress: undefined,
-      theme: "light",
-      transition: Slide,
     });
     return <Navigate to="/login" />;
   }

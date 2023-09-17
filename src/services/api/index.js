@@ -1,12 +1,10 @@
 import { store } from "../../redux";
 import { logoutUser } from "../../redux/auth/auth.actions";
-import { toast } from "react-toastify";
 import API from "./axios";
 import { refreshTokenService } from "./auth.service";
 import AuthTokenManager from "../../utils/auth";
 
 let isRefreshing = false;
-let failedRequestQueue = [];
 let logoutTriggered = false;
 
 const requestInterceptor = (config) => {

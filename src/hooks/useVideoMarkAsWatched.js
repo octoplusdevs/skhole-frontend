@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { API } from "../services/api";
-import { queryClient } from "../services/query";
+// import { queryClient } from "../services/query";
 
 async function markAsWatched({ slug_course, slug_video }) {
   let response, video;
@@ -12,8 +12,8 @@ async function markAsWatched({ slug_course, slug_video }) {
 
 export function useVideoMarkAsWatched() {
   return useMutation(["video"], markAsWatched, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("video");
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries("video");
+    // },
   });
 }

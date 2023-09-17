@@ -10,7 +10,6 @@ import {
   registerFailure,
 } from "./auth.slice";
 import history from "../../services/history";
-import { toast } from "react-toastify";
 
 export const loginUser = (email, password, onSuccess, onError) => async (dispatch) => {
   dispatch(loginRequest());
