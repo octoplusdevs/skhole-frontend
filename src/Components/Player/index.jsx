@@ -30,6 +30,7 @@ export function Player({
   const [lastReportedTime, setLastReportedTime] = useState(0);
   const [timeSpent, setTimeSpent] = useState(0);
   const [updateInterval, setUpdateInterval] = useState(null);
+  console.log("unknow");
 
   const updateProgressMutation = useVideoUpdateProgress({
     slug_course: slugCourse,
@@ -56,7 +57,7 @@ export function Player({
     ({ playedSeconds }) => {
       if (playedSeconds - lastReportedTime > 5 && !updateProgressMutation.isMutating) {
         setLastReportedTime(playedSeconds);
-        // updateProgress();
+        updateProgress();
       }
     },
     [lastReportedTime, updateProgress, updateProgressMutation],
@@ -95,7 +96,7 @@ export function Player({
               onDuration={handleDuration}
               onProgress={handleProgress}
               onPause={handlePause}
-              // onSeek={updateProgress}
+              onSeek={updateProgress}
               onPlay={updateProgress}
               onReady={handleReady}
               width="100%"
