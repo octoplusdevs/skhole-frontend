@@ -73,16 +73,16 @@ export function Player({
     }
   }, [initialLastPosition]);
 
-  // useEffect(() => {
-  //   const updateIntervalId = setInterval(updateProgress, updateInterval);
+  useEffect(() => {
+    const updateIntervalId = setInterval(updateProgress, updateInterval);
 
-  //   window.addEventListener("beforeunload", updateProgress);
+    window.addEventListener("beforeunload", updateProgress);
 
-  //   return () => {
-  //     clearInterval(updateIntervalId);
-  //     window.removeEventListener("beforeunload", updateProgress);
-  //   };
-  // }, [updateInterval, updateProgress]);
+    return () => {
+      clearInterval(updateIntervalId);
+      window.removeEventListener("beforeunload", updateProgress);
+    };
+  }, [updateInterval, updateProgress]);
 
   return (
     <Wrapper>
