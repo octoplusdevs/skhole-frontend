@@ -14,13 +14,14 @@ export function useVideoUpdateProgress({ slug_course, slug_video }) {
   return useMutation(
     ["video"],
     async ({ timeSpent, lastPosition }) => {
+      console.log("Mutation is being called with:", { timeSpent, lastPosition });
       let response, video;
       response = await API.put(`/videos/${slug_course}/${slug_video}/update-progress`, {
         timeSpent,
         lastPosition,
       });
       video = response.data;
-
+      console.log("Mutation response:", video);
       return video;
     },
     {
