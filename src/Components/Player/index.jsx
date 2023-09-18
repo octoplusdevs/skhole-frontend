@@ -39,19 +39,12 @@ export function Player({
     const interval = playedSeconds - timeSpent;
     setTimeSpent(playedSeconds);
 
-    console.log("Interval:", interval); // Log temporário
-    console.log("Update Interval:", updateInterval / 1000); // Log temporário
-
-    // if (interval >= updateInterval / 1000) {
-    console.log("Updating progress..."); // Log temporário
     updateProgressMutation.mutate({ timeSpent: playedSeconds, lastPosition: playedSeconds });
     setLastReportedTime(playedSeconds); // Atualize o último tempo registrado
-    // }
   }
 
   function handleProgress({ playedSeconds }) {
     const nextUpdatePoint = lastReportedTime + getUpdateFrequency(playerRef.current.getDuration());
-    console.log("PROGRESS - ", playedSeconds);
 
     if (playedSeconds >= nextUpdatePoint && !updateProgressMutation.isMutating) {
       setLastReportedTime(playedSeconds);
@@ -60,13 +53,10 @@ export function Player({
   }
 
   function handlePause() {
-    console.log("PAUSED");
     updateProgress();
   }
 
   function handleReady() {
-    console.log("READY", playerRef.current);
-
     if (initialLastPosition && playerRef.current) {
       playerRef.current.seekTo(initialLastPosition);
     }
@@ -93,9 +83,9 @@ export function Player({
               url={url}
               controls
               onDuration={handleDuration}
-              // onProgress={handleProgress}
+              onProgress={handleProgress}
               onPause={handlePause}
-              // onSeek={updateProgress}
+              onSeek={updateProgress}
               onPlay={updateProgress}
               onReady={handleReady}
               width="100%"
