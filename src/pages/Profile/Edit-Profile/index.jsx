@@ -97,7 +97,7 @@ export function EditProfile() {
 
   return (
     <Wrapper>
-      <h2>Informações de Perfil</h2>
+      <h2>Dados do Perfil</h2>
       <div className="avatar">
         <div className="user__avatar" onClick={handleButtonClick}>
           {selectedImage || userInfo?.avatar?.url ? (
