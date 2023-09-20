@@ -10,6 +10,7 @@ export const Wrapper = styled.button`
   transition: 0.3s ease;
   border-radius: 8px;
   letter-spacing: 0.8px;
+  user-select: none;
 
   &:hover {
     transform: translateY(-3px);

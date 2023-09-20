@@ -21,7 +21,7 @@ export function formatSecondsToHMS(seconds) {
   } else if (minutes > 0) {
     return `${formattedMinutes}:${formattedSeconds} min`;
   } else {
-    return `${formattedSeconds} s`;
+    return formattedSeconds > 0 ? `${formattedSeconds} s` : `${formattedSeconds}`;
   }
 }
 

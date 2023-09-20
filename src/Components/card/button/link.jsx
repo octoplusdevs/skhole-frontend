@@ -14,6 +14,7 @@ const Wrapper = styled(ReactLink)`
   color: #47fdbb;
   background-color: #252e31;
   box-shadow: none;
+  user-select: none;
   &:hover {
     transform: translateY(-3px);
     color: #fff;

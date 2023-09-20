@@ -34,7 +34,12 @@ export function Learning() {
                     slug={enrollment.Course?.slug}
                   />
                   {/* <CourseCard.Price price={enrollment.Course?.price} /> */}
-                  <CourseCard.Details />
+                  {/* <CourseCard.Details
+                    totalDuration={enrollment.Course?.duration}
+                    totalLessons={enrollment.Course.modules
+                      .map((module) => module.videos.length)
+                      .reduce((acc, curr) => acc + curr, 0)}
+                  /> */}
                 </CourseCard.Root>
               ))}
             </div>

@@ -35,7 +35,12 @@ export function Courses() {
                     slug={course?.slug}
                   />
                   <CourseCard.Price price={course?.price} />
-                  <CourseCard.Details />
+                  <CourseCard.Details
+                    totalDuration={course?.duration}
+                    totalLessons={course.modules
+                      .map((module) => module.videos.length)
+                      .reduce((acc, curr) => acc + curr, 0)}
+                  />
                 </CourseCard.Root>
               ))}
             </div>
