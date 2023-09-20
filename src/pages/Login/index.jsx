@@ -58,7 +58,7 @@ export function Login() {
         <Header>
           <h2>Skholê</h2>
           <h1>Faça o login para continuar na plataforma</h1>
-          <p>© 2022 Skholê. Powered by Octoplus</p>
+          <p>© {new Date().getFullYear()} Skholê. Powered by Octoplus</p>
         </Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="input">
