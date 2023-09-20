@@ -32,39 +32,32 @@ const Profile = yup.object({
 
   first_name: yup
     .string()
-    .max(15)
-    .nullable()
-    .test("firstname-validation", "Nome inválido.", (value) => {
+    .trim() // Remove espaços no início e no final
+    .test("name-length", "Nome muito curto.", (value) => {
+      if (!value || value.length === 0) return true; // Permite campo vazio (nulo)
+      return value.length >= 2;
+    })
+    .max(30, "Nome muito longo.")
+    .test("single-name", "Apenas um nome é permitido.", (value) => {
       if (!value) return true; // Permite campo vazio (nulo)
-
-      // Expressão regular para validação de nomes de forma genérica
-
-      const firstnameRegex = /^[a-zA-ZÀ-ÿ]{4,12}$/;
-
-      // Verificar se o nome coincide com a expressão regular
-      if (value.match(firstnameRegex)) {
-        return true;
-      }
-
-      return false;
-    }),
+      return !value.includes(" ");
+    })
+    .matches(/^[a-zA-ZÀ-ÿ]+$/, { message: "Nome inválido.", excludeEmptyString: true })
+    .nullable(),
   last_name: yup
     .string()
-    .max(15)
-    .nullable()
-    .test("lastname-validation", "Sobrenome inválido.", (value) => {
+    .trim() // Remove espaços no início e no final
+    .test("name-length", "Nome muito curto.", (value) => {
+      if (!value || value.length === 0) return true; // Permite campo vazio (nulo)
+      return value.length >= 2;
+    })
+    .max(30, "Nome muito longo.")
+    .test("single-name", "Apenas um nome é permitido.", (value) => {
       if (!value) return true; // Permite campo vazio (nulo)
-
-      // Expressão regular para validação de sobrenomes de forma genérica
-      const lastnameRegex = /^[a-zA-ZÀ-ÿ]{4,12}$/;
-
-      // Verificar se o sobrenome coincide com a expressão regular
-      if (value.match(lastnameRegex)) {
-        return true;
-      }
-
-      return false;
-    }),
+      return !value.includes(" ");
+    })
+    .matches(/^[a-zA-ZÀ-ÿ]+$/, { message: "Nome inválido.", excludeEmptyString: true })
+    .nullable(),
   phone: yup
     .string()
     .nullable()
