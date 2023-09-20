@@ -89,7 +89,7 @@ export function Login() {
               autoComplete="current-password"
             />
             <p className="message_error">
-              {errors?.email?.password || (hasError?.includes("senha") && hasError)}
+              {errors?.password?.message || (hasError?.includes("senha") && hasError)}
             </p>
           </div>
 

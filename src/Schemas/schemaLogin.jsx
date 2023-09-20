@@ -11,8 +11,8 @@ const Login = yup.object({
     }),
   password: yup
     .string()
-    .min(6, "A senha deve conter no mínimo 6 caracters")
-    .required("Senha é obrigatória."),
+    .required("A senha é obrigatória.")
+    .min(6, "A senha deve conter no mínimo 6 caracters"),
 });
 
 export default Login;
