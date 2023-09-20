@@ -4,6 +4,7 @@ import AuthTokenManager from "../../utils/auth";
 const initialState = {
   user: null,
   error: null,
+  showToast: false,
   isAuthenticated: checkTokenExistence(),
 };
 
@@ -22,12 +23,15 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.isAuthenticated = true;
       state.user = action.payload;
+      state.showToast = false;
     },
     loginFailure: (state, action) => {
       state.error = action.payload;
+      state.showToast = false;
     },
     logout: (state) => {
       state.isAuthenticated = false;
+      state.showToast = true;
       state.user = null;
       state.error = null;
     },
