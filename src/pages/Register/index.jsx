@@ -36,8 +36,8 @@ export function Register() {
         () => {
           setAccountCreated(true);
         },
-        () => {
-          toast.error("Erro ao criar conta");
+        (error) => {
+          toast.error(error);
         },
       ),
     ).finally(() => setLoading(false));
@@ -68,7 +68,7 @@ export function Register() {
                   id="username"
                 />
                 <p className="message_error">
-                  {errors?.username?.message || (hasError?.includes("Username") && hasError)}
+                  {errors?.username?.message || (hasError?.includes("usuário") && hasError)}
                 </p>
               </div>
               <div className="input">
@@ -82,7 +82,7 @@ export function Register() {
                   id="email"
                 />
                 <p className="message_error">
-                  {errors?.email?.message || (hasError?.includes("Email") && hasError)}
+                  {errors?.email?.message || (hasError?.includes("E-mail") && hasError)}
                 </p>
               </div>
 
