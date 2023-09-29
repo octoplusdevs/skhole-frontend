@@ -37,7 +37,7 @@ export function Register() {
           setAccountCreated(true);
         },
         (error) => {
-          toast.error(error);
+          // toast.error(error);
         },
       ),
     ).finally(() => setLoading(false));
