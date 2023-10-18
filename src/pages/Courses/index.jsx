@@ -18,6 +18,7 @@ export function Courses() {
               {courses.map((course) => (
                 <CourseCard.Root
                   key={course.slug}
+                  course_id={course.id}
                   slug={course.slug}
                   confirmed={course?.enrollment?.confirmed || false}
                   subscribed={course?.subscribed || false}

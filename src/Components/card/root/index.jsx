@@ -3,11 +3,11 @@ import { Wrapper } from "./styles";
 import useEnrollment from "../../../hooks/useSubscribeCourse";
 import { Button } from "../button";
 
-export default function Root({ children, slug, confirmed, subscribed, status }) {
+export default function Root({ children, slug, course_id, confirmed, subscribed, status }) {
   const { mutate, isLoading: isEnrolling } = useEnrollment();
 
-  function handleEnroll(slug) {
-    mutate(slug);
+  function handleEnroll(course_id) {
+    mutate(course_id);
   }
   return (
     <Wrapper>
@@ -15,7 +15,7 @@ export default function Root({ children, slug, confirmed, subscribed, status }) 
       {!subscribed && status === "active" && (
         <Button.Default
           disabled={isEnrolling}
-          onClick={() => handleEnroll(slug)}
+          onClick={() => handleEnroll(course_id)}
           text={"Inscrever"}
         />
       )}
@@ -38,4 +38,5 @@ Root.propTypes = {
   status: PropTypes.any,
   confirmed: PropTypes.bool.isRequired,
   subscribed: PropTypes.bool.isRequired,
+  course_id: PropTypes.string.isRequired,
 };

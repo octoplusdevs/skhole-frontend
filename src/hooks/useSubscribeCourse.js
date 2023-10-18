@@ -3,10 +3,10 @@ import { API } from "../services/api";
 import { queryClient } from "../services/query";
 import { toast } from "react-toastify";
 
-const createEnrollment = async (slug_course) => {
+const createEnrollment = async (course_id) => {
   try {
     const { data: response } = await API.post("/enrollments", {
-      slug_course,
+      course_id,
     });
     return response.data;
   } catch (err) {
@@ -16,9 +16,9 @@ const createEnrollment = async (slug_course) => {
 };
 
 const destroyEnrollment = async (options) => {
-  const { id, slug_course } = options;
+  const { id, course_id } = options;
   const { data: response } = await API.put("/enrollments/" + id, {
-    slug_course,
+    course_id,
     status: "canceled",
   });
   return response.data;
