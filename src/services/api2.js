@@ -6,8 +6,8 @@ import { refreshNewToken } from "./auth";
 // const BASE_URL = import.meta.env.VITE_API_URL;
 
 const commonOptions = {
-  baseURL: "https://api.skholepro.com/api/v1",
-  // baseURL: "http://localhost:3001/api/v1",
+  // baseURL: "https://api.skholepro.com/api/v1",
+  baseURL: "http://localhost:3001/api/v1",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

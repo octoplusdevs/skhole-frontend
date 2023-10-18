@@ -21,7 +21,7 @@ export function Courses() {
                   slug={course.slug}
                   confirmed={course?.enrollment?.confirmed || false}
                   subscribed={course?.subscribed || false}
-                  status={course?.status || "inativo"}
+                  status={course?.status || "inactive"}
                 >
                   <CourseCard.Thumbnail
                     src={course?.thumbnail?.url || ""}

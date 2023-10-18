@@ -12,20 +12,20 @@ export default function Root({ children, slug, confirmed, subscribed, status }) 
   return (
     <Wrapper>
       {children}
-      {!subscribed && status === "ativo" && (
+      {!subscribed && status === "active" && (
         <Button.Default
           disabled={isEnrolling}
           onClick={() => handleEnroll(slug)}
           text={"Inscrever"}
         />
       )}
-      {confirmed && subscribed && status === "ativo" && (
+      {confirmed && subscribed && status === "active" && (
         <Button.Link text={"Assistir"} to={`/courses/watch/${slug}`} />
       )}
-      {subscribed && !confirmed && status === "ativo" && (
+      {subscribed && !confirmed && status === "active" && (
         <Button.Link className="noverify" text={"Em verificação..."} />
       )}
-      {status === "inativo" && (
+      {status === "inactive" && (
         <Button.Link className="noverify" style={{ color: "#fff" }} text={"Brevemente"} />
       )}
     </Wrapper>
