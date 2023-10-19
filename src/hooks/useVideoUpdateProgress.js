@@ -15,7 +15,7 @@ export function useVideoUpdateProgress() {
     ["video"],
     async ({ timeSpent, lastPosition, video_id }) => {
       let response, video;
-      response = await API.put(`/update-progress`, {
+      response = await API.put(`/videos/update-progress`, {
         timeSpent,
         lastPosition,
         video_id,
