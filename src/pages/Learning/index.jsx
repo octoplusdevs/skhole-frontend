@@ -20,7 +20,7 @@ export function Learning() {
                   slug={enrollment.Course.slug}
                   confirmed={enrollment.confirmed}
                   subscribed={enrollment.confirmed}
-                  status={enrollment.confirmed && "ativo"}
+                  status={enrollment.confirmed && "active"}
                 >
                   <CourseCard.Thumbnail
                     src={enrollment.Course?.thumbnail?.url || ""}
