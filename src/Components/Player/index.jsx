@@ -11,10 +11,9 @@ const getUpdateFrequency = (duration) => {
 export function Player({
   videoIdCDN = "c8fae39c-2720-4c14-8d32-50415e57ad67",
   autoplay = true,
+  video_id,
   url,
   initialLastPosition,
-  slugVideo,
-  slugCourse,
   isLoading,
 }) {
   const playerRef = useRef(null);
@@ -22,10 +21,7 @@ export function Player({
   const [timeSpent, setTimeSpent] = useState(0);
   const [updateInterval, setUpdateInterval] = useState(null);
 
-  const updateProgressMutation = useVideoUpdateProgress({
-    slug_course: slugCourse,
-    slug_video: slugVideo,
-  });
+  const updateProgressMutation = useVideoUpdateProgress();
 
   function handleDuration(dur) {
     const frequency = getUpdateFrequency(dur);
@@ -39,7 +35,11 @@ export function Player({
     const interval = playedSeconds - timeSpent;
     setTimeSpent(playedSeconds);
 
-    updateProgressMutation.mutate({ timeSpent: playedSeconds, lastPosition: playedSeconds });
+    updateProgressMutation.mutate({
+      timeSpent: playedSeconds,
+      lastPosition: playedSeconds,
+      video_id,
+    });
     setLastReportedTime(playedSeconds); // Atualize o último tempo registrado
   }
 

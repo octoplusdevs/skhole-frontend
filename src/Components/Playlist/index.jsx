@@ -41,10 +41,7 @@ const AvailableLesson = ({
 }) => (
   <>
     <div className="lesson__title">
-      <CheckBox
-        checked={isViewed}
-        onChange={() => markedAsWatched(slug_course, video.slug, !isViewed)}
-      />
+      <CheckBox checked={isViewed} onChange={() => markedAsWatched(video.id, !isViewed)} />
       <Link
         to={`${slug_course}/${slug_module}/${video.slug}`}
         className={`${activeVideo === video.slug ? "active" : ""} `}
@@ -99,12 +96,12 @@ function Playlist({ activeVideo }) {
   };
 
   const markedAsWatchedCallback = useCallback(
-    (slug_course, slug_video, newIsViewed) => {
+    (video_id, newIsViewed) => {
       const updatedModules = localModules.map((module) => {
         if (!module.videos) return module;
 
         const videos = module.videos.map((video) => {
-          if (video.slug !== slug_video) return video;
+          if (video.id !== video_id) return video;
           return {
             ...video,
             progress: { isViewed: newIsViewed },
@@ -117,14 +114,14 @@ function Playlist({ activeVideo }) {
       setLocalModules(updatedModules);
 
       markVideoAsWatched(
-        { slug_course, slug_video },
+        { video_id },
         {
           onError: () => {
             const revertedModules = updatedModules.map((module) => {
               if (!module.videos) return module;
 
               const videos = module.videos.map((video) => {
-                if (video.slug !== slug_video) return video;
+                if (video.id !== video_id) return video;
                 return {
                   ...video,
                   progress: { isViewed: !newIsViewed },

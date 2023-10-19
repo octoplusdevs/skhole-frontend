@@ -10,14 +10,15 @@ import { queryClient } from "../services/query";
 //   return video;
 // }
 
-export function useVideoUpdateProgress({ slug_course, slug_video }) {
+export function useVideoUpdateProgress() {
   return useMutation(
     ["video"],
-    async ({ timeSpent, lastPosition }) => {
+    async ({ timeSpent, lastPosition, video_id }) => {
       let response, video;
-      response = await API.put(`/videos/${slug_course}/${slug_video}/update-progress`, {
+      response = await API.put(`/update-progress`, {
         timeSpent,
         lastPosition,
+        video_id,
       });
       video = response.data;
       return video;

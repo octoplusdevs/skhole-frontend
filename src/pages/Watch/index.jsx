@@ -12,7 +12,6 @@ export function Watch() {
   // Obtenha todos os vídeos dos módulos
   //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
   // console.log(video);
-
   return (
     <Wrapper>
       <div className="grid">
@@ -23,8 +22,7 @@ export function Watch() {
             duration={video?.duration}
             url={video?.url}
             videoIdCDN={video?.videoIdCDN}
-            slugVideo={video?.slug}
-            slugCourse={slug_course}
+            video_id={video?.id}
             isLoading={isLoadingVideo}
             initialLastPosition={video?.progress?.lastPosition}
           />
