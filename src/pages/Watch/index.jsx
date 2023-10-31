@@ -4,6 +4,7 @@ import Playlist from "../../Components/Playlist";
 import { Player } from "../../Components/Player";
 import { useModules } from "../../hooks/useModules";
 import { useVideo } from "../../hooks/useVideo";
+import { DownloadSimple, Link, Student } from "phosphor-react";
 
 export function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
@@ -32,12 +33,37 @@ export function Watch() {
           </div>
         </div>
         {/* <div className="playlist"> */}
-        <Playlist
-          // modules={modules}
-          // slug_course={slug_course}
-          activeVideo={slug_video || video?.slug}
+        <aside className="aside">
+          <Playlist
+            // modules={modules}
+            // slug_course={slug_course}
+            activeVideo={slug_video || video?.slug}
           // status={status}
-        />
+          />
+          {video?.assetLink ?
+            <a href={video.assetLink} target="_blank" rel="noopener noreferrer" className="button_assets">
+              <Link size={24} weight="bold" />
+              <span>
+                Recursos da Aula
+              </span>
+            </a>
+            :
+            <span title="Ainda não disponível." className="button_assets disabled">
+              <Link size={24} weight="regular" />
+              <span>
+                Recursos da Aula
+              </span>
+            </span>
+          }
+          <span title="Ainda não disponível." className="button_assets disabled">
+            <Student size={24} weight="regular" />
+            <span>
+              Emitir Certificado
+            </span>
+          </span>
+
+
+        </aside>
         {/* </div> */}
       </div>
     </Wrapper>

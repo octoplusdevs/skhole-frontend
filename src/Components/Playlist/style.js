@@ -2,15 +2,12 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  max-width: 800px;
   height: 449px;
   background-color: #161817;
   border-radius: 8px;
   overflow: scroll;
 
-  @media (min-width: 1024px) {
-    max-width: 384px;
-  }
+  
 `;
 
 export const Module = styled.div`

@@ -3,6 +3,28 @@ import styled from "styled-components";
 export const Wrapper = styled.section`
   padding-top: 56px;
   padding-bottom: 100px;
+  .button_assets {
+    background-color: #002300;
+    color: #47fdbb;
+    padding: 12px 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    gap: 8px;
+    font-size: 16px;
+    height: 56px;
+    transition: .3s ease;
+    font-weight: 500;
+    &:hover{
+      color: #fff;
+    }
+    &.disabled{
+      cursor: not-allowed;
+      background-color: #202020;
+      color: #494949;
+    }
+  }
   .grid {
     display: flex;
     flex-direction: column;
@@ -12,8 +34,15 @@ export const Wrapper = styled.section`
     width: 100%;
     max-width: 1246px;
     margin: 0 auto;
-    .playlist {
+    .aside {
+      max-width: 800px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      @media (min-width: 1024px) {
+        max-width: 384px;
+      }
     }
   }
   .main {
