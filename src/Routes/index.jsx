@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import { Routes, Route } from "react-router-dom";
 import { Courses } from "../pages/Courses";
+import { Course } from "../pages/Course";
 import { Learning } from "../pages/Learning";
 import { NotFound } from "../pages/NotFound";
 import { Watch } from "../pages/Watch";
@@ -23,6 +24,7 @@ export default function () {
           <Route path="/learn" element={<Learning />} />
           <Route path="/" element={<Courses />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:slug_course" element={<Course />} />
           <Route path="/courses/watch/" element={<Watch />}>
             <Route path=":slug_course" element={<Watch />}>
               <Route path=":slug_module" element={<Watch />}>

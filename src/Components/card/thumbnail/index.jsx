@@ -6,7 +6,7 @@ export default function Thumbnail({ confirmed, src, alt, slug }) {
   return (
     <Wrapper>
       {confirmed ? (
-        <Link to={`/courses/watch/${slug}`}>
+        <Link to={`/courses/${slug}`}>
           <img src={src} alt={alt} />
         </Link>
       ) : (
