@@ -5,6 +5,7 @@ import { Player } from "../../Components/Player";
 import { useModules } from "../../hooks/useModules";
 import { useVideo } from "../../hooks/useVideo";
 import { DownloadSimple, Link, Student } from "phosphor-react";
+import Quiz from "../../Components/quiz";
 
 export function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
@@ -14,7 +15,7 @@ export function Watch() {
   //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
   // console.log(video);
   return (
-    <Wrapper>
+    <Wrapper className="flex flex-col gap-14">
       <div className="grid">
         <div className="main">
           <Player
@@ -66,6 +67,8 @@ export function Watch() {
         </aside>
         {/* </div> */}
       </div>
+
+      <Quiz />
     </Wrapper>
   );
 }

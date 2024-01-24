@@ -85,7 +85,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   button{
-  background-color: transparent;
+    background-color: transparent;
   }
 
   label{

@@ -13,6 +13,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./services/query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Modal from "react-modal";
+import './index.css'
 
 Modal.setAppElement("#root");
 

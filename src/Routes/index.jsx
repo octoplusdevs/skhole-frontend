@@ -16,7 +16,8 @@ import { ConfirmAccount } from "../pages/confirmAccount";
 export default function () {
   return (
     <Routes>
-      <Route element={<PrivateRoute />}>
+      {/* <Route element={<PrivateRoute />}> */}
+      <Route>
         <Route element={<Layout />}>
           <Route path="/me" element={<Profile />} />
           <Route path="/me/:tab" element={<Profile />} />
