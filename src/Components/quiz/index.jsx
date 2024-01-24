@@ -1,5 +1,5 @@
-import { Modal } from "../Modal"
 import QuestionArea from "./question-area"
+import { QUESTIONS } from "./data"
 
 function Quiz(){
   return(
@@ -16,7 +16,24 @@ function Quiz(){
 
         <form action="" className="">
           <div className="flex flex-col gap-16">
-            <QuestionArea />
+            {QUESTIONS.map(({
+              id,
+              format,
+              hasUserAnswered,
+              hint,
+              points,
+              question_text,
+              right_answer })=>(
+              <QuestionArea
+                key={id}
+                question_text={question_text}
+                points={points}
+                hasUserAnswered={hasUserAnswered}
+                format={format}
+                hint={hint}
+                right_answer={right_answer}
+              />
+            ))}
           </div>
         </form>
       </div>
