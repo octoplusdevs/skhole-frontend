@@ -38,6 +38,7 @@ function Quiz(){
     watch,
     formState: { errors },
   } = useForm()
+
   const onSubmit = (data) => {
     const dataArray = Object.entries(data)
       .map(([questionId, response]) => ({ questionId, response }));
