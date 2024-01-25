@@ -34,11 +34,27 @@ function Quiz(){
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
-    console.log(data)
+    const dataArray = Object.entries(data)
+      .map(([questionId, response]) => ({ questionId, response }));
+
+    let validQuestions = dataArray
+      .filter(({ response }) => response !== "" && response !== undefined);
+
+    const { questionId, response } = validQuestions[0];
+
+    const questionAnswered = {
+      questionId,
+      response
+    };
+
+    console.log(questionAnswered)
+    setFocusedInputId(100)
+    reset()
   }
 
   return(
@@ -84,7 +100,7 @@ function Quiz(){
                       right_answer :
                       "Formato da resposta: "
                     }
-                    {...register(`question: ${id}`)}
+                    {...register(`${id}`)}
                     onChange={(e)=> hideResponseFormat(e, id)}
                   />
 
