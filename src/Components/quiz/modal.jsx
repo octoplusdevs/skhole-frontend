@@ -5,7 +5,8 @@ function ModalQuiz({
   visible,
   hint,
   onClick,
-  ...rest}){
+  ...rest
+}){
   return(
     <div
       className={`w-full duration-300 px-10 bg-[#0f0e0eb2] fixed flex justify-center
