@@ -89,7 +89,7 @@ function Quiz(){
               <Points points={points}/>
               <Question question_text={question_text}/>
               <div className="flex flex-col sm:flex-row gap-8 sm:gap-4">
-                <div className="flex w-full h-max rounded-[4px] border border-[#303030] relative">
+                <div className="flex w-full items-center h-max rounded-[4px] border border-[#303030] relative overflow-x-scroll">
                   <Input
                     disabled={ hasUserAnswered ? true : false }
                     className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-11 pl-8 w-full
