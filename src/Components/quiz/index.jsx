@@ -1,6 +1,6 @@
 import { QUESTIONS } from "./data"
 import ModalQuiz from "./modal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Input } from "../ui/input"
 import { Points } from "./points"
@@ -9,9 +9,19 @@ import { Buttons } from "./buttons"
 import { Format } from "./format"
 
 function Quiz(){
-  const [currentTip, setCurrentTip] = useState('')
+  const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
   const [focusedInputId, setFocusedInputId] = useState(100)
+  const [emptyEntryId, setEmptyEntryId] = useState(100)
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitSuccessful },
+    watch,
+    formState: { errors },
+  } = useForm()
 
   const hideResponseFormat = (e, id) => {
     const currentTextSize = e.currentTarget.value.length
@@ -22,22 +32,14 @@ function Quiz(){
     setFocusedInputId(100)
   }
 
-  const openTipModal = (tip) => {
-    setActivateModal(prev=> !prev)
-    setCurrentTip(tip)
+  const openTipModal = (hint) => {
+    setActivateModal(true)
+    setCurrenHint(hint)
   }
 
   const closeTipModal = () => {
     setActivateModal(false)
   }
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm()
 
   const onSubmit = (data) => {
     const dataArray = Object.entries(data)
@@ -48,15 +50,23 @@ function Quiz(){
 
     const { questionId, response } = validQuestions[0];
 
-    const questionAnswered = {
-      questionId,
-      response
-    };
+    const questionAnswered = { questionId, response };
 
     console.log(questionAnswered)
     setFocusedInputId(100)
-    reset()
+    setEmptyEntryId(100)
   }
+
+  const resetInputs = () => {
+    let redefinedFields = {}
+
+    QUESTIONS.forEach(({ id }) => redefinedFields[id] = '');
+    reset(redefinedFields);
+  };
+
+  useEffect(()=>{
+    resetInputs()
+  }, [isSubmitSuccessful])
 
   return(
     <div className="container">
@@ -73,10 +83,10 @@ function Quiz(){
         <ModalQuiz
           onClick={closeTipModal}
           visible={activateModal}
-          hint={currentTip}
+          hint={currentHint}
         />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-16">
+        <div className="flex flex-col gap-16">
           {QUESTIONS.map(({
             id,
             format,
@@ -85,14 +95,28 @@ function Quiz(){
             points,
             question_text,
             right_answer })=>(
-            <div key={id} className="flex flex-col gap-8">
+            <form
+              key={id}
+              onSubmit={focusedInputId === id ?
+                handleSubmit(onSubmit) :
+                handleSubmit(()=> setEmptyEntryId(id))
+              }
+              className="flex flex-col gap-8"
+            >
               <Points points={points}/>
               <Question question_text={question_text}/>
               <div className="flex flex-col sm:flex-row gap-8 sm:gap-4">
-                <div className="flex w-full items-center h-max rounded-[4px] border border-[#303030] relative overflow-x-scroll">
+                <div
+                  className={`flex w-full items-center h-max rounded-[4px] border relative overflow-x-scroll
+                    ${ emptyEntryId === id ?
+                      'border-[#845EF7]' :
+                      'border-[#303030]'
+                    }
+                  `}
+                >
                   <Input
                     disabled={ hasUserAnswered ? true : false }
-                    className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-11 pl-8 w-full
+                    className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-[24px] pl-8 w-full
                     ${ hasUserAnswered ?
                       'placeholder:font-semibold placeholder:text-[#7D7D7D]' :
                       'placeholder:font-light placeholder:text-[#777777]'}
@@ -119,9 +143,9 @@ function Quiz(){
                   openTipModal={()=> openTipModal(hint)}
                 />
             </div>
-            </div>
+            </form>
           ))}
-        </form>
+        </div>
 
       </div>
     </div>
