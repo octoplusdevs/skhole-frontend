@@ -1,7 +1,21 @@
 import QuestionArea from "./question-area"
 import { QUESTIONS } from "./data"
+import ModalQuiz from "./modal"
+import { useState } from "react"
 
 function Quiz(){
+  const [currentTip, setCurrentTip] = useState('')
+  const [activateModal, setActivateModal] = useState(false)
+
+  const openTipModal = (tip) => {
+    setActivateModal(prev=> !prev)
+    setCurrentTip(tip)
+  }
+
+  const closeTipModal = () => {
+    setActivateModal(false)
+  }
+
   return(
     <div className="container">
       <div className="bg-[#161817] flex flex-col gap-8 max-w-[800px] px-6 py-10">
@@ -13,7 +27,11 @@ function Quiz(){
             Responda às perguntas abaixo para completar esta seção e ganhar pontos!
           </p>
         </header>
-
+        <ModalQuiz
+          onClick={closeTipModal}
+          visible={activateModal}
+          hint={currentTip}
+        />
         <form action="" className="">
           <div className="flex flex-col gap-16">
             {QUESTIONS.map(({
@@ -32,6 +50,7 @@ function Quiz(){
                 format={format}
                 hint={hint}
                 right_answer={right_answer}
+                onClick={()=> openTipModal(hint)}
               />
             ))}
           </div>

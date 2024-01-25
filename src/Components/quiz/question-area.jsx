@@ -10,6 +10,7 @@ function QuestionArea({
   hint,
   format,
   right_answer,
+  onClick,
   ...rest
 }){
   const [focusInput, setFocusInput] = useState()
@@ -41,7 +42,7 @@ function QuestionArea({
           <Input
             disabled={ hasUserAnswered ? true : false }
             className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-11 pl-8 w-full
-            ${ right_answer.length != 0 ?
+            ${ hasUserAnswered ?
               'placeholder:font-semibold placeholder:text-[#7D7D7D]' :
               'placeholder:font-light placeholder:text-[#777777]'}
             `}
@@ -80,7 +81,7 @@ function QuestionArea({
        { hint.length != 0 && (
         <Button
           type="button"
-          onClick={()=> alert("Abrir modal")}
+          onClick={onClick}
           className={`flex w-full max-w-[111px] rounded-[4px] items-center border border-[#FDB447]
             gap-2 text-2xl text-[#FDB447] hover:bg-[#fdb44731] justify-center h-[57px]
             ${ hasUserAnswered ?
