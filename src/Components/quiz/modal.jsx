@@ -15,23 +15,25 @@ function ModalQuiz({
         'opacity-100 pointer-events-auto':
         'opacity-0 pointer-events-none'}`
       }
+      {...rest}
     >
-      <div className="bg-[#161817] border border-[#69DB7C] rounded-xl w-full max-w-[609px]
-        h-[294px] relative flex justify-center items-center p-12">
+      <div className="bg-[#161817] border border-[#acabab62] rounded-xl
+          py-3 w-full max-h-[320px] max-w-[380px]
+          relative flex justify-center items-center px-12">
         <Button
           onClick={onClick}
-          className={`absolute top-8 right-[12px] hover:opacity-60`}
+          className={`absolute top-[12px] right-[4px] hover:opacity-60`}
         >
           <X size={24} color="#fff"/>
         </Button>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 py-12 w-full h-full">
           <header className="flex gap-2 items-center">
             <Lightbulb size={40} color="#FDB447" className="size-12 sm:size-14 lg:size-16"/>
-            <h2 className="text-[24px] lg:text-[32px] font-medium text-white">
+            <h2 className="text-[22px] lg:text-[24px] font-medium text-white">
               Dica de pergunta
             </h2>
           </header>
-          <p className="text-[16px] sm:text-[18px] font-normal leading-[150%] text-white">
+          <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-[#bebebe]">
             {hint}
           </p>
         </div>
