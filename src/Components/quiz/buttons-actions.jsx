@@ -10,16 +10,15 @@ export function ButtonsActions({
     <div className="flex gap-4 sm:w-fit w-full h-[50px]">
       <Button
         className={`flex w-full flex-shrink px-[32px] border-none items-center rounded-[4px] text-[16px]
-        text-white gap-2 h-full hover:bg-[#845ef7ee]
+        text-white gap-2 h-full hover:bg-[#a5d8ff] hover:text-[#000] group
           ${ hasUserAnswered ?
-            'bg-[#A688FF] pointer-events-none' :
-            'bg-[#845EF7] pointer-events-auto' }
+            'bg-[#13466d] pointer-events-none text-[#5181a5]' :
+            'bg-[#4dabf7] pointer-events-auto' }
           `}
       >
         <PaperPlane
           size={24}
-          color="#fff"
-          className={`rotate-45 translate-y-[-4px] ${ hasUserAnswered ? 'hidden': 'flex'}`}
+          className={`group-hover:rotate-[65deg] transition-transform duration-300 rotate-45  translate-y-[-4px] ${ hasUserAnswered ? 'hidden': 'flex'}`}
         />
         { hasUserAnswered ? 'Respondido' : 'Enviar'}
       </Button>

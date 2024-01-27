@@ -105,7 +105,7 @@ function Quiz({QUESTIONS}){
               <div className="flex flex-col sm:flex-row sm:gap-[8px] gap-[16px]">
                 <div
                   className={`flex w-full flex-initial items-center h-max rounded-[4px] border relative
-                  overflow-hidden border-[#303030] focus-within:border-[#845EF7]
+                  overflow-hidden border-[#303030] focus-within:border-[#868e96]
                   `}
                 >
                   <Input
