@@ -4,13 +4,13 @@ export const QUESTIONS = [
     question_text: "Qual ferramenta e bastante usada para versionamento de codigo?",
     hasUserAnswered: false,
     points: 5,
-    hint: "O nome dessa ferramenta começa com a letra G",
+    hint: "O nome dessa ferramenta começa com a letra G Essa plataforma é conhecida pelo uso do logotipo de um gatoEssa plataforma é conhecida pelo uso do logotipo de um gatoEssa plataforma é conhecida pelo uso do logotipo de um gato",
     format: "***",
     right_answer: ''
   },
   {
     id: 1,
-    question_text: "QQual é a linguagem de programação frequentemente utilizada para criar interações dinâmicas em páginas web",
+    question_text: "Qual é a linguagem de programação frequentemente utilizada para criar interações dinâmicas em páginas web",
     hasUserAnswered: false,
     points: 235,
     hint: "",

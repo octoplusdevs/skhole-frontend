@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { Input } from "../ui/input"
 import { Points } from "./points"
 import Question from "./question"
-import { Buttons } from "./buttons"
+import { ButtonsActions } from "./buttons-actions"
 import { Format } from "./format"
 
 function Quiz(){
@@ -70,12 +70,12 @@ function Quiz(){
 
   return(
     <div className="container">
-      <div className="bg-[#161817] flex flex-col gap-8 max-w-[800px] px-6 py-10">
+      <div className="sm:bg-[#161817] flex flex-col gap-8 max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
         <header>
-          <h2 className="text-white text-[24px] font-medium">
+          <h2 className="text-white text-[20px] font-bold">
             Responda as questões abaixo
           </h2>
-          <p className="text-[#969696] text-[18px] font-light">
+          <p className="text-[#969696] text-[15px] font-normal">
             Responda às perguntas abaixo para completar esta seção e ganhar pontos!
           </p>
         </header>
@@ -86,7 +86,7 @@ function Quiz(){
           hint={currentHint}
         />
 
-        <div className="flex flex-col gap-16">
+        <div className="flex flex-col gap-[40px]">
           {QUESTIONS.map(({
             id,
             format,
@@ -101,13 +101,13 @@ function Quiz(){
                 handleSubmit(onSubmit) :
                 handleSubmit(()=> setEmptyEntryId(id))
               }
-              className="flex flex-col gap-8"
+              className="flex flex-col gap-[8px] w-full"
             >
               <Points points={points}/>
               <Question question_text={question_text}/>
-              <div className="flex flex-col sm:flex-row gap-8 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:gap-[8px] gap-[16px]">
                 <div
-                  className={`flex w-full items-center h-max rounded-[4px] border relative overflow-x-scroll
+                  className={`flex w-full flex-initial items-center h-max rounded-[4px] border relative overflow-hidden
                     ${ emptyEntryId === id ?
                       'border-[#845EF7]' :
                       'border-[#303030]'
@@ -116,7 +116,7 @@ function Quiz(){
                 >
                   <Input
                     disabled={ hasUserAnswered ? true : false }
-                    className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-[24px] pl-8 w-full
+                    className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-[24px] pl-[16px] w-full
                     ${ hasUserAnswered ?
                       'placeholder:font-semibold placeholder:text-[#7D7D7D]' :
                       'placeholder:font-light placeholder:text-[#777777]'}
@@ -137,7 +137,7 @@ function Quiz(){
                   />
                 </div>
 
-                <Buttons
+                <ButtonsActions
                   hasUserAnswered={hasUserAnswered}
                   hint={hint}
                   openTipModal={()=> openTipModal(hint)}
