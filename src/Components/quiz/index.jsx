@@ -1,35 +1,17 @@
 import ModalQuiz from "./modal"
+import { Toaster } from "@/components/ui/toaster"
 import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
 import { Input } from "../ui/input"
 import { Points } from "./points"
 import Question from "./question"
 import { ButtonsActions } from "./buttons-actions"
-import { Format } from "./format"
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 function Quiz({QUESTIONS}){
   const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
-  const [focusedInputId, setFocusedInputId] = useState(100)
-  const [emptyEntryId, setEmptyEntryId] = useState(100)
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isSubmitSuccessful },
-    watch,
-    formState: { errors },
-  } = useForm()
-
-  const hideResponseFormat = (e, id) => {
-    const currentTextSize = e.currentTarget.value.length
-
-    if(currentTextSize > 0){
-      return setFocusedInputId(id)
-    }
-    setFocusedInputId(100)
-  }
+  const { toast } = useToast()
 
   const openTipModal = (hint) => {
     setActivateModal(true)
@@ -40,35 +22,25 @@ function Quiz({QUESTIONS}){
     setActivateModal(false)
   }
 
-  const onSubmit = (data) => {
-    const dataArray = Object.entries(data)
-      .map(([questionId, response]) => ({ questionId, response }));
+  const handleSubmit = (e, formId, right_answer) => {
+    e.preventDefault();
+    try{
+      throw new Error("Erro")
+      const flagValue = e.target.elements.flag.value;
+      console.log({flagValue, questionId: formId, right_answer})
+      alert("BOA")
+    }catch(e){
+      toast({
+        title: "Epa! Quase acertou hein, continue!",
+      }
+      )
+    }
 
-    let validQuestions = dataArray
-      .filter(({ response }) => response !== "" && response !== undefined);
-
-    const { questionId, response } = validQuestions[0];
-
-    const questionAnswered = { questionId, response };
-
-    console.log(questionAnswered)
-    setFocusedInputId(100)
-    setEmptyEntryId(100)
-  }
-
-  const resetInputs = () => {
-    let redefinedFields = {}
-
-    QUESTIONS.forEach(({ id }) => redefinedFields[id] = '');
-    reset(redefinedFields);
   };
-
-  useEffect(()=>{
-    resetInputs()
-  }, [isSubmitSuccessful])
 
   return(
     <div className="container">
+      <Toaster />
       <div className="sm:bg-[#161817] flex flex-col gap-8 max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
         <header>
           <h2 className="text-white text-[20px] font-bold">
@@ -99,43 +71,29 @@ function Quiz({QUESTIONS}){
             right_answer })=>(
             <form
               key={id}
-              onSubmit={focusedInputId === id ?
-                handleSubmit(onSubmit) :
-                handleSubmit(()=> setEmptyEntryId(id))
-              }
+              onSubmit={(e) => handleSubmit(e, id)}
               className="flex flex-col gap-[8px] w-full"
             >
               <Points points={points}/>
               <Question question_text={question_text}/>
               <div className="flex flex-col sm:flex-row sm:gap-[8px] gap-[16px]">
                 <div
-                  className={`flex w-full flex-initial items-center h-max rounded-[4px] border relative overflow-hidden
-                    ${ emptyEntryId === id ?
-                      'border-[#845EF7]' :
-                      'border-[#303030]'
-                    }
+                  className={`flex w-full flex-initial items-center h-max rounded-[4px] border relative
+                  overflow-hidden border-[#303030] focus-within:border-[#845EF7]
                   `}
                 >
                   <Input
                     disabled={ hasUserAnswered ? true : false }
-                    className={`font-semibold text-[18px] text-[#7D7D7D] border-none py-[24px] pl-[16px] w-full
+                    className={`font-semibold text-[18px] text-[#fff] border-none py-[24px] pl-[16px] w-full
                     ${ hasUserAnswered ?
                       'placeholder:font-semibold placeholder:text-[#7D7D7D]' :
                       'placeholder:font-light placeholder:text-[#777777]'}
                     `}
                     placeholder={ hasUserAnswered ?
                       right_answer :
-                      "Formato da resposta: "
+                      `Formato da resposta: ${format}`
                     }
-                    {...register(`${id}`)}
-                    onChange={(e)=> hideResponseFormat(e, id)}
-                  />
-
-                  <Format
-                    idInput={id}
-                    focusedInputId={focusedInputId}
-                    format={format}
-                    hasUserAnswered={hasUserAnswered}
+                    name="flag"
                   />
                 </div>
 
