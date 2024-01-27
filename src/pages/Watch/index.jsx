@@ -6,6 +6,7 @@ import { useModules } from "../../hooks/useModules";
 import { useVideo } from "../../hooks/useVideo";
 import { DownloadSimple, Link, Student } from "phosphor-react";
 import Quiz from "../../Components/quiz";
+import { QUESTIONS } from "@/Components/quiz/data";
 
 export function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
@@ -68,7 +69,7 @@ export function Watch() {
         {/* </div> */}
       </div>
 
-      <Quiz />
+      <Quiz QUESTIONS={QUESTIONS}/>
     </Wrapper>
   );
 }

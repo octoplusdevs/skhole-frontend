@@ -1,4 +1,3 @@
-import { QUESTIONS } from "./data"
 import ModalQuiz from "./modal"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -8,7 +7,7 @@ import Question from "./question"
 import { ButtonsActions } from "./buttons-actions"
 import { Format } from "./format"
 
-function Quiz(){
+function Quiz({QUESTIONS}){
   const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
   const [focusedInputId, setFocusedInputId] = useState(100)
@@ -73,10 +72,13 @@ function Quiz(){
       <div className="sm:bg-[#161817] flex flex-col gap-8 max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
         <header>
           <h2 className="text-white text-[20px] font-bold">
-            Responda as questões abaixo
+            Desafios da aula
           </h2>
           <p className="text-[#969696] text-[15px] font-normal">
-            Responda às perguntas abaixo para completar esta seção e ganhar pontos!
+            {
+              QUESTIONS.length > 0 ? 'Responda às perguntas abaixo para completar os desafios e ganhar pontos!':
+              'Esta aula nao tem desafios!'
+            }
           </p>
         </header>
 
