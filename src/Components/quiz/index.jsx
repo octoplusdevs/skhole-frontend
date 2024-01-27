@@ -1,17 +1,33 @@
 import ModalQuiz from "./modal"
-import { Toaster } from "@/components/ui/toaster"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Input } from "../ui/input"
 import { Points } from "./points"
 import Question from "./question"
 import { ButtonsActions } from "./buttons-actions"
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+import toast, { Toaster } from 'react-hot-toast';
+import { Lightning } from "phosphor-react"
+
+
+
+function ToastModified ({points, message}) {
+  return (
+    <div className="flex py-4 items-center gap-[8px]">
+      {
+      points &&
+        <span className="flex text-black items-center ">
+        <b className="font-bold">+{points}pts</b>
+        <Lightning className="text-[16px] sm:text-[18px]" weight="fill" color="#000" />
+      </span>
+      }
+
+      <span className="font-bold">{message}</span>
+    </div>
+  )
+}
 
 function Quiz({QUESTIONS}){
   const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
-  const { toast } = useToast()
 
   const openTipModal = (hint) => {
     setActivateModal(true)
@@ -22,25 +38,35 @@ function Quiz({QUESTIONS}){
     setActivateModal(false)
   }
 
-  const handleSubmit = (e, formId, right_answer) => {
+  const handleSubmit = (e, formId, right_answer, points) => {
     e.preventDefault();
     try{
-      throw new Error("Erro")
+      // throw new Error("Erro")
       const flagValue = e.target.elements.flag.value;
       console.log({flagValue, questionId: formId, right_answer})
-      alert("BOA")
+      toast((t) => <ToastModified points={4} message={'Uau! Acertou em cheio!'} />, {
+        style: {
+          borderRadius: '10px',
+          background: '#C4FFBF',
+          color: '#005134',
+        },
+      });
+
     }catch(e){
-      toast({
-        title: "Epa! Quase acertou hein, continue!",
-      }
-      )
+      toast((t) => <ToastModified message={'Epa! Quase acertou hein, continue!'} />, {
+        style: {
+          borderRadius: '10px',
+          background: '#FFA4A4',
+          color: '#511300',
+        },
+      });
+
     }
 
   };
 
   return(
     <div className="container">
-      <Toaster />
       <div className="sm:bg-[#161817] flex flex-col gap-8 max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
         <header>
           <h2 className="text-white text-[20px] font-bold">
@@ -108,6 +134,10 @@ function Quiz({QUESTIONS}){
         </div>
 
       </div>
+      <Toaster
+        position="bottom-right"
+
+      />
     </div>
   )
 }
