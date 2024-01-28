@@ -7,12 +7,13 @@ import { Points } from "./points"
 import Question from "./question"
 import { Buttons } from "./buttons"
 import { Format } from "./format"
+import { ToastDemo } from "./toast"
 
 function Quiz(){
   const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
   const [focusedInputId, setFocusedInputId] = useState(100)
-  const [emptyEntryId, setEmptyEntryId] = useState(100)
+  const [emptyInputId, setEmptyInputId] = useState(100)
 
   const {
     register,
@@ -25,7 +26,6 @@ function Quiz(){
 
   const hideResponseFormat = (e, id) => {
     const currentTextSize = e.currentTarget.value.length
-
     if(currentTextSize > 0){
       return setFocusedInputId(id)
     }
@@ -54,7 +54,7 @@ function Quiz(){
 
     console.log(questionAnswered)
     setFocusedInputId(100)
-    setEmptyEntryId(100)
+    setEmptyInputId(100)
   }
 
   const resetInputs = () => {
@@ -99,7 +99,7 @@ function Quiz(){
               key={id}
               onSubmit={focusedInputId === id ?
                 handleSubmit(onSubmit) :
-                handleSubmit(()=> setEmptyEntryId(id))
+                handleSubmit(()=> setEmptyInputId(id))
               }
               className="flex flex-col gap-8"
             >
@@ -108,7 +108,7 @@ function Quiz(){
               <div className="flex flex-col sm:flex-row gap-8 sm:gap-4">
                 <div
                   className={`flex w-full items-center h-max rounded-[4px] border relative overflow-x-scroll
-                    ${ emptyEntryId === id ?
+                    ${ emptyInputId === id ?
                       'border-[#845EF7]' :
                       'border-[#303030]'
                     }
@@ -147,6 +147,8 @@ function Quiz(){
           ))}
         </div>
 
+
+        <ToastDemo />
       </div>
     </div>
   )
