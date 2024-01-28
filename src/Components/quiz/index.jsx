@@ -28,7 +28,7 @@ function ToastModified ({points, message}) {
 function Quiz({QUESTIONS}){
   const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
-
+  console.log(QUESTIONS)
   const openTipModal = (hint) => {
     setActivateModal(true)
     setCurrenHint(hint)
@@ -89,6 +89,7 @@ function Quiz({QUESTIONS}){
         <div className="flex flex-col gap-[40px]">
           {QUESTIONS?.map(({
             id,
+            is_bonus,
             format,
             hasUserAnswered,
             hint,
@@ -109,13 +110,14 @@ function Quiz({QUESTIONS}){
                   `}
                 >
                   <Input
-                    disabled={ hasUserAnswered ? true : false }
+
+                    disabled={ hasUserAnswered | is_bonus }
                     className={`font-semibold text-[18px] text-[#fff] border-none py-[24px] pl-[16px] w-full
                     ${ hasUserAnswered ?
                       'placeholder:font-semibold placeholder:text-[#7D7D7D]' :
                       'placeholder:font-light placeholder:text-[#777777]'}
                     `}
-                    placeholder={ hasUserAnswered ?
+                    placeholder={ (hasUserAnswered || is_bonus) === true ?
                       flag :
                       `Formato da resposta: ${format}`
                     }
