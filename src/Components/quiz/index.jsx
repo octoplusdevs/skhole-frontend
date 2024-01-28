@@ -74,7 +74,7 @@ function Quiz({QUESTIONS}){
           </h2>
           <p className="text-[#969696] text-[15px] font-normal">
             {
-              QUESTIONS.length > 0 ? 'Responda às perguntas abaixo para completar os desafios e ganhar pontos!':
+              QUESTIONS?.length > 0 ? 'Responda às perguntas abaixo para completar os desafios e ganhar pontos!':
               'Esta aula nao tem desafios!'
             }
           </p>
@@ -87,14 +87,14 @@ function Quiz({QUESTIONS}){
         />
 
         <div className="flex flex-col gap-[40px]">
-          {QUESTIONS.map(({
+          {QUESTIONS?.map(({
             id,
             format,
             hasUserAnswered,
             hint,
             points,
             question_text,
-            right_answer })=>(
+            flag })=>(
             <form
               key={id}
               onSubmit={(e) => handleSubmit(e, id)}
@@ -116,7 +116,7 @@ function Quiz({QUESTIONS}){
                       'placeholder:font-light placeholder:text-[#777777]'}
                     `}
                     placeholder={ hasUserAnswered ?
-                      right_answer :
+                      flag :
                       `Formato da resposta: ${format}`
                     }
                     name="flag"
