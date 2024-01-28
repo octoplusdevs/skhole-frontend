@@ -14,7 +14,6 @@ import { queryClient } from "./services/query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Modal from "react-modal";
 import './index.css'
-import { Toaster } from "./Components/ui/toaster";
 
 Modal.setAppElement("#root");
 
@@ -39,7 +38,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Routes />
         </BrowserRouter>
         <GlobalStyle />
-        <Toaster />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
       {/* </PersistGate> */}
