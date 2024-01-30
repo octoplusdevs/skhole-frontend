@@ -10,6 +10,7 @@ export function Layout() {
       <Header.Root>
         <Header.Logo />
         <Header.Navigation activeLocation={activeLocation} />
+        <Header.Points />
         <Header.Avatar />
       </Header.Root>
       <Outlet />
