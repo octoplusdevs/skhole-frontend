@@ -69,7 +69,7 @@ export function Watch() {
         {/* </div> */}
       </div>
 
-      <Quiz QUESTIONS={QUESTIONS}/>
+      <Quiz QUESTIONS={video?.questions}/>
     </Wrapper>
   );
 }
