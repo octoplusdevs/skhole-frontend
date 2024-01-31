@@ -1,4 +1,4 @@
-import { LightningSlash } from "phosphor-react";
+import { Lightning } from "phosphor-react";
 import React from "react";
 import { useUserInformation } from "../../hooks/useUserInformation";
 import Cookies from "js-cookie";
@@ -7,9 +7,13 @@ function UserPoints() {
   const { data: userInfo } = useUserInformation(Cookies.get("skhole.user.id"));
 
   return (
-    <div className="text-red-500">
-      <LightningSlash color="red" />
-      {userInfo?.points}
+    <div
+      className="bg-[#333A3D] flex gap-2 items-center justify-center px-4 py-3 h-max rounded-[6px]"
+    >
+      <span className="text-white text-[18px] font-medium sm:text-[20px]">
+        {userInfo?.points}
+      </span>
+      <Lightning color="#69DB7C" size={24} weight="fill"/>
     </div>
   );
 }
