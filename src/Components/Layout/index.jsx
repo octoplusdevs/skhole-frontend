@@ -10,7 +10,10 @@ export function Layout() {
       <Header.Root>
         <Header.Logo />
         <Header.Navigation activeLocation={activeLocation} />
-        <Header.Avatar />
+        <div className="flex gap-4 sm:gap-8 items-center">
+          <Header.Points />
+          <Header.Avatar />
+        </div>
       </Header.Root>
       <Outlet />
     </main>

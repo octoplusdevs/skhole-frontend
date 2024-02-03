@@ -20,6 +20,9 @@ export const Wrapper = styled.button`
   cursor: pointer;
   transition: all 0.1s ease;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .loading {
     animation: ${loadingAnimated} 1s linear infinite;
   }

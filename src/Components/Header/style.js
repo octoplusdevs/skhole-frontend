@@ -81,7 +81,7 @@ export const Wrapper = styled.header`
     cursor: pointer;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 900px) {
     .container {
       height: 80px;
     }

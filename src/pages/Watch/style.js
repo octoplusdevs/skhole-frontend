@@ -16,6 +16,10 @@ export const Wrapper = styled.section`
     height: 56px;
     transition: .3s ease;
     font-weight: 500;
+    width: calc(100% - 48px);
+    @media (min-width: 640px){
+      width: 100%
+    }
     &:hover{
       color: #fff;
     }
@@ -38,6 +42,8 @@ export const Wrapper = styled.section`
       max-width: 800px;
       width: 100%;
       display: flex;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
       gap: 16px;
       @media (min-width: 1024px) {

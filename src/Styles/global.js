@@ -85,13 +85,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   button{
-  border: none;
-  background-color: transparent;
+    background-color: transparent;
   }
 
-  input{
-  border: none;
-  }
   label{
     font-weight: 400;
     font-size: 16px;
