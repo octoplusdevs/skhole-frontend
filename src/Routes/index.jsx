@@ -9,7 +9,7 @@ import SkholeLogo from "@/assets/Logo";
 const Courses = lazy(() => import("../pages/Courses"));
 const Learning = lazy(() => import("../pages/Learning"));
 const NotFound = lazy(() => import("../pages/NotFound"));
-// const Watch = lazy(() => import("../pages/Watch"));
+const Course = lazy(() => import("../pages/Course"));
 const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
 const Profile = lazy(() => import("../pages/Profile"));
@@ -39,6 +39,7 @@ export default function () {
               <Route path="/learn" element={<Learning />} />
               <Route path="/" element={<Courses />} />
               <Route path="/courses" element={<Courses />} />
+              <Route path="/courses/:slug_course" element={<Course />} />
               <Route path="/courses/watch/" element={<Watch />}>
                 <Route path=":slug_course" element={<Watch />}>
                   <Route path=":slug_module" element={<Watch />}>

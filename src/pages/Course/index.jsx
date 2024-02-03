@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCourses } from "../../hooks/useCourses";
+import { useCourse, useCourses } from "../../hooks/useCourses";
 import { useParams } from "react-router-dom";
 import { Star, Certificate, Video, SealCheck, UsersThree, User, Play, CaretDown } from "@phosphor-icons/react";
 import { Wrapper, BannerCourse, Draft, Modules, ProgressBar } from "./style";
@@ -42,7 +42,7 @@ const MODULES = [
   }
 ]
 
-function Item({title, progress, moduleNumber, content}){
+function Item({title, progress, moduleNumber, content, ...rest}){
   const [active, setActive] = useState(false);
 
   function toggleAccordion() {
@@ -50,7 +50,7 @@ function Item({title, progress, moduleNumber, content}){
   }
 
   return (
-    <li key={moduleNumber} onClick={toggleAccordion}>
+    <li key={moduleNumber} onClick={toggleAccordion} {...rest}>
       <div className="module">
           <div className="module__header">
             <div className="module__left">
@@ -72,7 +72,7 @@ function Item({title, progress, moduleNumber, content}){
           <div className={`${active ? 'open':''} module__content`}>
             <ul>
               {
-                content.map((item, index)=>(<li key={item}><h3><span>{`${moduleNumber}.${index+1} `}</span>{item}</h3></li>))
+                content.map(({title,id}, index)=>(<li key={id}><h3><span>{index}</span>{title}</h3></li>))
               }
             </ul>
           </div>
@@ -81,17 +81,11 @@ function Item({title, progress, moduleNumber, content}){
   )
 }
 
-export function Course() {
+export default function Course() {
   const { slug_course } = useParams();
-  const [openModule, setOpenModule] = useState(true)
 
-  const { data } = useQuery(["course"], async () => {
-    const response = await API.get(`/courses/${slug_course}`);
-    return response.data;
-  });
-
-  console.log(data)
-
+  const { data: course } = useCourse(slug_course);
+  console.log(course)
   return (
     <>
       <Wrapper>
@@ -100,8 +94,8 @@ export function Course() {
             <BannerCourse>
               <div className="course__brand"></div>
               <div className="course__heading">
-                <h1>Pixel Perfect Básico</h1>
-                <p>For athletes, high altitude produces two contradictory effects on performance. For explosive events For athletes, high altitude produces two contradictory effects on performance. For explosive events </p>
+                <h1>{slug_course}</h1>
+                <p>{course?.description}</p>
               </div>
               <div className="course__progress">
                 <div className="progress">
@@ -121,8 +115,8 @@ export function Course() {
               <Modules>
 
                 {
-                  MODULES.map(({title, progress, moduleNumber, content})=> (
-                    <Item title={title} progress={progress} moduleNumber={moduleNumber} content={content} />
+                  course?.modules?.map(({title, videos, id})=> (
+                    <Item key={id} title={title} progress={0} moduleNumber={1} content={videos} />
                   ))
                 }
               </Modules>
@@ -130,14 +124,14 @@ export function Course() {
           </div>
           <Draft>
             <div className="draft-cta">
-              <h3>17.000 kz</h3>
+              <h3>{course?.price <= 0 ? "Gratuito": course?.price}</h3>
               <button>Comprar agora</button>
             </div>
             <div className="benefits">
               <ul>
                 <li>
                   <Star color="#F9FD47" weight="fill" size={24} />
-                  <span>4.7 (2301 de avaliacoes)</span>
+                  <span>4.9</span>
                 </li>
                 <li>
                   <SealCheck color="#fff" weight="fill" size={24} />
@@ -145,7 +139,9 @@ export function Course() {
                 </li>
                 <li>
                   <Video color="#fff" weight="fill" size={24} />
-                  <span>85 aulas Incriveis</span>
+                  <span>{course?.modules
+                      .map((module) => module.videos.length)
+                      .reduce((acc, curr) => acc + curr, 0)} aulas Incriveis</span>
                 </li>
                 <li>
                   <Certificate color="#fff" weight="fill" size={24} />
@@ -158,13 +154,22 @@ export function Course() {
               </ul>
             </div>
 
-            <div className="trainer">
-              <div className="trainer-avatar">
-                <User size={22} color="#ffffff" />
-              </div>
-              <div className="trainer-info">
-                <h4>Wilmy Danguya</h4>
-                <span>Instrutor do Curso</span>
+            <div className="flex flex-col gap-4">
+              <h4 className="text-white">Instructores</h4>
+              <div className="flex flex-col gap-4">
+                {
+                  course?.instructors?.map(({id,first_name, last_name})=>(
+                    <div className="trainer" key={id}>
+                    <div className="trainer-avatar">
+                      <User size={22} color="#ffffff" />
+                    </div>
+                    <div className="trainer-info">
+                      <h4>{`${first_name} ${last_name}`}</h4>
+                      <span>Instrutor do Curso</span>
+                    </div>
+                    </div>
+                  ))
+                }
               </div>
             </div>
           </Draft>
