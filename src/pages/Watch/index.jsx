@@ -10,7 +10,7 @@ import { Link, Student } from "phosphor-react";
 
 export default function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
-  const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
+  const { data: video, isLoading: isLoadingVideo } = useVideo("pixel-perfect-basico", slug_module, slug_video);
 
   // Obtenha todos os vídeos dos módulos
   //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
