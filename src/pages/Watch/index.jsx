@@ -1,8 +1,8 @@
 // import { Suspense, lazy } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import { Wrapper } from "./style";
 // import Player from "../../Components/Player";
-// import { useVideo } from "../../hooks/useVideo";
+import { useVideo } from "../../hooks/useVideo";
 // import { Link, Student } from "@phosphor-icons/react";
 
 // const Playlist = lazy(() => import("../../Components/Playlist"))
