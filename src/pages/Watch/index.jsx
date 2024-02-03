@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Wrapper } from "./style";
 import Player from "../../Components/Player";
 import { useVideo } from "../../hooks/useVideo";
-import { Link, Student } from "phosphor-react";
+// import { Link, Student } from "@phosphor-icons/react";
 // import { Suspense, lazy } from "react";
 
 // const Playlist = lazy(() => import("../../Components/Playlist"))
@@ -53,14 +53,14 @@ export default function Watch() {
             </a>
             :
             <span title="Ainda não disponível." className="button_assets disabled">
-              <Link size={24} weight="regular" />
+              {/* <Link size={24} weight="regular" /> */}
               <span>
                 Recursos da Aula
               </span>
             </span>
           }
           <span title="Ainda não disponível." className="button_assets disabled">
-            <Student size={24} weight="regular" />
+            {/* <Student size={24} weight="regular" /> */}
             <span>
               Emitir Certificado
             </span>
