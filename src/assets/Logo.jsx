@@ -1,6 +1,6 @@
 import React from "react";
 
-function SkholeLogo() {
+function SkholeLogo({...rest}) {
   return (
     <svg
       width="30"
@@ -8,6 +8,7 @@ function SkholeLogo() {
       viewBox="0 0 133 145"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         fillRule="evenodd"

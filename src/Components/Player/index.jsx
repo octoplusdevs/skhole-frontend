@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Wrapper } from "./style";
 import PropTypes from "prop-types";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/file";
 import { useVideoUpdateProgress } from "../../hooks/useVideoUpdateProgress";
 
 const getUpdateFrequency = (duration) => {
   return duration * 0.15; // 15% da duração total em segundos
 };
 
-export function Player({
+export default function Player({
   videoIdCDN = "c8fae39c-2720-4c14-8d32-50415e57ad67",
   autoplay = true,
   video_id,
@@ -87,6 +87,7 @@ export function Player({
               onPause={handlePause}
               onSeek={updateProgress}
               onPlay={updateProgress}
+              fallback={<h1>Carregando...</h1>}
               onReady={handleReady}
               width="100%"
               height="100%"

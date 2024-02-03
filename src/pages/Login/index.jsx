@@ -15,7 +15,7 @@ import { queryClient } from "../../services/query";
 import { Modal } from "../../Components/Modal";
 import { API } from "../../services/api";
 
-export function Login() {
+export default function Login() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);

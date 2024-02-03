@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 import { toast } from "react-toastify";
 
-export function ResetPassword() {
+export default function ResetPassword() {
   const dispatch = useDispatch();
   const hasError = useSelector((state) => state.resetPassword.error);
   const navigate = useNavigate();

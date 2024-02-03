@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Wrapper } from "./style";
 import { ArrowLeft } from "phosphor-react";
 
-export function NotFound() {
+export default function NotFound() {
   return (
     <Wrapper>
       <div className="left">

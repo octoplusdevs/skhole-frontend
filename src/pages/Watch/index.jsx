@@ -1,20 +1,26 @@
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper } from "./style";
-import Playlist from "../../Components/Playlist";
-import { Player } from "../../Components/Player";
-import { useModules } from "../../hooks/useModules";
+import Player from "../../Components/Player";
 import { useVideo } from "../../hooks/useVideo";
-import { DownloadSimple, Link, Student } from "phosphor-react";
+import { Link, Student } from "@phosphor-icons/react";
+import {SkeletonQuiz} from "../../Components/quiz"
+import {SkeletonPlaylist} from "../../Components/Playlist"
 
-export function Watch() {
+const Playlist = lazy(() => import("../../Components/Playlist"))
+const Quiz = lazy(() => import("../../Components/quiz"))
+
+export default function Watch() {
+  const [shouldShowFallback, setShouldShowFallback] = useState(true);
   const { slug_course, slug_video, slug_module } = useParams();
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
+
 
   // Obtenha todos os vídeos dos módulos
   //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
   // console.log(video);
   return (
-    <Wrapper>
+    <Wrapper className="flex flex-col gap-14">
       <div className="grid">
         <div className="main">
           <Player
@@ -32,14 +38,12 @@ export function Watch() {
             <p>{video?.description}</p>
           </div>
         </div>
-        {/* <div className="playlist"> */}
         <aside className="aside">
-          <Playlist
-            // modules={modules}
-            // slug_course={slug_course}
-            activeVideo={slug_video || video?.slug}
-          // status={status}
-          />
+          <Suspense fallback={<SkeletonPlaylist />}>
+            <Playlist
+              activeVideo={slug_video || video?.slug}
+            />
+          </Suspense>
           {video?.assetLink ?
             <a href={video.assetLink} target="_blank" rel="noopener noreferrer" className="button_assets">
               <Link size={24} weight="bold" />
@@ -64,8 +68,11 @@ export function Watch() {
 
 
         </aside>
-        {/* </div> */}
       </div>
+
+      <Suspense fallback={<SkeletonQuiz/>}>
+        <Quiz QUESTIONS={video?.questions}/>
+      </Suspense>
     </Wrapper>
   );
 }
