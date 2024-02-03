@@ -9,14 +9,14 @@
 // const Quiz = lazy(() => import("../../Components/quiz"))
 
 export default function Watch() {
-  // const { slug_course, slug_video, slug_module } = useParams();
-  // const { data: video, isLoading: isLoadingVideo } = useVideo("pixel-perfect-basico", slug_module, slug_video);
+  const { slug_course, slug_video, slug_module } = useParams();
+  const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
 
   // Obtenha todos os vídeos dos módulos
   //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
   // console.log(video);
   return (
-    <h1>Watching...</h1>
+    <h1>{video?.title}</h1>
     // <Wrapper className="flex flex-col gap-14">
     //   <div className="grid">
     //     <div className="main">
