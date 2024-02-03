@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper } from "./style";
 import Player from "../../Components/Player";
@@ -11,7 +11,6 @@ const Playlist = lazy(() => import("../../Components/Playlist"))
 const Quiz = lazy(() => import("../../Components/quiz"))
 
 export default function Watch() {
-  const [shouldShowFallback, setShouldShowFallback] = useState(true);
   const { slug_course, slug_video, slug_module } = useParams();
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
 
