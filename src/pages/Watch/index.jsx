@@ -1,12 +1,12 @@
-// import { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper } from "./style";
 import Player from "../../Components/Player";
 import { useVideo } from "../../hooks/useVideo";
-// import { Link, Student } from "@phosphor-icons/react";
+import { Link, Student } from "@phosphor-icons/react";
 
-// const Playlist = lazy(() => import("../../Components/Playlist"))
-// const Quiz = lazy(() => import("../../Components/quiz"))
+const Playlist = lazy(() => import("../../Components/Playlist"))
+const Quiz = lazy(() => import("../../Components/quiz"))
 
 export default function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
@@ -17,8 +17,9 @@ export default function Watch() {
   // console.log(video);
   return (
     <Wrapper className="flex flex-col gap-14">
-      <h1>{video?.title}</h1>
-      <Player
+      <div className="grid">
+        <div className="main">
+          <Player
             title={video?.title}
             description={video?.description}
             duration={video?.duration}
@@ -28,9 +29,6 @@ export default function Watch() {
             isLoading={isLoadingVideo}
             initialLastPosition={video?.progress?.lastPosition}
           />
-      {/* <div className="grid">
-        <div className="main">
-
           <div className={`${isLoadingVideo || video?.length <= 0 ? "skeleton" : "video__info"}`}>
             <h1>{video?.title}</h1>
             <p>{video?.description}</p>
@@ -70,7 +68,7 @@ export default function Watch() {
 
       <Suspense fallback={<h1>Carregando</h1>}>
         <Quiz QUESTIONS={video?.questions}/>
-      </Suspense> */}
+      </Suspense>
     </Wrapper>
   );
 }

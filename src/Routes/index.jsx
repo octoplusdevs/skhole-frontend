@@ -3,11 +3,12 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "../Components/Layout";
 import PrivateRoute from "./private"
+import Watch from "../pages/Watch";
 
 const Courses = lazy(() => import("../pages/Courses"));
 const Learning = lazy(() => import("../pages/Learning"));
 const NotFound = lazy(() => import("../pages/NotFound"));
-const Watch = lazy(() => import("../pages/Watch"));
+// const Watch = lazy(() => import("../pages/Watch"));
 const Login = lazy(() => import("../pages/Login"));
 const Register = lazy(() => import("../pages/Register"));
 const Profile = lazy(() => import("../pages/Profile"));
@@ -17,7 +18,8 @@ const ConfirmAccount = lazy(() => import("../pages/confirmAccount"))
 
 export default function () {
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <>
+      <Suspense fallback={<h1>Loading...</h1>}>
       <Routes>
           <Route element={<PrivateRoute />}>
           <Route>
@@ -45,5 +47,6 @@ export default function () {
           <Route path="/login" element={<Login />} />
     </Routes>
     </Suspense>
+    </>
   );
 }
