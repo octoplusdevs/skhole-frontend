@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Wrapper } from "./style";
 import PropTypes from "prop-types";
+import ReactPlayer from "react-player/file";
 import { useVideoUpdateProgress } from "../../hooks/useVideoUpdateProgress";
 
 const getUpdateFrequency = (duration) => {
@@ -9,7 +10,7 @@ const getUpdateFrequency = (duration) => {
 
 export default function Player({
   videoIdCDN = "c8fae39c-2720-4c14-8d32-50415e57ad67",
-  autoplay = false,
+  autoplay = true,
   video_id,
   url,
   initialLastPosition,
@@ -61,25 +62,37 @@ export default function Player({
     }
   }
 
+  // useEffect(() => {
+  //   const updateIntervalId = setInterval(updateProgress, updateInterval);
 
+  //   window.addEventListener("beforeunload", updateProgress);
+
+  //   return () => {
+  //     clearInterval(updateIntervalId);
+  //     window.removeEventListener("beforeunload", updateProgress);
+  //   };
+  // }, [updateInterval, updateProgress]);
 
   return (
     <Wrapper>
       <div className="video__container aspect-ratio-container">
         {!isLoading && (
           <>
-            <iframe
-              src={`https://iframe.mediadelivery.net/embed/44259/${videoIdCDN}?autoplay=${autoplay}&preload=${false}&onPause=${handlePause}`}
-              loading="lazy"
-              style={{
-                border: "none",
-                top: 0,
-                height: "100%",
-                width: "100%",
-              }}
-              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-              allowFullScreen={true}
-            ></iframe>
+            <ReactPlayer
+              ref={playerRef}
+              url={url}
+              controls
+              onDuration={handleDuration}
+              onProgress={handleProgress}
+              onPause={handlePause}
+              onSeek={updateProgress}
+              onPlay={updateProgress}
+              fallback={<h1>Carregando...</h1>}
+              onReady={handleReady}
+              width="100%"
+              height="100%"
+              className="player-wrapper"
+            />
           </>
         )}
       </div>
