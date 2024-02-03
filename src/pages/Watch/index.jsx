@@ -3,10 +3,10 @@ import { Wrapper } from "./style";
 import Player from "../../Components/Player";
 import { useVideo } from "../../hooks/useVideo";
 import { Link, Student } from "phosphor-react";
-import { Suspense, lazy } from "react";
+// import { Suspense, lazy } from "react";
 
-const Playlist = lazy(() => import("../../Components/Playlist"))
-const Quiz = lazy(() => import("../../Components/quiz"))
+// const Playlist = lazy(() => import("../../Components/Playlist"))
+// const Quiz = lazy(() => import("../../Components/quiz"))
 
 export default function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
@@ -36,14 +36,14 @@ export default function Watch() {
         </div>
         {/* <div className="playlist"> */}
         <aside className="aside">
-          <Suspense fallback={<h1>Carregando a playlist</h1>}>
+          {/* <Suspense fallback={<h1>Carregando a playlist</h1>}>
             <Playlist
               // modules={modules}
               // slug_course={slug_course}
               activeVideo={slug_video || video?.slug}
             // status={status}
             />
-          </Suspense>
+          </Suspense> */}
           {video?.assetLink ?
             <a href={video.assetLink} target="_blank" rel="noopener noreferrer" className="button_assets">
               <Link size={24} weight="bold" />
@@ -71,9 +71,9 @@ export default function Watch() {
         {/* </div> */}
       </div>
 
-      <Suspense fallback={<h1>Carregando</h1>}>
+      {/* <Suspense fallback={<h1>Carregando</h1>}>
         <Quiz QUESTIONS={video?.questions}/>
-      </Suspense>
+      </Suspense> */}
     </Wrapper>
   );
 }
