@@ -14,7 +14,7 @@ import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 import { toast } from "react-toastify";
 import AccountCreated from "./accountCreated";
 
-export function Register() {
+export default function Register() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);

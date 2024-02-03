@@ -8,7 +8,7 @@ import { DownloadSimple, Link, Student } from "phosphor-react";
 import Quiz from "../../Components/quiz";
 import { QUESTIONS } from "@/Components/quiz/data";
 
-export function Watch() {
+export default function Watch() {
   const { slug_course, slug_video, slug_module } = useParams();
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
 

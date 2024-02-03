@@ -12,7 +12,7 @@ import { Form } from "../../Components/Form";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 import { useState } from "react";
 
-export function ForgotPassword() {
+export default function ForgotPassword() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);

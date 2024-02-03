@@ -10,7 +10,7 @@ import { Biling } from "./Biling";
 import { Apparence } from "./Apparence";
 import { DropdownList } from "react-widgets";
 
-export function Profile() {
+export default function Profile() {
   const [activeTab, setActiveTab] = useState();
 
   useEffect(() => {

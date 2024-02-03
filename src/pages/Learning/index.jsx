@@ -3,7 +3,7 @@ import { Wrapper } from "./style";
 import Loader from "../../Components/Loader";
 import { CourseCard } from "../../Components/card";
 
-export function Learning() {
+export default function Learning() {
   const { data: enrollments, isLoading: isLoadingCourses } = useUserEnrollments();
   return (
     <>

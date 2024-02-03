@@ -74,7 +74,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export function ConfirmAccount() {
+export default function ConfirmAccount() {
   const navigate = useNavigate();
   const [accountWasConfirmed, setAccountWasConfirmed] = useState(false);
   const { token } = useParams();
