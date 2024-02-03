@@ -8,7 +8,7 @@ const getUpdateFrequency = (duration) => {
   return duration * 0.15; // 15% da duração total em segundos
 };
 
-export function Player({
+export default function Player({
   videoIdCDN = "c8fae39c-2720-4c14-8d32-50415e57ad67",
   autoplay = true,
   video_id,
