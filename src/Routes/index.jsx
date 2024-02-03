@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Layout } from "../Components/Layout";
 import PrivateRoute from "./private"
 import Watch from "../pages/Watch";
+import SkholeLogo from "@/assets/Logo";
 
 const Courses = lazy(() => import("../pages/Courses"));
 const Learning = lazy(() => import("../pages/Learning"));
@@ -16,10 +17,19 @@ const ForgotPassword  = lazy(() => import( "../pages/ForgotPassword"))
 const ResetPassword = lazy(() => import("../pages/ResetPassword"))
 const ConfirmAccount = lazy(() => import("../pages/confirmAccount"))
 
+function PageLoader(){
+  return (
+    <div className="w-screen h-screen overflow-hidden flex items-center gap-2 flex-col justify-center text-[#929292]">
+      <SkholeLogo className="animate-pulse" height={70} width={70} />
+      <h2>Skhole Profissional</h2>
+    </div>
+  )
+}
+
 export default function () {
   return (
     <>
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<PageLoader/>}>
       <Routes>
           <Route element={<PrivateRoute />}>
           <Route>

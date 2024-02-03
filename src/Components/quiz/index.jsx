@@ -7,7 +7,7 @@ import { ButtonsActions } from "./buttons-actions"
 import useAnswerQuestion from "@/hooks/useAnswerQuestion"
 
 
-function Quiz({QUESTIONS}){
+export default function Quiz({QUESTIONS}){
   const [currentHint, setCurrenHint] = useState('')
   const [activateModal, setActivateModal] = useState(false)
   const [selectQuestionId, setSelectQuestionId] = useState("")
@@ -112,4 +112,11 @@ function Quiz({QUESTIONS}){
 }
 
 
-export default Quiz
+export function SkeletonQuiz(){
+  return (
+    <div className="container">
+      <div className="sm:bg-[#161817] flex flex-col gap-8 max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
+      </div>
+    </div>
+  )
+}

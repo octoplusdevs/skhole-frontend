@@ -1,16 +1,20 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper } from "./style";
 import Player from "../../Components/Player";
 import { useVideo } from "../../hooks/useVideo";
 import { Link, Student } from "@phosphor-icons/react";
+import {SkeletonQuiz} from "../../Components/quiz"
+import {SkeletonPlaylist} from "../../Components/Playlist"
 
 const Playlist = lazy(() => import("../../Components/Playlist"))
 const Quiz = lazy(() => import("../../Components/quiz"))
 
 export default function Watch() {
+  const [shouldShowFallback, setShouldShowFallback] = useState(true);
   const { slug_course, slug_video, slug_module } = useParams();
   const { data: video, isLoading: isLoadingVideo } = useVideo(slug_course, slug_module, slug_video);
+
 
   // Obtenha todos os vídeos dos módulos
   //  const allVideos = modules.reduce((acc, module) => [...acc, ...module.videos], []);
@@ -35,7 +39,7 @@ export default function Watch() {
           </div>
         </div>
         <aside className="aside">
-          <Suspense fallback={<h1>Carregando a playlist</h1>}>
+          <Suspense fallback={<SkeletonPlaylist />}>
             <Playlist
               activeVideo={slug_video || video?.slug}
             />
@@ -66,7 +70,7 @@ export default function Watch() {
         </aside>
       </div>
 
-      <Suspense fallback={<h1>Carregando</h1>}>
+      <Suspense fallback={<SkeletonQuiz/>}>
         <Quiz QUESTIONS={video?.questions}/>
       </Suspense>
     </Wrapper>

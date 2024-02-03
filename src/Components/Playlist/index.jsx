@@ -187,6 +187,31 @@ function Playlist({ activeVideo }) {
   );
 }
 
+
+export function SkeletonPlaylist(){
+  return (
+    <div className="h-[449px] bg-[##161817] rounded-[8px] w-[384px]">
+      <div className="sm:bg-[#161817] h-full flex flex-col gap-8 max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
+        <div role="status" className="w-full animate-pulse ">
+          <div className="flex flex-col gap-8 w-full mb-4">
+            {
+              [...Array(7).keys()].map((item)=>(
+                <div key={item} className="flex gap-4 opacity-[0.13]">
+                  <div className="h-[38px] w-[38px] shrink-0 bg-slate-500 rounded-full"></div>
+                  <div className="w-full flex flex-col gap-4 items-start justify-center">
+                    <div className="h-[12px] w-[71%] bg-slate-500 rounded"></div>
+                    <div className="h-[8px] w-[35%] bg-green-500 rounded"></div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+      </div>
+      </div>
+    </div>
+  )
+}
+
 Playlist.propTypes = {
   modules: propTypes.array,
   slug_course: propTypes.string,
