@@ -17,7 +17,7 @@ import { ConfirmAccount } from "../pages/confirmAccount";
 export default function () {
   return (
     <Routes>
-      {/* <Route element={<PrivateRoute />}> */}
+      <Route element={<PrivateRoute />}>
         <Route element={<Layout />}>
           <Route path="/me" element={<Profile />} />
           <Route path="/me/:tab" element={<Profile />} />
@@ -33,7 +33,7 @@ export default function () {
             </Route>
           </Route>
         </Route>
-      {/* </Route> */}
+      </Route>
       <Route path="*" element={<NotFound />} />
       <Route path="/register" element={<Register />} />
       <Route path="/password/reset/:token" element={<ResetPassword />} />
