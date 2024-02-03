@@ -1,7 +1,7 @@
 // import { Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { Wrapper } from "./style";
-// import Player from "../../Components/Player";
+import Player from "../../Components/Player";
 import { useVideo } from "../../hooks/useVideo";
 // import { Link, Student } from "@phosphor-icons/react";
 
@@ -18,9 +18,7 @@ export default function Watch() {
   return (
     <Wrapper className="flex flex-col gap-14">
       <h1>{video?.title}</h1>
-      {/* <div className="grid">
-        <div className="main">
-          <Player
+      <Player
             title={video?.title}
             description={video?.description}
             duration={video?.duration}
@@ -30,6 +28,9 @@ export default function Watch() {
             isLoading={isLoadingVideo}
             initialLastPosition={video?.progress?.lastPosition}
           />
+      {/* <div className="grid">
+        <div className="main">
+
           <div className={`${isLoadingVideo || video?.length <= 0 ? "skeleton" : "video__info"}`}>
             <h1>{video?.title}</h1>
             <p>{video?.description}</p>
