@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import React,{ useRef, useState, lazy, Suspense } from "react";
 import { Wrapper } from "./style";
 import PropTypes from "prop-types";
-import ReactPlayer from "react-player";
+const LazyReactPlayer = lazy(() => import('react-player'));
 import { useVideoUpdateProgress } from "../../hooks/useVideoUpdateProgress";
 
 const getUpdateFrequency = (duration) => {
@@ -77,8 +77,8 @@ export default function Player({
     <Wrapper>
       <div className="video__container aspect-ratio-container">
         {!isLoading && (
-          <>
-            <ReactPlayer
+          <Suspense fallback={<div>Carregando...</div>}>
+            <LazyReactPlayer
               ref={playerRef}
               url={url}
               controls
@@ -92,7 +92,7 @@ export default function Player({
               height="100%"
               className="player-wrapper"
             />
-          </>
+          </Suspense>
         )}
       </div>
     </Wrapper>
