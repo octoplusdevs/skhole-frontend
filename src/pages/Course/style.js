@@ -5,7 +5,7 @@ export const Wrapper = styled.section`
   .container {
     display: flex;
     gap: 32px;
-    /* height: 1000px; */
+    height: 1000px;
     .main{
       max-width: 100%;
       width: 100%;
@@ -141,9 +141,9 @@ export const BannerCourse = styled.div`
 
     }
   }
-  
 
-  
+
+
 
 `
 
@@ -219,7 +219,7 @@ export const Draft = styled.div`
 `
 
 export const Modules = styled.ul`
-  
+
   color: #fff;
   li {
     margin-bottom: 8px;
@@ -274,7 +274,7 @@ export const Modules = styled.ul`
             color: #fff;
             font-size: 14px;
           }
-          
+
         }
         h2{
           color: #FFF;
@@ -300,22 +300,22 @@ export const Modules = styled.ul`
         transition: transform 0.4s ease;
       }
     }
-   
-    
 
-    
+
+
+
   }
 
   .module__content {
     transition: all 0.4s ease;
-    
+
     overflow: hidden;
     background-color: #030404;
 
     border-radius: 0 0 8px 8px;
 
     padding: 0 40px;
-    
+
     opacity: 0;
     pointer-events: none;
     height: 0;

@@ -27,7 +27,7 @@ export default function Courses() {
                   <CourseCard.Thumbnail
                     src={course?.thumbnail?.url || ""}
                     alt={course?.description}
-                    confirmed={course?.enrollment?.confirmed || false}
+                    status={course?.status}
                     slug={course?.slug}
                   />
                   <CourseCard.Title
