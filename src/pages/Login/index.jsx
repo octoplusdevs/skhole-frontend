@@ -91,7 +91,7 @@ export default function Login() {
               autoComplete="email"
             />
             <p className="message_error">
-              {errors?.email?.message || (hasError?.includes("Email") && hasError)}
+              {errors?.email?.message}
             </p>
           </div>
 

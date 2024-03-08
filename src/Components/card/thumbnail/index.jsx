@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import { Wrapper } from "./styles";
 import { Link } from "react-router-dom";
 
-export default function Thumbnail({ confirmed, src, alt, slug }) {
+export default function Thumbnail({ status, src, alt, slug }) {
   return (
     <Wrapper>
-      {confirmed ? (
-        <Link to={`/courses/watch/${slug}`}>
+      {!(status === "inactive") ? (
+        <Link to={`/courses/${slug}`}>
           <img src={src} alt={alt} />
         </Link>
       ) : (
@@ -17,7 +17,7 @@ export default function Thumbnail({ confirmed, src, alt, slug }) {
 }
 
 Thumbnail.propTypes = {
-  confirmed: PropTypes.bool.isRequired,
+  status: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,

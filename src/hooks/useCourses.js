@@ -7,3 +7,9 @@ export function useCourses() {
     return response.data;
   });
 }
+export function useCourse(slug_course) {
+  return useQuery([slug_course], async () => {
+    const response = await API.get(`/courses/${slug_course}`);
+    return response.data;
+  });
+}
