@@ -2,10 +2,12 @@ import styled from "styled-components";
 
 export const Wrapper = styled.section`
   padding: 120px 0;
+
   .container {
     display: flex;
+    flex-direction: column;
     gap: 32px;
-    height: 1000px;
+    min-height: 1000px;
     .main{
       max-width: 100%;
       width: 100%;
@@ -20,6 +22,11 @@ export const Wrapper = styled.section`
       }
 
 
+    }
+  }
+  @media (min-width: 1024px){
+    .container {
+      flex-direction: row;
     }
   }
 
@@ -149,13 +156,18 @@ export const BannerCourse = styled.div`
 
 export const Draft = styled.div`
   height: 450px;
-  width: 384px;
-  position: sticky;
-  top: 100px;
+  width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  display: none;
+
+  @media (min-width: 1024px){
+    max-width: 384px;
+    position: sticky;
+    top: 100px;
+
+  }
   @media (min-width: 1148px){
     display: flex;
   }
