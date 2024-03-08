@@ -74,7 +74,7 @@ function Item({title, progress, moduleNumber, content, ...rest}){
           <div className={`${active ? 'open':''} module__content`}>
             <ul>
               {
-                content.map(({title,id, lesson_number}, index)=>(<li key={id}><h3><span>{lesson_number}</span>{title}</h3></li>))
+                content.sort((a,b)=> a.lesson_number - b.lesson_number).map(({title,id, lesson_number}, index)=>(<li key={id}><h3><span>{lesson_number}</span>{title}</h3></li>))
               }
             </ul>
           </div>
