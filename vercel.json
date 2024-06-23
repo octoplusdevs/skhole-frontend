@@ -3,12 +3,14 @@
     {
       "source": "/(.*)",
       "destination": "https://www.skholepro.com/$1",
-      "permanent": true
+      "permanent": true,
+      "statusCode": 308
     },
     {
       "source": "/",
       "destination": "https://www.skholepro.com",
-      "permanent": true
+      "permanent": true,
+      "statusCode": 308
     }
   ]
 }
