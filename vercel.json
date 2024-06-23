@@ -2,7 +2,13 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "destination": "https://skholepro.com"
+      "destination": "https://www.skholepro.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "destination": "https://www.skholepro.com",
+      "permanent": true
     }
   ]
 }
