@@ -1,6 +1,7 @@
 import { AuthProvider } from "./context/auth-context";
 import { ReactQueryProvider } from "./components/providers/react-query-provider";
 import 'styles/globals.css';
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: 'Skholé',
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ReactQueryProvider>
           <AuthProvider>{children}</AuthProvider>
+          <Toaster />
         </ReactQueryProvider>
       </body>
     </html>
