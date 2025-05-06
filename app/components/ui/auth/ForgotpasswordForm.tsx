@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { API } from '@/lib/api';
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -25,9 +26,8 @@ export function ForgotPasswordForm() {
 
   const onSubmit = async (data: ForgotPasswordData) => {
     try {
-      // Aqui você pode chamar sua API ou função
-      console.log(data);
-      toast.success("Link de recuperação enviado!");
+      const response = await API.post('/auth/forgot-password', data);
+      toast.success(response.data.message || "E-mail enviado com sucesso!");
     } catch (err) {
       toast.error("Erro ao enviar e-mail.");
     }

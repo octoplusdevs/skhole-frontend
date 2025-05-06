@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { API } from '@/lib/api';
+import { useLogin } from '@/hooks/auth/useLogin';
 
 const loginSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -26,8 +28,9 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginData) => {
     try {
-      // Aqui você chama sua API de login
-      console.log(data);
+      const { mutate } = useLogin();
+      const response = mutate(data);
+      console.log(response);
       toast.success("Login efetuado com sucesso!");
     } catch (err) {
       toast.error("Erro ao fazer login.");
