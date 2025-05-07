@@ -1,6 +1,7 @@
 import { AuthProvider } from "./context/auth-context";
 import { ReactQueryProvider } from "./components/providers/react-query-provider";
-import "styles/globals.css";
+import 'styles/globals.css';
+import { Toaster } from "sonner";
 import { inter } from "./fonts/fonts";
 
 export const metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <AuthProvider>{children}</AuthProvider>
+          <Toaster />
         </ReactQueryProvider>
       </body>
     </html>
