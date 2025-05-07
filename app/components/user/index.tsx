@@ -1,21 +1,29 @@
 import Image from "next/image";
 import { IUser } from "./interface";
 
-export const User = ({ email, name, role }: IUser) => {
+export const User = ({ email, name, role, firstName, avatar }: IUser) => {
   return (
     <div className="flex gap-2">
       <Image
         alt="user"
-        src="/user.png"
+        src={avatar}
         width={48}
         height={48}
         className="w-full max-w-[40px] h-[40px] sm:max-w-[48px] sm:h-[48px] object-contain"
       />
-      <div className="hidden flex-col gap-1 lg:flex">
+      <div
+        className={`flex-col gap-1 ${firstName ? "lg:flex hidden" : "flex"}`}
+      >
         <p className="font-semibold text-[16px]">
-          {name.split(" ")[0] || "Visitante"}
+          {firstName ? name.trim().split(/\s+/)[0] : name || "Visitante"}
         </p>
-        <span className="text-primary font-medium text-[12px]">Online</span>
+        <span
+          className={` font-medium ${
+            role ? "text-[14px] text-description" : "text-[12px] text-primary"
+          }`}
+        >
+          {role ? role : "Online"}
+        </span>
       </div>
     </div>
   );

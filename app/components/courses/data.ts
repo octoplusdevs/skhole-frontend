@@ -1,4 +1,20 @@
-const courses = [
+type StatusType = "ACTIVE" | "DRAFT" | "ARCHIVED" | "ENROLLED";
+
+interface ICourse {
+  id: number;
+  title: string;
+  price: number;
+  details: {
+    totalTime: string;
+    lessonCount: number;
+    category: string;
+  };
+  slug: string;
+  thumbnail: string;
+  status: StatusType;
+}
+
+const courses: ICourse[] = [
   {
     id: 0,
     title: "JavaScript do Zero ao Avançado",
@@ -8,8 +24,9 @@ const courses = [
       lessonCount: 120,
       category: "prog",
     },
-    link: "/",
+    slug: "javascript-do-zero-ao-avancado",
     thumbnail: "/node.png",
+    status: "ACTIVE",
   },
   {
     id: 1,
@@ -20,8 +37,9 @@ const courses = [
       lessonCount: 80,
       category: "design",
     },
-    link: "/",
+    slug: "design-ui-ux-para-iniciantes",
     thumbnail: "/js.jpeg",
+    status: "ENROLLED",
   },
   {
     id: 2,
@@ -32,8 +50,9 @@ const courses = [
       lessonCount: 100,
       category: "web",
     },
-    link: "/",
+    slug: "react-e-typescript-na-pratica",
     thumbnail: "/ts.png",
+    status: "ARCHIVED",
   },
   {
     id: 3,
@@ -44,8 +63,9 @@ const courses = [
       lessonCount: 60,
       category: "photo",
     },
-    link: "/",
+    slug: "fotografia-profissional-com-o-celular",
     thumbnail: "/js.jpeg",
+    status: "DRAFT",
   },
   {
     id: 4,
@@ -56,8 +76,9 @@ const courses = [
       lessonCount: 75,
       category: "data",
     },
-    link: "/",
+    slug: "introducao-ao-banco-de-dados-sql",
     thumbnail: "/ts.png",
+    status: "ENROLLED",
   },
   {
     id: 5,
@@ -68,8 +89,9 @@ const courses = [
       lessonCount: 50,
       category: "design",
     },
-    link: "/",
+    slug: "figma-para-web-design-moderno",
     thumbnail: "/node.png",
+    status: "ACTIVE",
   },
   {
     id: 6,
@@ -80,8 +102,9 @@ const courses = [
       lessonCount: 110,
       category: "backend",
     },
-    link: "/",
+    slug: "nodejs-com-express-e-mongodb",
     thumbnail: "/ts.png",
+    status: "DRAFT",
   },
   {
     id: 7,
@@ -92,8 +115,9 @@ const courses = [
       lessonCount: 90,
       category: "data",
     },
-    link: "/",
+    slug: "python-para-analise-de-dados",
     thumbnail: "/node.png",
+    status: "ENROLLED",
   },
   {
     id: 8,
@@ -104,8 +128,9 @@ const courses = [
       lessonCount: 70,
       category: "marketing",
     },
-    link: "/",
+    slug: "marketing-digital-com-estrategias-de-conteudo",
     thumbnail: "/js.jpeg",
+    status: "ARCHIVED",
   },
 ];
 

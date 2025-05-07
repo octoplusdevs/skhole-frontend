@@ -41,6 +41,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-logo: var(--logo);
   --color-link: var(--link);
+  --color-description: var(--description);
 }
 
 :root {
@@ -78,6 +79,7 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --logo: #f2f2f2;
   --link: #8c8c8c;
+  --description: #808080;
 }
 
 .dark {

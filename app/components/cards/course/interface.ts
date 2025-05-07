@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
+type StatusType = "ACTIVE" | "DRAFT" | "ARCHIVED" | "ENROLLED";
+
 interface IRoot {
   children: ReactNode;
   className?: string;
@@ -28,10 +30,12 @@ interface IDetail {
 }
 
 interface IButton {
-  content: string;
+  content?: string;
   className?: string;
   Icon?: ReactNode;
   target: string;
+  onClick: () => void;
+  status: StatusType;
 }
 
 export type { IRoot, IThumbnail, ITitle, IPrice, IDetail, IButton };

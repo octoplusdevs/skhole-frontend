@@ -32,7 +32,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="bg-secondary fixed w-full">
+    <header className="bg-secondary z-50 fixed w-full">
       <Container className="flex justify-between items-center gap-4 relative h-14 sm:h-20">
         <Logo />
         <nav id="menu-desktop" className="hidden gap-6 md:flex">
@@ -53,7 +53,7 @@ const Header = () => {
         </nav>
         <nav
           id="menu-mobile"
-          className={`flex flex-col gap-4 md:hidden bg-card-foreground absolute top-20 left-0 h-[100dvh] duration-150 overflow-x-scroll pt-4 ${
+          className={`flex flex-col gap-4 md:hidden bg-card-foreground absolute top-14 sm:top-20 left-0 h-[100dvh] duration-150 overflow-x-scroll pt-4 ${
             menuMobileStatus ? "w-full px-4" : "w-0 px-0"
           }`}
         >
@@ -78,7 +78,8 @@ const Header = () => {
               email={user.email}
               id={user.id}
               name={user.name}
-              role={user.role}
+              firstName={true}
+              avatar="/user.png"
             />
           )}
           <div id="buttons-mobile" className="md:hidden">
