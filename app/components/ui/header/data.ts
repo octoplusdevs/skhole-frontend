@@ -16,8 +16,8 @@ export const MENU = [
   },
   {
     id: 3,
-    content: "Treinamentos",
-    target: "/dashboard/treinamentos",
+    content: "Fórum",
+    target: "/dashboard/forum-de-discussao",
   },
   {
     id: 4,

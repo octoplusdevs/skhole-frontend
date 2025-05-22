@@ -1,4 +1,4 @@
-import { inter } from "@/fonts/fonts";
+import { inter } from "@/fonts/data";
 import { ITitle } from "./interface";
 
 const Title = ({ content, className }: ITitle) => {

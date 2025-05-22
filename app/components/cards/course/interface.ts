@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type StatusType = "ACTIVE" | "DRAFT" | "ARCHIVED" | "ENROLLED";
+type StatusType = "ACTIVE" | "DRAFT" | "ARCHIVED" | "ENROLLED" | "PENDING";
 
 interface IRoot {
   children: ReactNode;
@@ -11,6 +11,8 @@ interface IThumbnail {
   src: string;
   alt?: string;
   className?: string;
+  onClick: () => void;
+  target: string;
 }
 
 interface ITitle {
@@ -33,7 +35,6 @@ interface IButton {
   content?: string;
   className?: string;
   Icon?: ReactNode;
-  target: string;
   onClick: () => void;
   status: StatusType;
 }

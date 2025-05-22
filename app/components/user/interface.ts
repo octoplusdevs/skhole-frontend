@@ -5,4 +5,5 @@ export interface IUser {
   role?: "ADMIN" | "STUDANT" | "TEACHER" | string;
   firstName: boolean;
   avatar: string;
+  points?: number;
 }

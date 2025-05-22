@@ -3,7 +3,7 @@ import { IRoot } from "./interface";
 const Root = ({ children, className }: IRoot) => {
   return (
     <div
-      className={`bg-secondary w-full lg:max-w-[382px] p-6 rounded-2xl sm:rounded-4xl flex flex-col gap-[42px] ${className}`}
+      className={`bg-secondary w-full lg:max-w-[382px] p-6 rounded-2xl sm:rounded-4xl flex flex-col justify-between gap-[42px] ${className}`}
     >
       {children}
     </div>

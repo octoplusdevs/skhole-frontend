@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import { User } from "@/components/user";
 import { courseAdvantages } from "./data";
 import { usePathname, useRouter } from 'next/navigation'
-import { modules } from "@/utils/data";
 import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage";
+import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage";
 
 export const CoursePaymentArea = () => {
   const router = useRouter()
   const pathName = usePathname()
-  const url = `${pathName + '/' + modules[0].lessons[0].slug}`
+  const currentCourse = getItemLocalStorage("currentCourse")
+  const url = `${pathName + '/' + currentCourse.modules[0].lessons[0].slug}`
   const isEnrolled = true
   const isFree = true
 

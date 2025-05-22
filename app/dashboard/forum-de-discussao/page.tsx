@@ -5,7 +5,7 @@ export default function TrainingsPage() {
   return (
     <section className="pt-32">
       <Container className="">
-        <SpecialTitle content="Treinamentos" />
+        <SpecialTitle content="Fórums De Discussão" />
       </Container>
     </section>
   );

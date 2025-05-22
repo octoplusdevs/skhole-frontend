@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { modules } from "@/utils/data"
 import { Container } from "@/components/container"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { CheckBox } from "@/components/inputs/checkbox"
@@ -16,10 +15,11 @@ import { LessonProgress } from "./percentage"
 
 export default function LessonPreview() {
   const savedAccordion = getItemLocalStorage("accordion")
+
+  const [currentCourse, setCurrentCourse] = useState<any>(getItemLocalStorage("currentCourse"))
   const [accordionOpen, setAccordionOpen] = useState<string>(savedAccordion)
-  const [currentLesson, setCurrentLesson] = useState<any>(modules[0].lessons[0])
+  const [currentLesson, setCurrentLesson] = useState<any>(currentCourse.modules[0].lessons[0])
   const [courseStatus, setCourseStatus] = useState<"PENDING" | "FINISHED">("PENDING")
-  const [, refresh] = useState(0)
   const router = useRouter()
   const params = useParams()
 
@@ -32,27 +32,36 @@ export default function LessonPreview() {
   }
 
   const toggleLessonStatus = (selected: any) => {
-    for (const module of modules) {
-      const target = module.lessons.find(lesson => lesson.slug === selected.slug)
-      if (target) {
-        target.watched = !target.watched
-        if (target.slug === currentLesson.slug) setCurrentLesson({ ...target })
-        refresh(prev => prev + 1)
-      }
+    const updatedModules = currentCourse.modules.map((module: any) => {
+      const updatedLessons = module.lessons.map((lesson: any) => {
+        if (lesson.slug === selected.slug) {
+          const updatedLesson = { ...lesson, watched: !lesson.watched }
+          if (updatedLesson.slug === currentLesson.slug) {
+            setCurrentLesson(updatedLesson)
+          }
+          return updatedLesson
+        }
+        return lesson
+      })
+      return { ...module, lessons: updatedLessons }
+    })
 
-      const completed = module.lessons.filter(lesson => lesson.watched).length
-      const total = module.lessons.length
-      setCourseStatus(completed === total ? "FINISHED" : "PENDING")
-    }
+    const updatedCourse = { ...currentCourse, modules: updatedModules }
+    setCurrentCourse(updatedCourse)
+    setItemLocalStorage("currentCourse", updatedCourse)
+
+    const totalLessons = updatedModules.map((module: any) => module.lessons).length
+    const completedLessons = updatedModules.map((module: any) => module.lessons).filter((lesson: any) => lesson.watched).length
+    setCourseStatus(completedLessons === totalLessons ? "FINISHED" : "PENDING")
   }
 
   useEffect(() => {
     const lessonSlug = params["slug-aula"]
-    for (const module of modules) {
-      const found = module.lessons.find(lesson => lesson.slug === lessonSlug)
+    for (const module of currentCourse.modules) {
+      const found = module.lessons.find((lesson: any) => lesson.slug === lessonSlug)
       if (found) setCurrentLesson(found)
     }
-  }, [params])
+  }, [params, currentCourse])
 
   return (
     <section className="py-32">
@@ -64,7 +73,7 @@ export default function LessonPreview() {
             </div>
             <div className="flex flex-col gap-4 max-w-[800px] w-full">
               <h1 className="text-[16px] sm:text-[20px] lg:text-[24px] font-bold text-logo leading-[140%]">
-                <span className="text-[#737272]">{currentLesson.id}</span> {currentLesson?.title}
+                <span className="text-[#737272]">{currentLesson.id + 1}</span> {currentLesson?.title}
               </h1>
               <p className="text-link leading-[150%]">{currentLesson?.description}</p>
             </div>
@@ -79,26 +88,26 @@ export default function LessonPreview() {
                 onValueChange={setAccordionOpen}
                 className="flex flex-col gap-0 rounded-[8px]"
               >
-                {modules.map(({ id, lessons, title }, idx) => {
-                  const completed = lessons.filter(l => l.watched).length
-                  const total = lessons.length
+                {currentCourse.modules.map((module: any, index: number) => {
+                  const completed = module.lessons.filter((lesson: any) => lesson.watched).length
+                  const total = module.lessons.length
                   const percentage = calculatePercentage(completed, total)
                   const color = percentage >= 75 ? "#baf722" : "#f7a622"
 
                   return (
-                    <AccordionItem key={id} value={`item-${id}`} className="border-none">
+                    <AccordionItem key={module.id} value={`item-${module.id}`} className="border-none">
                       <AccordionTrigger className="bg-[#182132] px-5 py-3 rounded-none">
                         <div className="flex gap-4 w-full">
                           <LessonProgress
                             percentage={percentage}
                             progressColor={color}
-                            title={title}
-                            lessons={lessons}
+                            title={module.title}
+                            lessons={module.lessons}
                           />
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className={`flex flex-col gap-2 p-6 ${idx + 1 === modules.length ? "rounded-b-[8px]" : ""}`}>
-                        {lessons.map((lesson, i) => (
+                      <AccordionContent className={`flex flex-col gap-2 p-6 ${index + 1 === currentCourse.modules.length ? "rounded-b-[8px]" : ""}`}>
+                        {module.lessons.map((lesson: any, i: number) => (
                           <CheckBox
                             key={i}
                             duration={lesson.duration}
@@ -107,7 +116,7 @@ export default function LessonPreview() {
                             check={() => toggleLessonStatus(lesson)}
                             onClick={() => {
                               handleLessonNavigation(lesson)
-                              setItemLocalStorage("accordion", `item-${id}`)
+                              setItemLocalStorage("accordion", `item-${module.id}`)
                             }}
                           />
                         ))}

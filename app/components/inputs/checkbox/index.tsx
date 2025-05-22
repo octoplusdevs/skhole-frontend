@@ -11,9 +11,11 @@ const CheckBox = ({ duration, onClick, title, watched, check }: ICheckbox) => {
           {watched && <CheckFat color="#baf722" size={16} weight="fill" />}
           <input type="checkbox" className="appearance-none" />
         </div>
-        <p onClick={onClick}>{title}</p>
+        <div className="flex justify-between w-full gap-2" onClick={onClick}>
+          <p >{title}</p>
+          <span className="text-link">{duration && formatTime(duration)}</span>
+        </div>
       </div>
-      <span className="text-link">{duration && formatTime(duration)}</span>
     </div>
   )
 }

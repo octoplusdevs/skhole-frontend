@@ -1,12 +1,12 @@
-import { Container } from "@/components/container";
-import { SpecialTitle } from "@/components/special-title";
+import { RenderCourses } from "@/components/render-courses";
+import { courses } from "@/utils/data";
 
 export default function StudentCoursesPage() {
+  const enrolledCourses = courses.filter(course => course.status === 'ENROLLED')
   return (
-    <section className="pt-32">
-      <Container className="">
-        <SpecialTitle content="Meus cursos" />
-      </Container>
-    </section>
+    <RenderCourses
+      title="Meus Cursos"
+      courses={enrolledCourses}
+    />
   );
 }
