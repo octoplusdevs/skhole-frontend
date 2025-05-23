@@ -6,4 +6,5 @@ export interface ICheckbox {
   watched: boolean;
   duration?: number;
   check: () => void;
+  currentLesson: boolean;
 }

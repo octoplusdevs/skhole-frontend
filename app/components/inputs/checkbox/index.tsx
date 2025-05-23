@@ -3,7 +3,7 @@ import { ICheckbox } from "./interface"
 import { formatTime } from "@/utils/format-time"
 import { CheckFat } from "@phosphor-icons/react/dist/ssr"
 
-const CheckBox = ({ duration, onClick, title, watched, check }: ICheckbox) => {
+const CheckBox = ({ duration, onClick, title, watched, check, currentLesson }: ICheckbox) => {
   return (
     <div className="flex w-full justify-between gap-1 cursor-pointer hover:opacity-60 duration-100">
       <div className="flex gap-2 w-full">
@@ -13,7 +13,7 @@ const CheckBox = ({ duration, onClick, title, watched, check }: ICheckbox) => {
         </div>
         <div className="flex justify-between w-full gap-2" onClick={onClick}>
           <p >{title}</p>
-          <span className="text-link">{duration && formatTime(duration)}</span>
+          <span className={`${currentLesson ? 'text-primary' : 'text-link'}`}>{duration && formatTime(duration)}</span>
         </div>
       </div>
     </div>

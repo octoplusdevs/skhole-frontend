@@ -1,6 +1,5 @@
 const initialState = {
   currentCourse: undefined,
-  accordionOpen: undefined,
   currentLesson: undefined,
   courseStatus: "PENDING",
 };
