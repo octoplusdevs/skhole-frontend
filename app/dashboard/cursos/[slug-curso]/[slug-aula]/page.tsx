@@ -1,43 +1,44 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useReducer } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { Container } from "@/components/container"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { CheckBox } from "@/components/inputs/checkbox"
 import VideoPlayer from "@/components/video-player"
 import { Button } from "@/components/ui/button"
-import { Books, Student } from "@phosphor-icons/react/dist/ssr"
+import { Books, CircleNotch, Student } from "@phosphor-icons/react/dist/ssr"
 import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage"
-import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage"
 import { calculatePercentage } from "@/utils/calculate-percentage"
 import { LessonProgress } from "./percentage"
+import { reducer } from "./reducer"
+import { initialState } from "./data"
+import { actions } from "./actions"
+import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage"
 
 export default function LessonPreview() {
-  const savedAccordion = getItemLocalStorage("accordion")
+  const course = getItemLocalStorage("currentCourse");
+  const savedAccordion = getItemLocalStorage("accordion");
 
-  const [currentCourse, setCurrentCourse] = useState<any>(getItemLocalStorage("currentCourse"))
-  const [accordionOpen, setAccordionOpen] = useState<string>(savedAccordion)
-  const [currentLesson, setCurrentLesson] = useState<any>(currentCourse.modules[0].lessons[0])
-  const [courseStatus, setCourseStatus] = useState<"PENDING" | "FINISHED">("PENDING")
+  const [state, dispatch] = useReducer(reducer, initialState)
   const router = useRouter()
   const params = useParams()
 
   const handleLessonNavigation = (lesson: any) => {
     const newPath = `/dashboard/cursos/${params["slug-curso"]}/${lesson.slug}`
     if (lesson.slug === params["slug-aula"]) return
-    setCurrentLesson(lesson)
+    dispatch({ type: actions.GET_LESSON, payload: lesson })
     setItemLocalStorage("currentPage", newPath)
     router.replace(newPath)
   }
 
   const toggleLessonStatus = (selected: any) => {
-    const updatedModules = currentCourse.modules.map((module: any) => {
+    const updatedModules = state.currentCourse.modules.map((module: any) => {
       const updatedLessons = module.lessons.map((lesson: any) => {
         if (lesson.slug === selected.slug) {
           const updatedLesson = { ...lesson, watched: !lesson.watched }
-          if (updatedLesson.slug === currentLesson.slug) {
-            setCurrentLesson(updatedLesson)
+          if (updatedLesson.slug === state.currentLesson.slug) {
+            dispatch({ type: actions.GET_LESSON, payload: updatedLesson })
           }
           return updatedLesson
         }
@@ -46,22 +47,54 @@ export default function LessonPreview() {
       return { ...module, lessons: updatedLessons }
     })
 
-    const updatedCourse = { ...currentCourse, modules: updatedModules }
-    setCurrentCourse(updatedCourse)
+    const updatedCourse = { ...state.currentCourse, modules: updatedModules }
+    dispatch({ type: actions.GET_COURSE, payload: updatedCourse })
     setItemLocalStorage("currentCourse", updatedCourse)
 
     const totalLessons = updatedModules.map((module: any) => module.lessons).length
     const completedLessons = updatedModules.map((module: any) => module.lessons).filter((lesson: any) => lesson.watched).length
-    setCourseStatus(completedLessons === totalLessons ? "FINISHED" : "PENDING")
+
+    dispatch({
+      type: actions.TOGGLE_COURSE_STATUS,
+      payload: completedLessons === totalLessons ? "FINISHED" : "PENDING",
+    })
   }
 
   useEffect(() => {
     const lessonSlug = params["slug-aula"]
-    for (const module of currentCourse.modules) {
+    if (!state.currentCourse) return
+    for (const module of state.currentCourse.modules) {
       const found = module.lessons.find((lesson: any) => lesson.slug === lessonSlug)
-      if (found) setCurrentLesson(found)
+      if (found) {
+        dispatch({ type: actions.GET_LESSON, payload: found })
+        break
+      }
     }
-  }, [params, currentCourse])
+  }, [params, state.currentCourse])
+
+  useEffect(() => {
+    dispatch({ type: actions.GET_COURSE, payload: course })
+    dispatch({ type: actions.TOGGLE_ACCORDION, payload: savedAccordion })
+
+    const firstLesson = course.modules?.[0]?.lessons?.[0]
+    if (firstLesson) {
+      dispatch({ type: actions.GET_LESSON, payload: firstLesson })
+    }
+  }, [])
+
+  if (!state.currentCourse || !state.currentLesson || !state.accordionOpen) {
+    return (
+      <section className="py-32">
+        <Container className="flex items-center justify-center h-dvh">
+          <CircleNotch
+            color="#baf722"
+            size={56}
+            className="rotate-180 animate-spin duration-150"
+          />
+        </Container>
+      </section>
+    )
+  }
 
   return (
     <section className="py-32">
@@ -73,22 +106,24 @@ export default function LessonPreview() {
             </div>
             <div className="flex flex-col gap-4 max-w-[800px] w-full">
               <h1 className="text-[16px] sm:text-[20px] lg:text-[24px] font-bold text-logo leading-[140%]">
-                <span className="text-[#737272]">{currentLesson.id + 1}</span> {currentLesson?.title}
+                <span className="text-[#737272]">{state.currentLesson?.id + 1}</span> {state.currentLesson?.title}
               </h1>
-              <p className="text-link leading-[150%]">{currentLesson?.description}</p>
+              <p className="text-link leading-[150%]">{state.currentLesson?.description}</p>
             </div>
           </div>
 
           <div className="flex flex-col gap-4 w-full lg:max-w-[384px]">
-            <div id="modules" className="module_area flex flex-col w-full rounded-[8px] overflow-y-scroll h-[434px] bg-secondary">
+            <div className="module_area flex flex-col w-full rounded-[8px] overflow-y-scroll h-[434px] bg-secondary">
               <Accordion
                 type="single"
                 collapsible
-                value={accordionOpen}
-                onValueChange={setAccordionOpen}
+                value={state.accordionOpen}
+                onValueChange={(value) =>
+                  dispatch({ type: actions.TOGGLE_ACCORDION, payload: value })
+                }
                 className="flex flex-col gap-0 rounded-[8px]"
               >
-                {currentCourse.modules.map((module: any, index: number) => {
+                {state.currentCourse.modules.map((module: any, index: number) => {
                   const completed = module.lessons.filter((lesson: any) => lesson.watched).length
                   const total = module.lessons.length
                   const percentage = calculatePercentage(completed, total)
@@ -106,7 +141,7 @@ export default function LessonPreview() {
                           />
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className={`flex flex-col gap-2 p-6 ${index + 1 === currentCourse.modules.length ? "rounded-b-[8px]" : ""}`}>
+                      <AccordionContent className={`flex flex-col gap-2 p-6 ${index + 1 === state.currentCourse.modules.length ? "rounded-b-[8px]" : ""}`}>
                         {module.lessons.map((lesson: any, i: number) => (
                           <CheckBox
                             key={i}
@@ -136,7 +171,7 @@ export default function LessonPreview() {
                 Recursos da aula
               </Button>
               <Button
-                disabled={courseStatus === "PENDING"}
+                disabled={state.courseStatus === "PENDING"}
                 className="w-full h-[56px] rounded-[2px]"
                 onClick={() => alert("Obter certificado")}
               >
