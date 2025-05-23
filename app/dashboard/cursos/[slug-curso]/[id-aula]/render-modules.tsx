@@ -42,9 +42,9 @@ const RenderModules = () => {
       }
     }
 
-    const lessonSlug = params["slug-aula"]
+    const lessonId = params["id-aula"]
     course.modules.forEach((module: any) => {
-      const found = module.lessons.find((lesson: any) => lesson.slug === lessonSlug)
+      const found = module.lessons.find((lesson: any) => lesson.id === lessonId)
       if (found) toggleLesson({ lesson: found })
     })
 
@@ -55,8 +55,8 @@ const RenderModules = () => {
   }, [params, course])
 
   const handleLessonNavigation = (lesson: any) => {
-    const newPath = `/dashboard/cursos/${params["slug-curso"]}/${lesson.slug}`
-    if (lesson.slug === params["slug-aula"]) return
+    const newPath = `/dashboard/cursos/${params["slug-curso"]}/${lesson.id}`
+    if (lesson.id === params["id-aula"]) return
 
     toggleLesson({ lesson })
     setItemLocalStorage("currentLesson", lesson)
@@ -68,9 +68,9 @@ const RenderModules = () => {
     const updatedModules = course.modules.map((module: any) => ({
       ...module,
       lessons: module.lessons.map((l: any) => {
-        if (l.slug === selected.slug) {
+        if (l.id === selected.id) {
           const updated = { ...l, watched: !l.watched }
-          if (updated.slug === lesson?.slug) toggleLesson({ lesson: updated })
+          if (updated.id === lesson?.id) toggleLesson({ lesson: updated })
           return updated
         }
         return l
@@ -111,7 +111,7 @@ const RenderModules = () => {
             <CheckBox
               key={i}
               duration={l.duration}
-              currentLesson={l.slug === lesson.slug}
+              currentLesson={l.id === lesson.id}
               watched={l.watched}
               title={l.title}
               check={() => toggleLessonStatus(l)}

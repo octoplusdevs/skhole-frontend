@@ -9,6 +9,7 @@ import { courseAdvantages } from "./data"
 import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage"
 import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage"
 import { UseGetCourseLessons } from "@/hooks/use-get-course-lessons"
+import { toast } from "sonner"
 
 export const CoursePaymentArea = () => {
   const queryClient = useQueryClient()
@@ -17,14 +18,15 @@ export const CoursePaymentArea = () => {
   const router = useRouter()
   const pathName = usePathname()
 
-  const isEnrolled = true
-  const isFree = true
+  const isEnrolled = false
+  let isFree = false
+  if (currentCourse) isFree = currentCourse.type === 'FREE'
 
   const getFirstLessonUrl = (): string => {
     if (!currentCourse) return ""
     const firstModule = currentCourse.modules?.[0]
     const firstLesson = firstModule?.lessons?.[0]
-    return firstLesson ? `${pathName}/${firstLesson.slug}` : ""
+    return firstLesson ? `${pathName}/${firstLesson.id}` : ""
   }
 
   const handleButtonClick = () => {
@@ -33,7 +35,7 @@ export const CoursePaymentArea = () => {
       router.push(url)
       setItemLocalStorage("currentPage", url)
     } else {
-      alert("Efectuar pagamento")
+      toast("Efectuar pagamento")
     }
   }
 
@@ -52,13 +54,13 @@ export const CoursePaymentArea = () => {
         </h3>
 
         <Button
-          className={`py-6 font-semibold text-[16px] sm:text-[18px] ${isEnrolled
-              ? "bg-[#6850a2] text-white hover:bg-[#6950a2ca] hover:text-white"
-              : "bg-primary"
+          className={`py-6 font-semibold text-[16px] sm:text-[18px] ${isEnrolled || isFree
+            ? "bg-[#6850a2] text-white hover:bg-[#6950a2ca] hover:text-white"
+            : "bg-primary"
             }`}
           onClick={handleButtonClick}
         >
-          {isEnrolled ? "Assisir" : "Comprar agora"}
+          {isFree ? "Assisir" : isEnrolled ? 'Assistir' : "Comprar agora"}
         </Button>
       </div>
 

@@ -18,9 +18,9 @@ export const RenderLesson = () => {
     }
   }, [])
 
-  const lessonId = typeof lesson?.id === "number" ? lesson.id + 1 : ""
+  const lessonId = typeof lesson?.order === "number" ? lesson?.order : ""
   const lessonTitle = lesson?.title ?? ""
-  const lessonDescription = lesson?.description ?? ""
+  const lessonDescription = lesson?.title ?? ""
 
   return (
     <div className="flex flex-col gap-8 w-full lg:max-w-[800px]">

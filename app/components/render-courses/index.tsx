@@ -32,7 +32,7 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
 
   const handleCourseClick = (course: any) => {
     const lesson = getFirstLesson(course)
-    const nextPage = `/dashboard/cursos/${course.slug}/${lesson.slug}`
+    const nextPage = `/dashboard/cursos/${course.slug}/${lesson.id}`
 
     switch (course.status) {
       case 'ENROLLED':
@@ -47,7 +47,9 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
         break
 
       default:
-        toast("Efectuar pagamento")
+        storeCommonCourseData(course, "", `/dashboard/cursos/${course.slug}`)
+        watchedCourse({ course })
+        router.push(`/dashboard/cursos/${course.slug}`)
         break
     }
   }
@@ -78,13 +80,12 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
             {courses.map(course => {
               const totalDuration = formatTime(calculateTotalDuration(course))
               const totalLessons = calculateTotalLessons(course)
-              const evaluation = course.details.evaluation
 
               return (
                 <CourseCard.Root key={course.id}>
                   <div className="flex flex-col gap-4">
                     <CourseCard.Thumbnail
-                      src={course.thumbnail}
+                      src={'/ts.png'}
                       alt={course.title}
                       onClick={() => handleThumbnailClick(course)}
                       target={`/dashboard/cursos/${course.slug}`}
@@ -96,7 +97,7 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
                     <div className="flex justify-between items-center">
                       <CourseCard.Detail Icon={<Clock size={24} />} content={totalDuration} />
                       <CourseCard.Detail Icon={<Video size={24} />} content={totalLessons} />
-                      <CourseCard.Detail Icon={<Star weight="fill" color="#FDB447" size={24} />} content={evaluation} />
+                      <CourseCard.Detail Icon={<Star weight="fill" color="#FDB447" size={24} />} content={totalLessons} />
                     </div>
                   </div>
                   <CourseCard.Button

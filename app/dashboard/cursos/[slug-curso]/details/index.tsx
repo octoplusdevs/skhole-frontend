@@ -47,12 +47,12 @@ export const CourseDetailsArea = () => {
       <CourseDetails.Root>
         <div className="flex flex-col gap-6">
           <CourseDetails.Thumbnail
-            src={currentCourse.thumbnail}
+            src={`/ts.png`}
             alt={currentCourse.title}
           />
           <div className="w-full max-w-[660px] flex flex-col gap-2">
             <CourseDetails.Title content={currentCourse.title} />
-            <CourseDetails.Description content={currentCourse.slug} />
+            <CourseDetails.Description content={currentCourse.description} />
           </div>
         </div>
 
@@ -109,13 +109,13 @@ export const CourseDetailsArea = () => {
                 className="border-none"
               >
                 <AccordionTrigger
-                  className={`bg-secondary px-5 py-3 rounded-[8px] items-center ${accordionOpen === `item-${module.id}`
-                      ? "rounded-b-none duration-150"
-                      : "rounded-[8px] duration-300"
+                  className={`bg-secondary px-5 py-3 rounded-[8px] items-center ${accordionOpen === `item-${module.order}`
+                    ? "rounded-b-none duration-150"
+                    : "rounded-[8px] duration-300"
                     }`}
                 >
                   <div className="flex gap-6 items-center w-full">
-                    <ValueItem value={module.id} />
+                    <ValueItem value={module.order} />
                     <ModuleDetail
                       title={module.title}
                       percentage={percentageModule}
