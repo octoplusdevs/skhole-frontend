@@ -1,11 +1,30 @@
-import { Button } from "@/components/ui/button"
-import Header from "./components/ui/header"
+"use client";
+import { useAuth } from "./context/auth-context";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Progress } from "./components/ui/progress";
+import { useCount } from "./hooks/useCount";
+import { getItemLocalStorage } from "./utils/localStorage/get-item-local-storage";
 
 export default function Home() {
-  return (
-    <div className="d">
-      <Header />
-      <h1>SKHOLE</h1>
-    </div>
-  )
+  const { user, loading } = useAuth();
+  const { count } = useCount();
+  const currentPage = getItemLocalStorage("currentPage");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        router.push("/login");
+      } else {
+        router.push(currentPage);
+      }
+    }
+  }, [loading, user, currentPage, router]);
+
+  if (loading) {
+    return <Progress value={count} />;
+  }
+
+  return null;
 }
