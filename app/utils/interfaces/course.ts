@@ -9,6 +9,7 @@ interface IQuiz {
   tip: string;
   createdAt: Date;
   updatedAt: Date;
+  isCorrect?: boolean;
   lessonId?: string;
   moduleId?: string;
   courseId?: string;
