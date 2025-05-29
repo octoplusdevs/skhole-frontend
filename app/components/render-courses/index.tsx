@@ -11,6 +11,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { UseGetCourseLessons } from "@/hooks/use-get-course-lessons"
 import { UseGetLesson } from "@/hooks/use-get-lesson"
+import { formatCurrency } from "@/utils/format-currency"
 
 export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
   const { mutate: watchedCourse } = UseGetCourseLessons()
@@ -76,33 +77,39 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
         <SpecialTitle content={title} />
 
         {hasCourses && (
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {courses.map(course => {
               const totalDuration = formatTime(calculateTotalDuration(course))
               const totalLessons = calculateTotalLessons(course)
 
               return (
                 <CourseCard.Root key={course.id}>
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col">
                     <CourseCard.Thumbnail
                       src={'/ts.png'}
                       alt={course.title}
                       onClick={() => handleThumbnailClick(course)}
                       target={`/dashboard/cursos/${course.slug}`}
                     />
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 px-6 h-24 overflow-hidden pt-6">
                       <CourseCard.Title content={course.title} />
-                      <CourseCard.Price content={course.price} />
                     </div>
-                    <div className="flex justify-between items-center">
-                      <CourseCard.Detail Icon={<Clock size={24} />} content={totalDuration} />
-                      <CourseCard.Detail Icon={<Video size={24} />} content={totalLessons} />
-                      <CourseCard.Detail Icon={<Star weight="fill" color="#FDB447" size={24} />} content={totalLessons} />
+                    <div className="flex justify-between gap-2 px-6 border-t-2 border-slate-600 py-4">
+                      <CourseCard.Rate content={course.rate} />
+                      <CourseCard.Author content={course.author} />
+                    </div>
+                    <div className="flex justify-between gap-2 px-6 border-t-2 border-slate-600 py-4">
+                      <CourseCard.PriceBeforeDiscount price={course.priceWithDiscount} percentage={course.descountPercentage}/>
+                      <CourseCard.Price content={course.price} />
                     </div>
                   </div>
                   <CourseCard.Button
                     status={course.status}
-                    content={course.status === 'ENROLLED' ? 'Assistir' : ''}
+                    content={
+                      course.status === 'ENROLLED'
+                        ? 'Assistir'
+                        : course.price === 0 ? 'Gratuito' : formatCurrency(course.price)
+                    }
                     onClick={() => handleCourseClick(course)}
                   />
                 </CourseCard.Root>
@@ -116,3 +123,5 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
     </section>
   )
 }
+
+

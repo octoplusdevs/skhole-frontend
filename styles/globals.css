@@ -80,6 +80,9 @@
   --logo: #f2f2f2;
   --link: #8c8c8c;
   --description: #808080;
+
+  --pad-inner: 52px;
+  --innerWidth: 1816px;
 }
 
 .dark {
@@ -120,11 +123,18 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   button {
     cursor: pointer;
+  }
+
+  .container {
+    inline-size: min(100% - var(--pad-inner) * 2, var(--innerWidth));
+    margin-inline: auto;
   }
 
   .module_area::-webkit-scrollbar {
