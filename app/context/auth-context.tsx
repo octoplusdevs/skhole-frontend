@@ -91,7 +91,7 @@ type User = {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   logout: () => void;
 }
 
@@ -125,6 +125,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       localStorage.setItem("fakeUser", JSON.stringify(fakeUser));
       setUser(fakeUser);
+      return Promise.resolve(fakeUser);
     } else {
       throw new Error("Credenciais inválidas");
     }

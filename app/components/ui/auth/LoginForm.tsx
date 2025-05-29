@@ -26,13 +26,16 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  const { mutate } = useLogin();
+
+
   const onSubmit = async (data: LoginData) => {
     try {
-      const { mutate } = useLogin();
       const response = mutate(data);
       console.log(response);
       toast.success("Login efetuado com sucesso!");
     } catch (err) {
+      console.log(err)
       toast.error("Erro ao fazer login.");
     }
   };
