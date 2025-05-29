@@ -1,15 +1,18 @@
 import { Button } from "./button";
 import { Detail } from "./detail";
-import { Price } from "./price";
+import { Price, PriceBeforeDiscount } from "./price";
 import { Root } from "./root";
 import { Thumbnail } from "./thumbnail";
-import { Title } from "./title";
+import { Title, Author, Rate } from "./title";
 
 const CourseCard = {
   Title,
   Price,
+  PriceBeforeDiscount,
   Root,
   Thumbnail,
+  Author,
+  Rate,
   Detail,
   Button,
 };
