@@ -1,10 +1,10 @@
 import { RenderCourses } from "@/components/render-courses";
-import { courses } from "@/utils/data";
+import { generateRandomCourses } from "@/utils/data";
 
 export default function DashboardPage() {
   return (
     <main>
-      <RenderCourses courses={courses} title="Cursos disponiveis" />
+      <RenderCourses courses={generateRandomCourses(10)} title="Cursos disponiveis" />
     </main>
   );
 }

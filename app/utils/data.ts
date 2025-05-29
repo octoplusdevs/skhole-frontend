@@ -1,265 +1,101 @@
-import { ICourse } from "./interfaces/course";
+import { ICourse, ILesson, IModule, IQuiz, StatusType } from "./interfaces/course";
 
-const courses: ICourse[] = [
-  {
-    id: "course-1",
-    title: "Desenvolvimento Web do Zero ao Avançado",
-    description:
-      "Aprenda desenvolvimento web com HTML, CSS, JavaScript e frameworks modernos.",
-    slug: "desenvolvimento-web",
-    price: 299.9,
-    duration: 40.5,
-    order: 1,
-    maxStudents: 100,
-    hasLimitedSeats: true,
-    type: "FREE",
-    category: "WEB_DEVELOPMENT",
-    level: "BEGINNER",
-    code: "WEB101",
-    status: "ENROLLED",
-    createdAt: new Date("2025-01-10"),
-    updatedAt: new Date(),
-    modules: [
-      {
-        id: "module-1",
-        title: "HTML e CSS Básico",
-        description: "Fundamentos da web com HTML e CSS.",
-        slug: "html-css-basico",
-        duration: 10.5,
-        order: 1,
-        createdAt: new Date("2025-01-10"),
-        updatedAt: new Date(),
-        lessons: [
-          {
-            id: "lesson-1",
-            title: "Introdução ao HTML",
-            content: "https://video.com/aula-html",
-            duration: 1500,
-            watched: true,
-            order: 1,
-            createdAt: new Date("2025-01-10"),
-            updatedAt: new Date(),
-            quizzes: [
-              {
-                id: "quiz-lesson-1-1",
-                question: "O que é HTML?",
-                correctAnswer: "Linguagem de marcação",
-                points: 10,
-                responseFormat: "********* ** ******",
-                tip: "Pense na estrutura de uma página.",
-                isCorrect: true,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-1",
-                moduleId: "module-1",
-                courseId: "course-1",
-              },
-            ],
-          },
-          {
-            id: "lesson-2",
-            title: "Estilizando com CSS",
-            content: "https://video.com/css-basico",
-            duration: 1428,
-            order: 2,
-            createdAt: new Date("2025-01-11"),
-            updatedAt: new Date(),
-            quizzes: [
-              {
-                id: "quiz-lesson-2-1",
-                question: "Para que serve o CSS?",
-                correctAnswer: "Estilizar páginas web",
-                points: 10,
-                responseFormat: "******** ******* ***",
-                tip: "CSS controla a aparência.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-2",
-                moduleId: "module-1",
-                courseId: "course-1",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: "module-2",
-        title: "JavaScript Intermediário",
-        description: "Domine lógica, eventos e DOM.",
-        slug: "javascript-intermediario",
-        duration: 12.0,
-        order: 2,
-        createdAt: new Date("2025-01-12"),
-        updatedAt: new Date(),
-        lessons: [
-          {
-            id: "lesson-3",
-            title: "Funções e Eventos",
-            content: "https://video.com/js-funcoes",
-            duration: 2313,
-            order: 3,
-            createdAt: new Date("2025-01-12"),
-            updatedAt: new Date(),
-            quizzes: [
-              {
-                id: "quiz-lesson-3-1",
-                question: "O que é uma função em JavaScript?",
-                correctAnswer: "Bloco de código reutilizável",
-                points: 10,
-                responseFormat: "***** ** ****** ************",
-                tip: "Funções executam ações.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-3",
-                moduleId: "module-2",
-                courseId: "course-1",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    enrollments: [],
-    testimonials: [],
-    Certificate: [],
-    Payment: [],
-    forumThread: [],
-    Quiz: [],
-  },
-  {
-    id: "course-2",
-    title: "Desenvolvimento Web com HTML e CSS",
-    description: "Construa páginas web incríveis com HTML e CSS.",
-    slug: "desenvolvimento-web-html-css",
-    price: 49.9,
-    duration: 10,
-    order: 2,
-    maxStudents: 200,
-    hasLimitedSeats: true,
-    type: "PAID",
-    category: "WEB_DEVELOPMENT",
-    level: "BEGINNER",
-    modules: [
-      {
-        id: "module-1",
-        title: "Fundamentos do HTML",
-        description: "Aprenda a estruturar páginas com HTML5.",
-        slug: "fundamentos-html",
-        duration: 4323,
-        order: 1,
-        lessons: [
-          {
-            id: "lesson-1",
-            title: "Introdução ao HTML",
-            order: 1,
-            content: "https://video-url.com/intro-html",
-            duration: 1,
-            quizzes: [
-              {
-                id: "quiz-lesson-1-1",
-                question: "O que é HTML?",
-                correctAnswer: "Linguagem de marcação",
-                points: 10,
-                responseFormat: "******** ** ********",
-                tip: "Pense na estrutura de uma página.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-1",
-                moduleId: "module-1",
-                courseId: "course-2",
-              },
-            ],
-          },
-          {
-            id: "lesson-2",
-            title: "Tags e Estrutura",
-            content: "https://video-url.com/tags-html",
-            duration: 1125,
-            order: 2,
-            quizzes: [
-              {
-                id: "quiz-lesson-2-1",
-                question: "Qual tag HTML é usada para títulos?",
-                correctAnswer: "Tag <h1> até <h6>",
-                points: 10,
-                responseFormat: "*** <**> *** <**>",
-                tip: "Existem seis níveis de títulos.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-2",
-                moduleId: "module-1",
-                courseId: "course-2",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: "module-2",
-        title: "Estilizando com CSS",
-        description: "Dê estilo às suas páginas com CSS3.",
-        slug: "estilizando-css",
-        duration: 6,
-        order: 2,
-        lessons: [
-          {
-            id: "lesson-3",
-            title: "Seletores e Propriedades",
-            content: "https://video-url.com/selectors-css",
-            duration: 214,
-            order: 3,
-            quizzes: [
-              {
-                id: "quiz-lesson-3-1",
-                question: "O que são seletores em CSS?",
-                correctAnswer: "Padrões usados para selecionar elementos HTML",
-                points: 10,
-                responseFormat: "******* ***** **** ********** ********* ****",
-                tip: "Seletores identificam elementos.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-3",
-                moduleId: "module-2",
-                courseId: "course-2",
-              },
-            ],
-          },
-          {
-            id: "lesson-4",
-            title: "Layouts com Flexbox e Grid",
-            content: "https://video-url.com/layouts-css",
-            duration: 7642,
-            order: 4,
-            quizzes: [
-              {
-                id: "quiz-lesson-4-1",
-                question: "Qual a função do Flexbox no CSS?",
-                correctAnswer: "Gerenciar layouts flexíveis em uma dimensão",
-                points: 10,
-                responseFormat: "********* ******* ********* ** *** *********",
-                tip: "Flexbox organiza elementos horizontalmente ou verticalmente.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                lessonId: "lesson-4",
-                moduleId: "module-2",
-                courseId: "course-2",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    enrollments: [],
-    testimonials: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    code: "WEB101",
-    status: "ACTIVE",
-    Certificate: [],
-    Payment: [],
-    forumThread: [],
-    Quiz: [],
-  },
-];
 
-export { courses };
+
+export function generateRandomCourses(count: number): ICourse[] {
+  const levels = ["BEGINNER", "INTERMEDIATE", "ADVANCED"] as const;
+  const types = ["FREE", "PAID"] as const;
+  const statuses: StatusType[] = ["ACTIVE", "DRAFT", "ARCHIVED", "ENROLLED", "PENDING"];
+  const courses: ICourse[] = [];
+  for (let i = 1; i <= count; i++) {
+    const courseId = `course-${i}`;
+    const modules: IModule[] = [];
+
+    for (let m = 1; m <= 2; m++) {
+      const moduleId = `module-${i}-${m}`;
+      const lessons: ILesson[] = [];
+
+      for (let l = 1; l <= 2; l++) {
+        const lessonId = `lesson-${i}-${m}-${l}`;
+        const quizzes: IQuiz[] = [];
+
+        for (let q = 1; q <= 1; q++) {
+          const quizId = `quiz-${i}-${m}-${l}-${q}`;
+          quizzes.push({
+            id: quizId,
+            question: `Pergunta ${q} da Lição ${l}`,
+            correctAnswer: "Resposta correta",
+            points: 10,
+            responseFormat: "******** *******",
+            tip: "Pense na lógica da pergunta.",
+            isCorrect: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            lessonId,
+            moduleId,
+            courseId,
+          });
+        }
+
+        lessons.push({
+          id: lessonId,
+          title: `Lição ${l} do Módulo ${m}`,
+          content: `https://video.com/curso-${i}/modulo-${m}/licao-${l}`,
+          duration: 1200 + Math.floor(Math.random() * 600),
+          watched: false,
+          order: l,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          quizzes,
+        });
+      }
+
+      modules.push({
+        id: moduleId,
+        title: `Módulo ${m}`,
+        description: `Descrição do Módulo ${m}`,
+        slug: `modulo-${m}`,
+        duration: lessons.reduce((acc, cur) => acc + cur.duration, 0) / 60,
+        order: m,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        lessons,
+        contentCount: lessons.length,
+      });
+    }
+
+    courses.push({
+      id: courseId,
+      title: `Curso ${i}`,
+      description: `Descrição do curso ${i}`,
+      slug: `curso-${i}`,
+      price: Math.random() > 0.5 ? 0 : 100 + i * 10,
+      duration: modules.reduce((acc, cur) => acc + cur.duration, 0),
+      order: i,
+      maxStudents: 30 + i * 5,
+      hasLimitedSeats: i % 2 === 0,
+      type: types[i % 2],
+      rate: 4 + Math.random(),
+      category: `Categoria ${i % 3}`,
+      level: levels[i % 3],
+      code: `CODE-${i}`,
+      author: `Autor ${i}`,
+      status: statuses[i % 3],
+      descountPercentage: Math.random() > 0.5 ? Math.floor(Math.random() * 50) : undefined,
+      priceWithDiscount: Math.random() > 0.5 ? (100 + i * 10) * (1 - (Math.floor(Math.random() * 50) / 100)) : undefined,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      modules,
+      enrollments: [],
+      testimonials: [],
+      Certificate: [],
+      Payment: [],
+      forumThread: [],
+      Quiz: [],
+    });
+  }
+
+  return courses;
+}
+
+

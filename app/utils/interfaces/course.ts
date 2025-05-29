@@ -39,6 +39,13 @@ interface IModule {
   updatedAt?: Date;
 }
 
+
+interface IModule {
+  id: string;
+  title: string;
+  contentCount: number;
+}
+
 interface ICourse {
   id: string;
   title: string;
@@ -49,20 +56,23 @@ interface ICourse {
   order: number;
   maxStudents: number;
   hasLimitedSeats: boolean;
+  descountPercentage?: number;
+  priceWithDiscount?: number;
   type: "FREE" | "PAID";
+  rate: number;
   category: string;
   level: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
   code: string;
+  author: string;
   status: StatusType;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
   modules: IModule[];
-  enrollments: any[];
-  testimonials: any[];
-  Certificate: any[];
-  Payment: any[];
-  forumThread: any[];
-  Quiz: any[];
+  enrollments: string[];
+  testimonials: string[];
+  Certificate: string[];
+  Payment: string[];
+  forumThread: string[];
+  Quiz: string[];
 }
-
-export type { ICourse, IModule, ILesson };
+export type { ICourse, IModule, ILesson, IQuiz, StatusType };
