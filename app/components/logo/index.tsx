@@ -1,9 +1,17 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export const Logo = () => {
   return (
-    <div className="">
-      <h4 className="font-bold text-[18px] md:text-[20px] lg:text-[24px] text-logo">
-        SKHOLÉ
-      </h4>
-    </div>
+    <Link href={"/"} className="">
+      <Image
+        src="/logo.svg"
+        alt="Skholé Logo"
+        width={100}
+        height={100}
+        className="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 object-contain"
+        priority
+      />
+    </Link>
   );
 };

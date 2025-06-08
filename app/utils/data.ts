@@ -75,7 +75,7 @@ export function generateRandomCourses(count: number): ICourse[] {
       maxStudents: 30 + i * 5,
       hasLimitedSeats: i % 2 === 0,
       type: types[i % 2],
-      rate: 4 + Math.random(),
+      rate: 4.7,
       category: `Categoria ${i % 3}`,
       level: levels[i % 3],
       code: `CODE-${i}`,

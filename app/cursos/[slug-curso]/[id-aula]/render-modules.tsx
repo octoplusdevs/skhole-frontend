@@ -55,7 +55,7 @@ const RenderModules = () => {
   }, [params, course])
 
   const handleLessonNavigation = (lesson: any) => {
-    const newPath = `/dashboard/cursos/${params["slug-curso"]}/${lesson.id}`
+    const newPath = `/learn/cursos/${params["slug-curso"]}/${lesson.id}`
     if (lesson.id === params["id-aula"]) return
 
     toggleLesson({ lesson })

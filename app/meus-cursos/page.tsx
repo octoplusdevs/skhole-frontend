@@ -1,7 +1,8 @@
 import { RenderCourses } from "@/components/render-courses";
-import { courses } from "@/utils/data";
+import { generateRandomCourses } from "@/utils/data";
 
 export default function StudentCoursesPage() {
+  let courses = generateRandomCourses(10);
   const enrolledCourses = courses.filter(course => course.status === 'ENROLLED')
   return (
     <RenderCourses

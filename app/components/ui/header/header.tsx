@@ -6,10 +6,10 @@ import Link from "next/link";
 import { MENU } from "./data";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/logo";
-import { User } from "@/components/user";
 import { X, List } from "@phosphor-icons/react";
 import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage";
 import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage";
+import { DropdownMenu } from "../dropdown-menu";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -70,16 +70,7 @@ const Header = () => {
           ))}
         </nav>
         <div className="flex gap-2 items-center">
-          {user && (
-            <User
-              email={user.email}
-              id={user.id}
-              name={user.name}
-              firstName={true}
-              avatar="/user.png"
-              points={24}
-            />
-          )}
+          <DropdownMenu name={user?.name || "User"} imageUrl={user?.avatar} />
           <div id="buttons-mobile" className="lg:hidden">
             {menuMobileStatus ? (
               <X

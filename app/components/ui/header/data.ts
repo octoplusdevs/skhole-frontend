@@ -2,26 +2,26 @@ export const MENU = [
   {
     id: 0,
     content: "Cursos",
-    target: "/dashboard",
+    target: "/learn",
   },
   {
     id: 1,
     content: "Meus cursos",
-    target: "/dashboard/meus-cursos",
+    target: "/learn/meus-cursos",
   },
   {
     id: 2,
     content: "Masterclasses",
-    target: "/dashboard/masterclasses",
+    target: "/learn/masterclasses",
   },
   {
     id: 3,
     content: "Fórum",
-    target: "/dashboard/forum-de-discussao",
+    target: "/learn/forum-de-discussao",
   },
   {
     id: 4,
     content: "Lives",
-    target: "/dashboard/lives",
+    target: "/learn/lives",
   },
 ];

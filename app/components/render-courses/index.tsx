@@ -33,7 +33,7 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
 
   const handleCourseClick = (course: any) => {
     const lesson = getFirstLesson(course)
-    const nextPage = `/dashboard/cursos/${course.slug}/${lesson.id}`
+    const nextPage = `/cursos/${course.slug}/${lesson.id}`
 
     switch (course.status) {
       case 'ENROLLED':
@@ -48,16 +48,16 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
         break
 
       default:
-        storeCommonCourseData(course, "", `/dashboard/cursos/${course.slug}`)
+        storeCommonCourseData(course, "", `/cursos/${course.slug}`)
         watchedCourse({ course })
-        router.push(`/dashboard/cursos/${course.slug}`)
+        router.push(`/cursos/${course.slug}`)
         break
     }
   }
 
   const handleThumbnailClick = (course: any) => {
     const lesson = getFirstLesson(course)
-    const nextPage = `/dashboard/cursos/${course.slug}`
+    const nextPage = `/cursos/${course.slug}`
     storeCommonCourseData(course, lesson, nextPage)
     watchedCourse({ course })
     getLesson({ lesson })
@@ -89,7 +89,7 @@ export const RenderCourses = ({ children, courses, title }: ICourseSection) => {
                       src={'/ts.png'}
                       alt={course.title}
                       onClick={() => handleThumbnailClick(course)}
-                      target={`/dashboard/cursos/${course.slug}`}
+                      target={`/cursos/${course.slug}`}
                     />
                     <div className="flex flex-col gap-2 px-6 h-24 overflow-hidden pt-6">
                       <CourseCard.Title content={course.title} />
