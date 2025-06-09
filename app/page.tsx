@@ -22,9 +22,5 @@ export default function Home() {
     }
   }, [loading, user, currentPage, router]);
 
-  if (loading) {
-    return <Progress value={count} />;
-  }
-
-  return null;
+  return <Progress value={count} />;
 }

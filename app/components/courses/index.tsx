@@ -40,12 +40,13 @@ export const CoursesSection = () => {
                 <CourseCard.Button
                   status={status}
                   content="Inscrever-se"
-                  onClick={() =>
+                  onClick={() => {
                     useSetItemLocalStorage(
                       "currentPage",
                       `/dashboard/cursos/${slug}`
-                    )
-                  }
+                    );
+                    useSetItemLocalStorage("slugCourse", slug);
+                  }}
                   target={`/dashboard/cursos/${slug}`}
                 />
               </CourseCard.Root>
