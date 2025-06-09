@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Avatar } from './avatar'
+import { Badge, LogOut, User } from 'lucide-react'
+import { Certificate } from '@phosphor-icons/react'
 
 interface DropdownMenuProps {
   name: string
@@ -34,15 +36,31 @@ export const DropdownMenu = ({ name, imageUrl }: DropdownMenuProps) => {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 bg-zinc-900 border border-zinc-700 rounded-md shadow-lg z-50 text-white">
-          <div className="px-4 py-2 text-sm border-b border-zinc-700">
+        <div className="absolute right-0 mt-8 w-[320px] max-h-[400px] bg-secondary border border-zinc-700 rounded-md shadow-lg z-50 text-white">
+          <div className="p-6 text-sm border-b border-zinc-700">
             Minha Conta
           </div>
           <button
             onClick={() => router.push('/perfil')}
-            className="w-full text-left px-4 py-2 text-sm hover:bg-zinc-800"
+            className="w-full text-left p-6 text-sm hover:bg-[#19243b]"
           >
-            Perfil
+            <User className="inline mr-2" size={20} color='#bbf722c9' />
+            <span>Perfil</span>
+          </button>
+          <button
+            onClick={() => router.push('/badges')}
+            className="w-full text-left p-6 text-sm hover:bg-[#19243b]"
+          >
+            <Badge className="inline mr-2" size={20} color='#bbf722c9' />
+            <span>Meus Badges</span>
+          </button>
+          <button
+            onClick={() => router.push('/certificados')}
+            className="w-full text-left p-6 text-sm hover:bg-[#19243b]"
+          >
+
+            <Certificate className="inline mr-2" size={20} color='#bbf722c9' />
+            <span>Meus Certificados</span>
           </button>
           <button
             onClick={() => {
@@ -50,9 +68,11 @@ export const DropdownMenu = ({ name, imageUrl }: DropdownMenuProps) => {
               // Adicionar lógica de logout real
               setOpen(false)
             }}
-            className="w-full text-left px-4 py-2 text-sm hover:bg-zinc-800"
+            className="w-full text-left p-6 text-sm hover:bg-[#19243b] text-red-400"
           >
-            Sair
+
+            <LogOut className="inline mr-2" size={20} />
+            <span>Sair da conta</span>
           </button>
         </div>
       )}

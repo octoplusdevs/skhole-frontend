@@ -14,7 +14,7 @@ export const Avatar = ({ name, imageUrl }: AvatarProps) => {
     .slice(0, 2)
 
   return (
-    <div className="relative w-10 h-10 rounded-full bg-gray-700 text-white flex items-center justify-center overflow-hidden">
+    <div className="relative w-10 h-10 rounded-full bg-[#bbf722c9] text-black flex items-center justify-center overflow-hidden">
       {imageUrl ? (
         <img
           src={imageUrl}
