@@ -84,14 +84,16 @@ import { createContext, useContext, useEffect, useState } from "react";
 type User = {
   id: string;
   name: string;
+  fullName: string;
   email: string;
   role?: string;
+  avatar?: string;
 };
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   logout: () => void;
 }
 
@@ -125,8 +127,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       localStorage.setItem("fakeUser", JSON.stringify(fakeUser));
       setUser(fakeUser);
+
+      return Promise.resolve(fakeUser);
     } else {
-      throw new Error("Credenciais inválidas");
+      // Simular erro de credenciais inválidas
+      setUser(null);
+      return Promise.reject(new Error("Credenciais inválidas"));
     }
   }
 

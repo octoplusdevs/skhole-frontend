@@ -11,7 +11,6 @@
 //   });
 // }
 
-
 // hooks/auth/useLogin.ts
 "use client";
 
@@ -24,11 +23,25 @@ export function useLogin() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async ({ email, password }: { email: string; password: string }) => {
-      await login(email, password);
+    mutationFn: async ({
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+    }) => {
+      try {
+        await login(email, password);
+        console.log("Login successful");
+
+      } catch (error) {
+        console.error("Login failed:", error);
+        throw new Error("Login failed");
+
+      }
     },
     onSuccess: () => {
-      router.push("/dashboard");
+      router.push("/learn");
     },
   });
 }

@@ -11,7 +11,7 @@ const Thumbnail = ({ src, alt, className }: IThumbnail) => {
         height={56}
         src={src}
         alt={alt ?? src}
-        className="w-full max-w-[56px] h-[56px] rounded-2xl object-cover"
+        className="w-full max-w-[56px] h-[56px] rounded-2xl object-fill"
       />
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/components/ui/header/header";
 import { useAuth } from "@/context/auth-context";
-import { useGetItemLocalStorage } from "@/hooks/localStorage/useGetItemLocalStorage";
+import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -11,7 +11,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { user, loading } = useAuth();
-  const currentPage = useGetItemLocalStorage("currentPage");
+  const currentPage = getItemLocalStorage("currentPage");
   const router = useRouter();
 
   useEffect(() => {

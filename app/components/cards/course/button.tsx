@@ -1,32 +1,46 @@
-"use client";
-import Link from "next/link";
-import { IButton } from "./interface";
+'use client';
 
-const buttonContent = {
-  ACTIVE: "Inscrever",
-  DRAFT: "Inscrever",
-  ARCHIVED: "Inscrever",
-  ENROLLED: "Inscrito",
+import { IButton } from './interface';
+import { clsx } from 'clsx';
+
+const STATUS_TEXT: Record<IButton['status'], string> = {
+  ACTIVE: 'Inscrever',
+  DRAFT: 'Indisponível',
+  ARCHIVED: 'Arquivado',
+  ENROLLED: 'Inscrito',
+  PENDING: 'Pendente',
 };
 
-const Button = ({ target, Icon, className, onClick, status }: IButton) => {
+const STATUS_STYLE: Record<IButton['status'], string> = {
+  ACTIVE: 'bg-[#151f33] text-primary hover:bg-[#2c375196] ',
+  DRAFT: 'bg-background cursor-not-allowed pointer-events-none opacity-46',
+  ARCHIVED: 'bg-background cursor-not-allowed pointer-events-none opacity-46',
+  ENROLLED: 'bg-primary text-black hover:opacity-70',
+  PENDING: 'bg-[#f7a522a2] text-black cursor-not-allowed pointer-events-none',
+};
+
+const Button = ({
+  Icon,
+  className = '',
+  onClick,
+  status,
+  content,
+}: IButton) => {
+  const isDisabled = ['DRAFT', 'ARCHIVED', 'PENDING'].includes(status);
+
   return (
-    <Link
-      href={target}
-      className={`duration-150 cursor-pointer py-4 px-6 flex items-center justify-center uppercase text-[14px] lg:text-[16px] tracking-[10%] font-bold rounded-[8px] ${className} ${
-        status === "ACTIVE"
-          ? "bg-background text-primary hover:bg-[#01071596]"
-          : status === "ARCHIVED" || status === "DRAFT"
-          ? "bg-background cursor-not-allowed pointer-events-none opacity-46"
-          : status === "ENROLLED"
-          ? "bg-primary text-black hover:opacity-70"
-          : ""
-      }`}
+    <button
+      disabled={isDisabled}
+      className={clsx(
+        'duration-150 py-4 px-6 flex items-center justify-center uppercase text-[14px] lg:text-[16px] tracking-[10%] font-bold',
+        STATUS_STYLE[status],
+        className
+      )}
       onClick={onClick}
     >
-      {buttonContent[status]}
-      {Icon && Icon}
-    </Link>
+      {content ?? STATUS_TEXT[status]}
+      {Icon && <span className="ml-2">{Icon}</span>}
+    </button>
   );
 };
 

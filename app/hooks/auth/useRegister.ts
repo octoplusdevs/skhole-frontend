@@ -28,7 +28,7 @@ export function useLogin() {
       await login(email, password);
     },
     onSuccess: () => {
-      router.push("/dashboard");
+      router.push("/learn");
     },
   });
 }

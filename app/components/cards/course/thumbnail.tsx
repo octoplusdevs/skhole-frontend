@@ -1,19 +1,22 @@
 import Image from "next/image";
 import { IThumbnail } from "./interface";
+import Link from "next/link";
 
-const Thumbnail = ({ src, alt, className }: IThumbnail) => {
+const Thumbnail = ({ src, alt, className, onClick, target }: IThumbnail) => {
   return (
-    <div
-      className={`w-full lg:max-w-[334px] h-[207px] rounded-3xl ${className} bg-secondary`}
+    <Link
+      href={target}
+      className={`w-full h-[207px] ${className}`}
+      onClick={onClick}
     >
       <Image
         width={334}
         height={207}
         src={src}
         alt={alt ?? src}
-        className="w-full lg:max-w-[334px] h-[207px] rounded-2xl sm:rounded-3xl object-cover"
+        className="w-full h-[207px] rounded-t-xl object-cover"
       />
-    </div>
+    </Link>
   );
 };
 
