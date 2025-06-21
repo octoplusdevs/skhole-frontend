@@ -1,6 +1,6 @@
 import { AuthProvider } from "./context/auth-context";
 import { ReactQueryProvider } from "./components/providers/react-query-provider";
-import 'styles/globals.css';
+import "styles/globals.css";
 import { Toaster } from "sonner";
 import { inter } from "./fonts/data";
 import Header from "./components/ui/header/header";
