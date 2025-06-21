@@ -17,6 +17,20 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+const personalizedToast = (message: string) => {
+  return toast(message, {
+    position: "top-center",
+    style: {
+      background: "",
+      color: "",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "2px",
+    },
+  });
+};
 
 export function useLogin() {
   const { login } = useAuth();
@@ -32,16 +46,14 @@ export function useLogin() {
     }) => {
       try {
         await login(email, password);
-        console.log("Login successful");
-
+        personalizedToast("Sessão iniciada com sucesso 🎉");
       } catch (error) {
-        console.error("Login failed:", error);
+        personalizedToast("Credenciais Inválidas");
         throw new Error("Login failed");
-
       }
     },
     onSuccess: () => {
-      router.push("/learn");
+      router.push("/");
     },
   });
 }

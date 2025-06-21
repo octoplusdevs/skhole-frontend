@@ -17,12 +17,19 @@ interface IThumbnail {
 
 interface ITitle {
   content: string;
+  subtitle?: string
+  className?: string;
+}
+
+interface IRate {
+  content: number;
   className?: string;
 }
 
 interface IPrice {
   content: number;
   className?: string;
+  discount: number;
 }
 
 interface IDetail {
@@ -39,4 +46,4 @@ interface IButton {
   status: StatusType;
 }
 
-export type { IRoot, IThumbnail, ITitle, IPrice, IDetail, IButton };
+export type { IRoot, IThumbnail, ITitle, IPrice, IDetail, IButton, IRate };
