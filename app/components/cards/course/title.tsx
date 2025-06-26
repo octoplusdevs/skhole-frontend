@@ -14,6 +14,7 @@ const Rate = ({ content, className }: IRate) => {
     <div className={`${className} flex gap-0.5`}>
       {Array.from({ length: 5 }).map((_, index: number) => (
         <Star
+          key={index}
           color={`${index + 1 <= content ? "#f7d722c9" : "#85806592"}`}
           size={16}
           weight="fill"

@@ -7,117 +7,103 @@ import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage
 import { ICourseSection, IPaymentsDetails } from "./interface";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { UseGetCourseLessons } from "@/hooks/use-get-course-lessons";
-import { UseGetLesson } from "@/hooks/use-get-lesson";
 import { levelTranslator } from "@/utils/level-translator";
 import { Categories } from "@/utils/data";
 import { getFirstAndLastName } from "@/utils/get-first-and-last-name";
+import { CourseModule, ICourse } from "@/utils/interfaces/course";
+import { verifyCourseAcess } from "@/utils/verify-course-acess";
+import { formatEnrollment } from "@/utils/format-enrollments";
 
 export const RenderCourses = ({
   children,
   courses,
   title,
-  enrolledCourses,
+  enrollmentsFound,
 }: ICourseSection) => {
-  const { mutate: watchedCourse } = UseGetCourseLessons();
-  const { mutate: getLesson } = UseGetLesson();
-  let enrollments: IPaymentsDetails[] = [];
   const router = useRouter();
 
   const hasCourses = Array.isArray(courses) && courses.length > 0;
-  const getFirstLesson = (course: any) => course.modules?.[0]?.lessons?.[0];
+  const getFirstLesson = (course: ICourse) => {
+    const courseModule = course.modules;
+    let lesson;
+    if (course.modules.length > 0) {
+      lesson = {
+        ...courseModule?.[0].module?.lessons[0]?.lesson,
+        order: String(courseModule[0].module.lessons[0].order),
+        moduleOrder: String(courseModule[0].order),
+      };
+      return lesson;
+    }
+  };
 
   const storeCommonCourseData = (
-    course: any,
-    lesson: any,
-    nextPage: string
+    slug: string,
+    lesson: string,
+    nextPage: string,
+    courseId: string,
+    lessonOrder: string,
+    moduleOrder: string
   ) => {
     const storageItems = [
       { key: "currentPage", value: nextPage },
-      { key: "currentCourse", value: course },
+      { key: "currentSlugCourse", value: slug },
+      { key: "currentCourseId", value: courseId },
       { key: "currentLesson", value: lesson },
       { key: "accordion", value: "" },
+      { key: "lessonOrder", value: lessonOrder },
+      { key: "moduleOrder", value: moduleOrder },
     ];
     storageItems.forEach(({ key, value }) => setItemLocalStorage(key, value));
   };
 
-  const handleCourseClick = (course: any) => {
+  const handleCourseClick = (course: ICourse, courseStatus: any) => {
     const lesson = getFirstLesson(course);
-    const nextPage = `/cursos/${course.slug}/${lesson.id}`;
+    const slug = course.slug;
+    const nextPage = `/learn/${slug}/${lesson?.id}`;
+    let lessons = course.modules?.reduce((acc: number, curr: CourseModule) => {
+      return (acc += curr.module.lessons.length);
+    }, 0);
 
-    switch (course.status) {
+    switch (courseStatus) {
       case "ENROLLED":
-        storeCommonCourseData(course, lesson, nextPage);
-        watchedCourse({ course });
-        getLesson({ lesson });
-        router.push(nextPage);
+        if (lessons) {
+          storeCommonCourseData(
+            slug,
+            lesson?.id ?? "",
+            nextPage,
+            course.id,
+            lesson?.order ?? "",
+            lesson?.moduleOrder ?? ""
+          );
+          router.push(nextPage);
+        } else {
+          toast("Este curso não possui aulas");
+        }
         break;
-
       case "PENDING":
         toast("O seu pagamento ainda não foi aprovado");
         break;
-
       default:
-        storeCommonCourseData(course, "", `/cursos/${course.slug}`);
-        watchedCourse({ course });
-        router.push(`/cursos/${course.slug}`);
+        storeCommonCourseData(slug, "", `/learn/${slug}`, course.id, "", "");
+        router.push(`/learn/${slug}`);
         break;
     }
   };
 
-  const handleThumbnailClick = (course: any) => {
+  const handleThumbnailClick = (course: ICourse) => {
     const lesson = getFirstLesson(course);
-    const nextPage = `/cursos/${course.slug}`;
-    storeCommonCourseData(course, lesson, nextPage);
-    watchedCourse({ course });
-    getLesson({ lesson });
+    const nextPage = `/learn/${course.slug}`;
+    storeCommonCourseData(
+      course.slug,
+      lesson?.id ?? "",
+      nextPage,
+      course.id,
+      lesson?.order ?? "",
+      lesson?.moduleOrder ?? ""
+    );
   };
 
-  if (enrolledCourses?.length > 0) {
-    enrollments = enrolledCourses.map((enroll: any) => {
-      return {
-        courseId: enroll?.courseId,
-        paymentsStatus: enroll.payments?.map((p: any) => p.status),
-        amount: enroll.payments?.reduce((acc: number, curr: any) => {
-          return (acc += Number(curr.amount));
-        }, 0),
-      };
-    });
-  }
-
-  const renderCTA = (course: any) => {
-    return enrollments.map((enrollment) => {
-      const isEnrolled = enrollment.courseId === course.id;
-      const isPaymentCompleted =
-        enrollment.paymentsStatus.includes("COMPLETED") &&
-        enrollment.amount === Number(course.price);
-      const isPaymentPending = enrollment.paymentsStatus.includes("PENDING");
-
-      let courseStatus = course.status;
-      let buttonContent = course.price === "0" ? "Gratuito" : "Inscrever-se";
-
-      if (isEnrolled) {
-        if (isPaymentCompleted) {
-          courseStatus = "ENROLLED";
-          buttonContent = "Assistir";
-        } else if (isPaymentPending) {
-          courseStatus = "PENDING";
-          buttonContent = "Pendente";
-        } else {
-          courseStatus = "ACTIVE";
-          buttonContent = "Inscrever-se";
-        }
-      }
-
-      return (
-        <CourseCard.Button
-          status={courseStatus}
-          content={buttonContent}
-          onClick={() => handleCourseClick(course)}
-        />
-      );
-    });
-  };
+  const { enrollments } = formatEnrollment(enrollmentsFound);
 
   return (
     <section className="pt-32 pb-8">
@@ -127,6 +113,10 @@ export const RenderCourses = ({
         {hasCourses && (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {courses.map((course) => {
+              const { buttonContent, courseStatus } = verifyCourseAcess(
+                course,
+                enrollments
+              );
               return (
                 <CourseCard.Root key={course.id}>
                   <div className="flex flex-col h-full justify-between">
@@ -134,7 +124,7 @@ export const RenderCourses = ({
                       src={"/ts.png"}
                       alt={course.title}
                       onClick={() => handleThumbnailClick(course)}
-                      target={`/cursos/${course.slug}`}
+                      target={`/learn/${course.slug}`}
                     />
                     <div className="flex flex-col gap-2 px-6 h-24 overflow-hidden pt-6">
                       <CourseCard.Title content={course.title} />
@@ -167,7 +157,11 @@ export const RenderCourses = ({
                         className="mt-[-4px]"
                       />
                     </div>
-                    {renderCTA(course)}
+                    <CourseCard.Button
+                      status={courseStatus}
+                      content={buttonContent}
+                      onClick={() => handleCourseClick(course, courseStatus)}
+                    />
                   </div>
                 </CourseCard.Root>
               );

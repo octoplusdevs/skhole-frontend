@@ -1,5 +1,5 @@
-import { Certificate } from "@phosphor-icons/react";
 import {
+  Certificate,
   SealCheck,
   Star,
   UsersThree,

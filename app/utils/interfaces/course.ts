@@ -1,6 +1,13 @@
-type StatusType = "ACTIVE" | "DRAFT" | "ARCHIVED" | "ENROLLED" | "PENDING";
-type ROLES = "ADMIN" | "TEACHER" | "STUDENT";
-type CATEGORIES =
+export type StatusType =
+  | "ACTIVE"
+  | "DRAFT"
+  | "ARCHIVED"
+  | "ENROLLED"
+  | "PENDING";
+
+export type ROLES = "ADMIN" | "TEACHER" | "STUDENT";
+
+export type CATEGORIES =
   | "WEB_DEVELOPMENT"
   | "MOBILE_DEVELOPMENT"
   | "DATA_SCIENCE"
@@ -13,7 +20,61 @@ type CATEGORIES =
   | "TESTING"
   | "AI_ML";
 
-interface IQuiz {
+export interface Author {
+  fullName: string;
+  email: string;
+  role: ROLES;
+}
+
+export interface User {
+  email: string;
+  fullName: string;
+  role: "ADMIN" | "TEACHER" | "STUDENT";
+}
+
+export interface Instructor {
+  user: User;
+}
+
+export interface Lesson {
+  id: string;
+  title: string;
+  content: string;
+  duration: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ModuleLesson {
+  moduleId: string;
+  lessonId: string;
+  order: number;
+  lesson: Lesson;
+}
+
+export interface Module {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  duration: string;
+  createdAt: string;
+  updatedAt: string;
+  lessons: ModuleLesson[];
+}
+
+export interface CourseModule {
+  id: string;
+  courseId: string;
+  moduleId: string;
+  isMandatory: boolean;
+  order: number;
+  releaseDate: string | null;
+  status: "DRAFT" | "PUBLISHED" | string;
+  module: Module;
+}
+
+export interface IQuiz {
   id: string;
   question: string;
   correctAnswer: string;
@@ -28,43 +89,25 @@ interface IQuiz {
   courseId?: string;
 }
 
-interface ILesson {
+export interface ICourseReviews {
+  classification: number;
+  courseId: string;
   id: string;
-  title: string;
-  content: string;
-  duration: number;
-  order?: number;
-  createdAt?: Date;
-  updatedAt?: Date;
-  watched?: boolean;
-  quizzes?: IQuiz[];
+  userId: string;
 }
 
-interface IModule {
+export interface IEnrollments {
+  courseId: string;
+  createdAt: Date;
+  enrolledAt: Date;
   id: string;
-  title: string;
-  description: string;
-  slug: string;
-  duration: number;
-  order: number;
-  lessons: ILesson[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  paymentId: string | null;
+  status: "ACTIVE" | "INACTIVE";
+  userId: string;
 }
 
-interface IModule {
-  id: string;
-  title: string;
-  contentCount: number;
-}
-
-interface author {
-  fullName: string;
-  email: string;
-  role: ROLES;
-}
-
-interface ICourse {
+// curso
+export interface ICourse {
   id: string;
   title: string;
   description: string;
@@ -82,17 +125,31 @@ interface ICourse {
   level: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
   code: string;
   author: string;
-  authorUser: author;
+  authorUser: Author;
   status: StatusType;
   discount: number;
+  guarantee: number;
   createdAt: Date;
   updatedAt: Date;
-  modules: IModule[];
-  enrollments: string[];
+
+  modules: CourseModule[];
+  enrollments: IEnrollments[];
   testimonials: string[];
   Certificate: string[];
   Payment: string[];
   forumThread: string[];
   Quiz: string[];
+  Instructors: Instructor[];
+  CourseReviews: ICourseReviews[];
 }
-export type { ICourse, IModule, ILesson, IQuiz, StatusType };
+
+export interface IWatchedLesson {
+  courseId: string;
+  createdAt: Date;
+  id: string;
+  lessonId: string;
+  moduleId: string;
+  status: "IN_PROGRESS" | "COMPLETED";
+  timeWatched: number;
+  userId: string;
+}

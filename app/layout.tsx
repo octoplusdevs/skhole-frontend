@@ -3,7 +3,6 @@ import { ReactQueryProvider } from "./components/providers/react-query-provider"
 import "styles/globals.css";
 import { Toaster } from "sonner";
 import { inter } from "./fonts/data";
-import Header from "./components/ui/header/header";
 
 export const metadata = {
   title: "Skholé",
@@ -21,7 +20,6 @@ export default function RootLayout({
         <ReactQueryProvider>
           <AuthProvider>
             <main className="overflow-x-hidden">
-              <Header />
               {children}
             </main>
           </AuthProvider>
