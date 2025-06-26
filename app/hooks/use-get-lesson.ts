@@ -1,12 +1,20 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { API } from "@/services/data";
+import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
-const UseGetLesson = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({ lesson }: { lesson: any }) => lesson,
-    onSuccess: (data) => {
-      queryClient.setQueryData(["currentLesson"], data);
+const UseGetLesson = ({ lessonId }: { lessonId: string }) => {
+  const token = Cookies.get("token");
+  return useQuery({
+    queryKey: ["currentLesson"],
+    queryFn: async () => {
+      const response = await API.get("/lessons/lesson", {
+        params: { lessonId },
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return response.data;
     },
+    enabled: !!lessonId,
   });
 };
 

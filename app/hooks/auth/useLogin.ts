@@ -19,15 +19,16 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const personalizedToast = (message: string) => {
+const personalizedToast = (message: string, bg?: string) => {
   return toast(message, {
     position: "top-center",
     style: {
-      background: "",
+      background: bg ?? "",
       color: "",
       alignItems: "center",
       justifyContent: "center",
       padding: "2px",
+      border: "none",
     },
   });
 };
@@ -46,7 +47,7 @@ export function useLogin() {
     }) => {
       try {
         await login(email, password);
-        personalizedToast("Sessão iniciada com sucesso 🎉");
+        personalizedToast("Sessão iniciada com sucesso 🎉", "#bbf722");
       } catch (error) {
         personalizedToast("Credenciais Inválidas");
         throw new Error("Login failed");

@@ -1,23 +1,35 @@
-import { Check } from "@phosphor-icons/react/dist/ssr/Check"
-import { ICheckbox } from "./interface"
-import { formatTime } from "@/utils/format-time"
-import { CheckFat } from "@phosphor-icons/react/dist/ssr"
+import { Check } from "@phosphor-icons/react/dist/ssr/Check";
+import { ICheckbox } from "./interface";
+import { formatTime } from "@/utils/format-time";
+import { CheckFat } from "@phosphor-icons/react/dist/ssr";
 
-const CheckBox = ({ duration, onClick, title, watched, check, currentLesson }: ICheckbox) => {
+const CheckBox = ({
+  duration,
+  onClick,
+  title,
+  watched,
+  check,
+  currentLesson,
+}: ICheckbox) => {
   return (
     <div className="flex w-full justify-between gap-1 cursor-pointer hover:opacity-60 duration-100">
       <div className="flex gap-2 w-full">
-        <div className="h-[24px] w-full max-w-[24px] rounded-[4px] flex items-center justify-center bg-[#ffffff39]" onClick={check}>
+        <div
+          className="h-[24px] w-full max-w-[24px] rounded-[4px] flex items-center justify-center bg-[#ffffff39]"
+          onClick={check}
+        >
           {watched && <CheckFat color="#baf722" size={16} weight="fill" />}
           <input type="checkbox" className="appearance-none" />
         </div>
         <div className="flex justify-between w-full gap-2" onClick={onClick}>
-          <p >{title}</p>
-          <span className={`${currentLesson ? 'text-primary' : 'text-link'}`}>{duration && formatTime(duration)}</span>
+          <p>{title}</p>
+          <span className={`${currentLesson ? "text-primary" : "text-link"}`}>
+            {duration && formatTime(duration)}
+          </span>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export { CheckBox }
+export { CheckBox };

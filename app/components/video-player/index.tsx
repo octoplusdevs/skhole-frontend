@@ -1,42 +1,4 @@
 "use client";
-<<<<<<< HEAD
-import { useEffect, useRef, useState } from "react";
-import ReactPlayer from "react-player";
-import { IVideoPlayer } from "./interface";
-
-export const VideoPlayer = ({ url, startTime }: IVideoPlayer) => {
-  const playerRef = useRef<ReactPlayer>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      playerRef.current?.seekTo(startTime, "seconds");
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [startTime]);
-
-  const handleProgress = (state: { playedSeconds: number }) => {
-    setCurrentTime(state.playedSeconds);
-  };
-
-  return (
-    <div className="w-full max-w-[800px] h-[242px] sm:h-[368px]  lg:h-[449px] rounded-[8px]">
-      <p>Current time: {currentTime.toFixed(0)} seconds</p>
-      <ReactPlayer
-        ref={playerRef}
-        url={url}
-        playing
-        controls
-        width="100%"
-        height="100%"
-        onProgress={handleProgress}
-        className="w-full h-full"
-      />
-    </div>
-  );
-};
-=======
 
 import { CircleNotch } from "@phosphor-icons/react/dist/ssr";
 import { useRef, useState } from "react";
@@ -92,7 +54,8 @@ export default function Player({
 
   const handleProgress = ({ playedSeconds }: { playedSeconds: number }) => {
     const nextUpdatePoint =
-      lastReportedTime + getUpdateFrequency(playerRef.current?.getDuration?.() ?? 0);
+      lastReportedTime +
+      getUpdateFrequency(playerRef.current?.getDuration?.() ?? 0);
 
     // if (playedSeconds >= nextUpdatePoint && !updateProgressMutation.isMutating) {
     //   setLastReportedTime(playedSeconds);
@@ -133,16 +96,16 @@ export default function Player({
             height="100%"
             className="absolute top-0 left-0 w-full h-full"
           />
-        ) :
+        ) : (
           <div className="absolute top-0 left-0 flex items-center justify-center h-full w-full">
             <CircleNotch
               color="#baf722"
               size={56}
               className="rotate-180 animate-spin duration-150"
             />
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );
 }
->>>>>>> 7fca739821e86e74b5de7fb8a53303fbdc91e4dc

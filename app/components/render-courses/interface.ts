@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 interface ICourseSection {
   courses: ICourse[];
-  enrolledCourses: IEnrollment[];
+  enrollmentsFound: any;
   title: string;
   children?: ReactNode;
 }

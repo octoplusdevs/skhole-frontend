@@ -2,7 +2,7 @@ export const MENU = [
   {
     id: 0,
     content: "Cursos",
-    target: "/learn",
+    target: "/",
   },
   {
     id: 1,

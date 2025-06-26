@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { API } from '@/lib/api';
-import { useLogin } from '@/hooks/auth/useLogin';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { API } from "@/lib/api";
+import { useLogin } from "@/hooks/auth/useLogin";
 
 const loginSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -28,13 +28,12 @@ export function LoginForm() {
 
   const { mutate } = useLogin();
 
-
   const onSubmit = async (data: LoginData) => {
     try {
       const response = mutate(data);
-      console.log({response});
+      console.log({ response });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       toast.error("Erro ao fazer login.");
     }
   };
@@ -55,12 +54,10 @@ export function LoginForm() {
           type="email"
           id="email"
           placeholder="Digite seu e-mail"
-          {...register('email')}
+          {...register("email")}
         />
         {errors.email && (
-          <span className="text-sm text-red-500">
-            {errors.email.message}
-          </span>
+          <span className="text-sm text-red-500">{errors.email.message}</span>
         )}
       </div>
 
@@ -70,7 +67,7 @@ export function LoginForm() {
           type="password"
           id="password"
           placeholder="Digite sua senha"
-          {...register('password')}
+          {...register("password")}
         />
         {errors.password && (
           <span className="text-sm text-red-500">
@@ -84,14 +81,14 @@ export function LoginForm() {
       </Button>
 
       <p className="text-sm font-medium text-[#8799B5]">
-        Esqueceu sua senha?{' '}
+        Esqueceu sua senha?{" "}
         <a href="/forgot-password" className="text-primary font-bold">
           Recuperar senha
         </a>
       </p>
 
       <p className="text-sm font-medium text-[#8799B5]">
-        Ainda não tem uma conta?{' '}
+        Ainda não tem uma conta?{" "}
         <a href="/register" className="text-primary font-bold">
           Criar conta
         </a>

@@ -15,8 +15,6 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const pathName = usePathname();
 
-  if (pathName === "/login") return "";
-
   const { user } = useAuth();
   const [currentPage, setCurrentPage] = useState<string>();
   const [menuMobileStatus, setMenuMobileStatus] = useState<boolean>(false);
@@ -49,7 +47,7 @@ const Header = () => {
                 navigate(target, false);
               }}
               className={`text-[16px] font-medium text-link hover:text-logo duration-150 ${
-                currentPage === target && "text-white"
+                pathName === target && "text-white"
               }`}
             >
               {content}
