@@ -23,12 +23,12 @@ export const RenderLesson = () => {
   const lessonDescription = lesson?.title ?? ""
 
   return (
-    <div className="flex flex-col gap-8 w-full lg:max-w-[800px]">
-      <div className="w-full rounded-[8px] bg-secondary">
+    <div className="flex flex-col gap-8 w-full py-6">
+      <div className="w-full bg-secondary">
         <VideoPlayer isLoading={false} url="/intro-octoplus.mp4" video_id="84323232" />
       </div>
 
-      <div className="flex flex-col gap-4 max-w-[800px] w-full">
+      <div className="flex flex-col gap-4 w-full p-6">
         <h1 className="text-[16px] sm:text-[20px] lg:text-[24px] font-bold text-logo leading-[140%]">
           <span className="text-[#737272]">{lessonId}</span> {lessonTitle}
         </h1>

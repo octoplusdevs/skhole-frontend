@@ -27,14 +27,26 @@ export default function LessonPreview() {
   }, [])
 
   return (
-    <section className="py-32">
-      <Container className="flex flex-col gap-20">
-        <div className="flex flex-col lg:flex-row gap-6">
+    <section className="py-20">
+      <main className="lg:grid grid-cols-[1fr_350px] grid-rows-[auto_auto] min-h-screen w-full">
+        {/* RenderLesson ocupa col 1, row 1 */}
+        <div className="col-start-1 row-start-1">
           <RenderLesson />
+          <Quiz QUESTIONS={QUESTIONS} />
+        </div>
+
+        {/* RenderModules ocupa col 2, row 1 */}
+        <div className="col-start-2 row-start-1 row-end-2">
+          <h3 className="px-4 pt-4">Conteúdo</h3>
           <RenderModules />
         </div>
-        <Quiz QUESTIONS={QUESTIONS} />
-      </Container>
+
+        {/* Quiz fica abaixo do RenderLesson */}
+
+      </main>
+
+
+
     </section>
   )
 }

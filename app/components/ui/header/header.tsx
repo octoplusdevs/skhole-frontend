@@ -43,7 +43,7 @@ const Header = () => {
               onClick={() => {
                 navigate(target, false);
               }}
-              className={`text-[16px] font-medium text-link hover:text-logo duration-150 ${currentPage === target && "text-white"
+              className={`text-[16px] font-light text-[#acb2bc] hover:text-logo duration-150 ${currentPage === target && "text-white"
                 }`}
             >
               {content}

@@ -32,7 +32,7 @@ function Quiz({ QUESTIONS }: { QUESTIONS: any[] }) {
 
   return (
     <div className="container">
-      <div className="sm:bg-secondary flex flex-col gap-8 w-full  max-w-[800px] px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
+      <div className="flex flex-col gap-8 w-full  px-[12px] sm:px-[32px] py-[40px] rounded-[5px]">
         <header>
           <h2 className="text-white text-[20px] font-bold">
             Desafios da aula

@@ -127,15 +127,15 @@ const RenderModules = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full lg:max-w-[384px]">
-      <div className="module_area flex flex-col w-full rounded-[8px] overflow-y-scroll h-[434px] bg-secondary">
+    <div className="flex flex-col gap-4 w-full lg:max-w-[384px] p-4">
+      <div className="module_area flex flex-col w-full overflow-y-scroll bg-secondary">
         {course && lesson && (
           <Accordion
             type="single"
             collapsible
             value={accordionOpen}
             onValueChange={setAccordionOpen}
-            className="flex flex-col gap-0 rounded-[8px]"
+            className="flex flex-col gap-0"
           >
             {course.modules.map((module: any, index: number) => renderAccordionContent(module, index))}
           </Accordion>

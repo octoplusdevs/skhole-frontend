@@ -4,7 +4,6 @@ import { useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
-import { User } from "@/components/user-menu"
 import { courseAdvantages } from "./data"
 import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage"
 import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage"
@@ -85,12 +84,12 @@ export const CoursePaymentArea = () => {
           })}
         </div>
 
-        <User
+        {/* <User
           name="Wilmy Danguya"
           role="Instrutor do curso"
           avatar="/user.png"
           firstName={false}
-        />
+        /> */}
       </div>
     </div>
   )
