@@ -15,14 +15,14 @@ const PriceBeforeDiscount = ({ price, percentage, className }: {
   className?: string;
 }) => {
   return (
-    <p className={`lg:text-[18px] font-semibold ${className}`}>
+    <div className={`lg:text-[18px] font-semibold ${className}`}>
       <p className="text-[12px]">
         {percentage > 0 ? percentage + "% de desconto" : ""}
       </p>
       <span className="line-through text-red-500 text-[14px]">
         {percentage > 0 ? price : ""}
       </span>
-    </p>
+    </div>
   );
 };
 
