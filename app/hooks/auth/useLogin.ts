@@ -1,47 +1,45 @@
-// import { API } from "@/lib/api";
-// import { UseMutationResult, useMutation } from "@tanstack/react-query";
-
-// export function useLogin(): UseMutationResult<any, Error, { email: string; password: string }> {
-//   return useMutation({
-//     mutationFn: async (data) => {
-//       const res = await API.post("/auth/login", data);
-//       localStorage.setItem("token", res.data.token);
-//       return res.data;
-//     },
-//   });
-// }
-
-// hooks/auth/useLogin.ts
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+interface IUseLogin {
+  email: string;
+  password: string;
+}
+
+const personalizedToast = (message: string, bg?: string) => {
+  return toast(message, {
+    position: "top-center",
+    style: {
+      background: bg ?? "",
+      color: "",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "2px",
+      border: "none",
+    },
+  });
+};
 
 export function useLogin() {
   const { login } = useAuth();
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async ({
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    }) => {
+    mutationFn: async ({ email, password }: IUseLogin) => {
       try {
         await login(email, password);
-        console.log("Login successful");
-
+        personalizedToast("Sessão iniciada com sucesso 🎉", "#bbf722");
       } catch (error) {
-        console.error("Login failed:", error);
+        personalizedToast("Credenciais Inválidas");
         throw new Error("Login failed");
-
       }
     },
     onSuccess: () => {
-      router.push("/learn");
+      router.push("/");
     },
   });
 }
