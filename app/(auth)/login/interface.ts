@@ -1,12 +1,14 @@
 import z from "zod";
 
 interface IRenderInput {
-  type: "email" | "password";
+  type: "email" | "password" | "text" | "number";
+  field: string;
   placeholder: string;
   label: string;
   isError: boolean | any;
   errorMessage: string | undefined;
   register: any;
+  onKeyDown?: (e: any) => void;
 }
 
 export const loginSchema = z.object({

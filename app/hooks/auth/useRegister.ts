@@ -1,34 +1,29 @@
-// import { API } from "@/lib/api";
-// import { UseMutationResult, useMutation } from "@tanstack/react-query";
-
-// export function useLogin(): UseMutationResult<any, Error, { email: string; password: string }> {
-//   return useMutation({
-//     mutationFn: async (data) => {
-//       const res = await API.post("/auth/login", data);
-//       localStorage.setItem("token", res.data.token);
-//       return res.data;
-//     },
-//   });
-// }
-
-
-// hooks/auth/useLogin.ts
-"use client";
-
+import { API } from "@/services/data";
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-export function useLogin() {
-  const { login } = useAuth();
+interface IUseRegister {
+  email: string;
+  password: string;
+  username: string;
+  fullName: string;
+  country: string;
+}
+
+const useRegister = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: async ({ email, password }: { email: string; password: string }) => {
-      await login(email, password);
+    mutationFn: async (data: IUseRegister) => {
+      const response = await API.post("users", data);
+      return response.data;
     },
-    onSuccess: () => {
-      router.push("/learn");
+    onSuccess: async (data) => {
+      toast.success("Conta criada 🎉");
+      router.push(`/email-verify?email=${data.email}`);
     },
   });
-}
+};
+
+export { useRegister };

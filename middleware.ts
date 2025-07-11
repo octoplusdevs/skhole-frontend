@@ -5,7 +5,12 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const pathname = request.nextUrl.pathname;
 
-  const publicRoutes = ["/login", "/register", "/forgot-password"];
+  const publicRoutes = [
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/email-verify",
+  ];
   const isPublic = publicRoutes.some((route) => pathname.startsWith(route));
 
   if (isPublic) return NextResponse.next();

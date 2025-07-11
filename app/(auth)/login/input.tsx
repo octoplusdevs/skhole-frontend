@@ -9,15 +9,20 @@ export const RenderInput = ({
   placeholder,
   type,
   register,
+  field,
+  onKeyDown,
 }: IRenderInput) => {
   return (
     <div className="flex flex-col gap-2 relative">
-      <Label htmlFor={type}>{label}</Label>
+      <Label htmlFor={field}>{label}</Label>
       <Input
         type={type}
-        id={type}
+        id={field}
         placeholder={placeholder}
-        {...register(type)}
+        onKeyDown={onKeyDown}
+        {...register(field, {
+          onKeyDown,
+        })}
       />
       {isError && (
         <span className="text-[13px] text-red-500 absolute bottom-[-22px]">

@@ -46,6 +46,7 @@ export function LoginForm() {
           placeholder="Digite seu e-mail"
           register={register}
           type="email"
+          field="email"
         />
         <Input
           errorMessage={errors?.password?.message}
@@ -54,6 +55,7 @@ export function LoginForm() {
           placeholder="Digite sua senha"
           register={register}
           type="password"
+          field="password"
         />
       </div>
 
