@@ -10,6 +10,7 @@ export function middleware(request: NextRequest) {
     "/register",
     "/forgot-password",
     "/email-verify",
+    "/reset-password",
   ];
   const isPublic = publicRoutes.some((route) => pathname.startsWith(route));
 

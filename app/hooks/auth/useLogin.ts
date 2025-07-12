@@ -12,13 +12,13 @@ interface IUseLogin {
 
 const personalizedToast = (message: string, bg?: string) => {
   return toast(message, {
-    position: "top-center",
+    position: "bottom-center",
     style: {
       background: bg ?? "",
       color: "",
       alignItems: "center",
       justifyContent: "center",
-      padding: "2px",
+      padding: "8px",
       border: "none",
     },
   });
