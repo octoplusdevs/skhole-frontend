@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { RedirectUser } from "@/components/redirect-user";
 import { RenderInput as Input } from "@/(auth)/login/input";
 import { useForgotPassword } from "@/hooks/auth/useForgotPassword";
+import Link from "next/link";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -60,11 +60,12 @@ export function ForgotPasswordForm() {
         {isSubmitting ? "Enviando..." : "Enviar link"}
       </Button>
 
-      <RedirectUser
-        link="/login"
-        question="Lembrou sua senha?"
-        response="Faça login"
-      />
+      <p className="text-sm font-medium text-[#8799B5]">
+        Lembrou sua senha?{" "}
+        <Link href="/login" className="text-primary font-bold">
+          Faça login
+        </Link>
+      </p>
     </form>
   );
 }

@@ -6,8 +6,8 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useLogin";
 import { RenderInput as Input } from "@/(auth)/login/input";
-import { RedirectUser } from "@/components/redirect-user";
 import { LoginData, loginSchema } from "@/(auth)/login/interface";
+import Link from "next/link";
 
 export function LoginForm() {
   const {
@@ -63,16 +63,19 @@ export function LoginForm() {
         {isSubmitting ? "Entrando..." : "Entrar"}
       </Button>
 
-      <RedirectUser
-        question="Esqueceu sua senha?"
-        response="Recuperar senha"
-        link="/forgot-password"
-      />
-      <RedirectUser
-        question="Ainda não tem uma conta?"
-        response="Criar conta"
-        link="/register"
-      />
+      <p className="text-sm font-medium text-[#8799B5]">
+        Esqueceu sua senha?{" "}
+        <Link href="/redefinir-senha" className="text-primary font-bold">
+          Recuperar senha
+        </Link>
+      </p>
+
+      <p className="text-sm font-medium text-[#8799B5]">
+        Ainda não tem uma conta?{" "}
+        <Link href="/criar-conta" className="text-primary font-bold">
+          Criar conta
+        </Link>
+      </p>
     </form>
   );
 }

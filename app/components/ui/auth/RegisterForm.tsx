@@ -7,9 +7,9 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { RenderInput as Input } from "@/(auth)/login/input";
-import { RedirectUser } from "@/components/redirect-user";
 import { useGetUserByEmail } from "@/hooks/users/use-get-user-by-email";
 import { useRegister } from "@/hooks/auth/useRegister";
+import Link from "next/link";
 
 const schema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -189,11 +189,12 @@ export function RegisterForm() {
         </div>
       </div>
 
-      <RedirectUser
-        link="/login"
-        question="Já tem uma conta?"
-        response="Faça login"
-      />
+      <p className="text-sm font-medium text-[#8799B5]">
+        Já tem uma conta?{" "}
+        <Link href="/login" className="text-primary font-bold">
+          Faça login
+        </Link>
+      </p>
     </form>
   );
 }
