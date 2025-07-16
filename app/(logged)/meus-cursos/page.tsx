@@ -1,13 +1,45 @@
+"use client";
+
+import { useEffect } from "react";
+
 import { RenderCourses } from "@/components/render-courses";
-import { generateRandomCourses } from "@/utils/data";
+import { Pagination } from "@/components/pagination";
+import { useGetEnrollments } from "@/hooks/use-get-enrollments";
+import { usePaginationParams } from "@/hooks/use-paginations-params";
+import { ICourse } from "@/utils/interfaces/course";
+import { Loading } from "@/components/loading";
 
 export default function StudentCoursesPage() {
-  let courses = generateRandomCourses(10);
-  const enrolledCourses = courses.filter(course => course.status === 'ENROLLED')
+  const { page, limit, updateParams } = usePaginationParams();
+  const { data: enrollmentsData, refetch, isLoading } = useGetEnrollments();
+
+  useEffect(() => {
+    refetch();
+  }, [page, limit, refetch]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const enrollments: any[] = enrollmentsData?.enrollments || [];
+
+  const enrolledCourses: ICourse[] = enrollments
+    .filter((enrollment) => enrollment.course)
+    .map((enrollment) => enrollment.course);
+
   return (
-    <RenderCourses
-      title="Meus Cursos"
-      courses={enrolledCourses}
-    />
+    <main className="flex flex-col gap-4 pb-32">
+      <RenderCourses
+        title="Meus cursos"
+        courses={enrolledCourses}
+        enrollmentsFound={enrollments}
+      />
+
+      <Pagination
+        page={page}
+        totalPages={enrollmentsData?.totalPages || 1}
+        onPageChange={updateParams}
+      />
+    </main>
   );
 }
