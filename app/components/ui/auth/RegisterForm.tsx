@@ -1,28 +1,30 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useRef, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { RenderInput as Input } from "@/(auth)/login/input";
+import { useGetUserByEmail } from "@/hooks/users/use-get-user-by-email";
+import { useRegister } from "@/hooks/auth/useRegister";
+import Link from "next/link";
 
 const schema = z.object({
-  email: z.string().email('E-mail inválido'),
-  password: z.string().min(6, 'Mínimo 6 caracteres'),
-  username: z.string().min(3, 'Mínimo 3 letras'),
-  fullName: z.string().min(3, 'Obrigatório'),
-  country: z.string().min(2, 'País inválido'),
+  email: z.string().email("E-mail inválido"),
+  password: z.string().min(6, "Mínimo 6 caracteres"),
+  username: z.string().min(3, "Mínimo 3 letras"),
+  fullName: z.string().min(3, "Obrigatório"),
+  country: z.string().min(2, "País inválido"),
 });
 
 type FormData = z.infer<typeof schema>;
 
 export function RegisterForm() {
   const [step, setStep] = useState(1);
-  const router = useRouter();
+  const { mutateAsync: findEmail } = useGetUserByEmail();
+  const { mutate: registerUser } = useRegister();
 
   const {
     register,
@@ -32,7 +34,7 @@ export function RegisterForm() {
     getValues,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    mode: 'onChange',
+    mode: "onChange",
     shouldUnregister: true,
   });
 
@@ -46,24 +48,27 @@ export function RegisterForm() {
   }, [step]);
 
   const checkEmail = async () => {
-    const valid = await trigger('email');
+    const valid = await trigger("email");
     if (!valid) return;
 
-    const email = getValues('email');
+    const email = getValues("email");
+
     try {
-      const emailExists = false; // simulação
-      if (emailExists) {
-        toast.error('E-mail já está em uso.');
-      } else {
-        setStep(2);
+      const user = await findEmail({ email });
+      if (user) {
+        toast.error("Este e-mail já está em uso.");
       }
-    } catch (err) {
-      toast.error('Erro ao verificar o e-mail.');
+    } catch (err: any) {
+      if (err?.response?.status === 500) {
+        setStep(2);
+      } else {
+        toast.error("Erro ao verificar o e-mail.");
+      }
     }
   };
 
   const nextPassword = async () => {
-    const valid = await trigger('password');
+    const valid = await trigger("password");
     if (valid) {
       setStep(3);
     }
@@ -71,11 +76,9 @@ export function RegisterForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // await api.post('/register', data)
-      toast.success('Conta criada!');
-      router.push(`/verificacao-email?email=${data.email}`);
+      registerUser(data);
     } catch (err) {
-      toast.error('Erro ao criar conta.');
+      toast.error("Erro ao criar conta.");
     }
   };
 
@@ -93,20 +96,24 @@ export function RegisterForm() {
         {/* Step 1 */}
         <div
           ref={step === 1 ? stepRef : null}
-          className={`absolute top-0 left-0 flex flex-col gap-2 w-full transition-all duration-500 ${step === 1 ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+          className={`flex flex-col gap-2 w-full transition-all duration-500 ${
+            step === 1 ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
-          <Label htmlFor="email">E-mail</Label>
           <Input
-            id="email"
+            errorMessage={errors?.email?.message}
+            isError={errors.email}
+            label="E-mail"
             placeholder="Digite seu e-mail"
-            {...register('email')}
+            register={register}
+            field="email"
+            type="email"
+            onKeyDown={(e: any) => {
+              if (e.key === "Enter") {
+                checkEmail();
+              }
+            }}
           />
-          {errors.email && (
-            <span className="text-sm text-red-500">
-              {errors.email.message}
-            </span>
-          )}
           <Button type="button" className="mt-4 w-full" onClick={checkEmail}>
             Verificar e continuar
           </Button>
@@ -115,21 +122,24 @@ export function RegisterForm() {
         {/* Step 2 */}
         <div
           ref={step === 2 ? stepRef : null}
-          className={`absolute top-0 left-0 w-full flex flex-col gap-2 transition-all duration-500 ${step === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+          className={`absolute top-0 left-0 w-full flex flex-col gap-2 transition-all duration-500 ${
+            step === 2 ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
-          <Label htmlFor="password">Senha</Label>
           <Input
-            id="password"
-            type="password"
+            errorMessage={errors?.password?.message}
+            isError={errors.password}
+            label="Senha"
             placeholder="Crie sua senha"
-            {...register('password')}
+            register={register}
+            type="password"
+            field="password"
+            onKeyDown={(e: any) => {
+              if (e.key === "Enter") {
+                nextPassword();
+              }
+            }}
           />
-          {errors.password && (
-            <span className="text-sm text-red-500">
-              {errors.password.message}
-            </span>
-          )}
           <Button type="button" className="mt-4 w-full" onClick={nextPassword}>
             Continuar
           </Button>
@@ -138,62 +148,52 @@ export function RegisterForm() {
         {/* Step 3 */}
         <div
           ref={step === 3 ? stepRef : null}
-          className={`absolute top-0 left-0 w-full transition-all duration-500 ${step === 3 ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+          className={`absolute top-0 left-0 w-full transition-all duration-500 ${
+            step === 3 ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
-          <div className="flex flex-col gap-3">
-            <Label htmlFor="username">Nome de usuário</Label>
+          <div className="flex flex-col gap-5 pb-3">
             <Input
-              id="username"
-              {...register('username')}
+              errorMessage={errors?.username?.message}
+              isError={errors.username}
+              label="Nome de usuário"
               placeholder="Usuário"
+              register={register}
+              type="text"
+              field="username"
             />
-            {errors.username && (
-              <span className="text-sm text-red-500">
-                {errors.username.message}
-              </span>
-            )}
-
-            <Label htmlFor="fullName">Nome completo</Label>
             <Input
-              id="fullName"
-              {...register('fullName')}
+              errorMessage={errors?.fullName?.message}
+              isError={errors.fullName}
+              label="Nome completo"
               placeholder="Nome completo"
+              register={register}
+              type="text"
+              field="fullName"
             />
-            {errors.fullName && (
-              <span className="text-sm text-red-500">
-                {errors.fullName.message}
-              </span>
-            )}
 
-            <Label htmlFor="country">País</Label>
             <Input
-              id="country"
-              {...register('country')}
+              errorMessage={errors?.country?.message}
+              isError={errors.country}
+              label="País"
               placeholder="Angola"
+              register={register}
+              type="text"
+              field="country"
             />
-            {errors.country && (
-              <span className="text-sm text-red-500">
-                {errors.country.message}
-              </span>
-            )}
           </div>
 
-          <Button
-            type="submit"
-            className="mt-4 w-full"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Criando...' : 'Criar conta'}
+          <Button type="submit" className="mt-4 w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Criando..." : "Criar conta"}
           </Button>
         </div>
       </div>
 
       <p className="text-sm font-medium text-[#8799B5]">
-        Já tem uma conta?{' '}
-        <a href="/login" className="text-primary font-bold">
+        Já tem uma conta?{" "}
+        <Link href="/login" className="text-primary font-bold">
           Faça login
-        </a>
+        </Link>
       </p>
     </form>
   );

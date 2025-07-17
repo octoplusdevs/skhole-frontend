@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { API } from '@/lib/api';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { RenderInput as Input } from "@/(auth)/login/input";
+import { useForgotPassword } from "@/hooks/auth/useForgotPassword";
+import Link from "next/link";
 
 const forgotPasswordSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -16,6 +16,7 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
 
 export function ForgotPasswordForm() {
+  const { mutate: forgotPassword } = useForgotPassword();
   const {
     register,
     handleSubmit,
@@ -26,8 +27,7 @@ export function ForgotPasswordForm() {
 
   const onSubmit = async (data: ForgotPasswordData) => {
     try {
-      const response = await API.post('/auth/forgot-password', data);
-      toast.success(response.data.message || "E-mail enviado com sucesso!");
+      forgotPassword({ email: data.email });
     } catch (err) {
       toast.error("Erro ao enviar e-mail.");
     }
@@ -40,32 +40,31 @@ export function ForgotPasswordForm() {
     >
       <h1 className="text-2xl font-bold">Esqueceu sua senha?</h1>
       <p className="text-sm font-medium text-[#8799B5]">
-        Enviaremos as instruções para redefinir sua senha para o e-mail cadastrado.
+        Enviaremos as instruções para redefinir sua senha para o e-mail
+        cadastrado.
         <br />
       </p>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="email">E-mail</Label>
+      <div className="flex flex-col gap-2 pb-3">
         <Input
-          type="email"
-          id="email"
+          errorMessage={errors?.email?.message}
+          field="email"
+          isError={errors.email}
+          label="E-mail"
           placeholder="Digite seu e-mail"
-          {...register('email')}
+          register={register}
+          type="email"
         />
-        {errors.email && (
-          <span className="text-sm text-red-500">
-            {errors.email.message}
-          </span>
-        )}
       </div>
 
       <Button type="submit" className="w-full h-10" disabled={isSubmitting}>
         {isSubmitting ? "Enviando..." : "Enviar link"}
       </Button>
+
       <p className="text-sm font-medium text-[#8799B5]">
-        Lembrou sua senha?{' '}
-        <a href="/login" className="text-primary font-bold">
+        Lembrou sua senha?{" "}
+        <Link href="/login" className="text-primary font-bold">
           Faça login
-        </a>
+        </Link>
       </p>
     </form>
   );

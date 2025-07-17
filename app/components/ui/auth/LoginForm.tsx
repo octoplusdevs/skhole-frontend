@@ -1,21 +1,13 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { toast } from 'sonner';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { API } from '@/lib/api';
-import { useLogin } from '@/hooks/auth/useLogin';
-
-const loginSchema = z.object({
-  email: z.string().email("E-mail inválido"),
-  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
-});
-
-type LoginData = z.infer<typeof loginSchema>;
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { useLogin } from "@/hooks/auth/useLogin";
+import { RenderInput as Input } from "@/(auth)/login/input";
+import { LoginData, loginSchema } from "@/(auth)/login/interface";
+import Link from "next/link";
 
 export function LoginForm() {
   const {
@@ -28,13 +20,10 @@ export function LoginForm() {
 
   const { mutate } = useLogin();
 
-
   const onSubmit = async (data: LoginData) => {
     try {
-      const response = mutate(data);
-      console.log({response});
+      mutate(data);
     } catch (err) {
-      console.log(err)
       toast.error("Erro ao fazer login.");
     }
   };
@@ -49,34 +38,25 @@ export function LoginForm() {
         Acesse sua conta com seu e-mail e senha.
       </p>
 
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="email">E-mail</Label>
+      <div className="flex flex-col gap-6 pb-2">
         <Input
-          type="email"
-          id="email"
+          errorMessage={errors?.email?.message}
+          isError={errors.email}
+          label="E-mail"
           placeholder="Digite seu e-mail"
-          {...register('email')}
+          register={register}
+          type="email"
+          field="email"
         />
-        {errors.email && (
-          <span className="text-sm text-red-500">
-            {errors.email.message}
-          </span>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="password">Senha</Label>
         <Input
-          type="password"
-          id="password"
+          errorMessage={errors?.password?.message}
+          isError={errors.password}
+          label="Senha"
           placeholder="Digite sua senha"
-          {...register('password')}
+          register={register}
+          type="password"
+          field="password"
         />
-        {errors.password && (
-          <span className="text-sm text-red-500">
-            {errors.password.message}
-          </span>
-        )}
       </div>
 
       <Button type="submit" className="w-full h-10" disabled={isSubmitting}>
@@ -84,17 +64,17 @@ export function LoginForm() {
       </Button>
 
       <p className="text-sm font-medium text-[#8799B5]">
-        Esqueceu sua senha?{' '}
-        <a href="/forgot-password" className="text-primary font-bold">
+        Esqueceu sua senha?{" "}
+        <Link href="/redefinir-senha" className="text-primary font-bold">
           Recuperar senha
-        </a>
+        </Link>
       </p>
 
       <p className="text-sm font-medium text-[#8799B5]">
-        Ainda não tem uma conta?{' '}
-        <a href="/register" className="text-primary font-bold">
+        Ainda não tem uma conta?{" "}
+        <Link href="/criar-conta" className="text-primary font-bold">
           Criar conta
-        </a>
+        </Link>
       </p>
     </form>
   );
