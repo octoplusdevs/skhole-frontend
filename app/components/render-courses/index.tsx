@@ -53,13 +53,13 @@ export const RenderCourses = ({
       toast("O seu pagamento ainda não foi aprovado");
     } else {
       storeCourseSession({ slug, courseId: course.id });
-      router.push(`/learn/${slug}`);
+      router.push(`/cursos/${slug}`);
     }
   };
 
   const handleThumbnailClick = (course: ICourse) => {
     const lesson = getFirstLesson(course);
-    const nextPage = `/learn/${course.slug}`;
+    const nextPage = `/cursos/${course.slug}`;
     storeCourseSession({
       slug: course.slug,
       courseId: course.id,
@@ -90,7 +90,7 @@ export const RenderCourses = ({
                       src="/ts.png"
                       alt={course.title}
                       onClick={() => handleThumbnailClick(course)}
-                      target={`/learn/${course.slug}`}
+                      target={`/cursos/${course.slug}`}
                     />
 
                     <div className="h-24 overflow-hidden px-6 pt-6">
