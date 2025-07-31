@@ -33,13 +33,11 @@ export function useLogin() {
       try {
         await login(email, password);
         personalizedToast("Sessão iniciada com sucesso 🎉", "#bbf722");
+        router.push("/");
       } catch (error) {
         personalizedToast("Credenciais Inválidas");
         throw new Error("Login failed");
       }
-    },
-    onSuccess: () => {
-      router.push("/");
     },
   });
 }
