@@ -1,4 +1,4 @@
 export interface IPagination {
-  limit: string;
-  page: string;
+  limit?: string;
+  page?: string;
 }

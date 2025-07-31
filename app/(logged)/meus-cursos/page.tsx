@@ -4,14 +4,18 @@ import { useEffect } from "react";
 
 import { RenderCourses } from "@/components/render-courses";
 import { Pagination } from "@/components/pagination";
-import { useGetEnrollments } from "@/hooks/use-get-enrollments";
 import { usePaginationParams } from "@/hooks/use-paginations-params";
 import { ICourse } from "@/utils/interfaces/course";
 import { Loading } from "@/components/loading";
+import { useGetEnrollments } from "@/hooks/use-get-enrollments";
 
 export default function StudentCoursesPage() {
   const { page, limit, updateParams } = usePaginationParams();
-  const { data: enrollmentsData, refetch, isLoading } = useGetEnrollments();
+  const {
+    data: enrollmentsData,
+    refetch,
+    isLoading,
+  } = useGetEnrollments({ page: String(page), limit: String(limit) });
 
   useEffect(() => {
     refetch();

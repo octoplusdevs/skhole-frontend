@@ -18,7 +18,10 @@ export default function HomePage() {
   } = useGetCourse({ page: String(page), limit: String(limit) });
 
   const { data: enrollmentsFound, isLoading: isLoadingEnrollments } =
-    useGetEnrollments();
+    useGetEnrollments({});
+
+
+    console.log(enrollmentsFound)
 
   useEffect(() => {
     refetch();

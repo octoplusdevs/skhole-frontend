@@ -7,8 +7,8 @@ const getFirstLesson = (course: ICourse) => {
 
   return {
     ...firstLesson.lesson,
-    order: String(firstLesson.order),
-    moduleOrder: String(firstModule.order),
+    order: String(firstLesson.order ?? ""),
+    moduleOrder: String(firstModule.order ?? ""),
   };
 };
 
