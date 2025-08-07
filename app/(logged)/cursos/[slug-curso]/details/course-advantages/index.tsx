@@ -13,9 +13,10 @@ import { CourseAdvantages } from "./course-advantage";
 import { CoursePrice } from "./course-price";
 import { CourseActionButton } from "./course-action-button";
 import { getCourseStats } from "./utils/calculate-course-stats";
+import { getFirstLesson } from "@/utils/get-first-lesson";
 
 interface ICoursePaymentArea {
-  currentCourse: ICourse | null | undefined;
+  currentCourse: ICourse;
 }
 
 export const CoursePaymentArea = ({ currentCourse }: ICoursePaymentArea) => {
@@ -28,13 +29,9 @@ export const CoursePaymentArea = ({ currentCourse }: ICoursePaymentArea) => {
   const isEnrolled = courseStatus === "ENROLLED";
   const isFree = currentCourse?.type === "FREE";
 
-  const getFirstLessonUrl = (): string => {
-    const firstLesson = currentCourse?.modules?.[0]?.module.lessons[0];
-    return firstLesson ? `${pathName}/${firstLesson.lessonId}` : "";
-  };
-
   const handleAccess = () => {
-    const url = getFirstLessonUrl();
+    const lesson = getFirstLesson(currentCourse);
+    const url = `${pathName}/modulo${lesson?.moduleOrder}/${lesson?.id}`;
     const lessons = currentCourse?.modules?.reduce(
       (acc, curr: CourseModule) => acc + curr.module.lessons.length,
       0

@@ -1,80 +1,86 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+import ReactPlayer from "react-player";
 import { CircleNotch } from "@phosphor-icons/react/dist/ssr";
-import { useRef, useState } from "react";
-import ReactPlayer from "react-player/file";
+import { useWatchedLesson } from "@/hooks/use-watched-lesson";
 
 interface PlayerProps {
-  videoIdCDN?: string;
+  moduleId: string;
+  courseId: string;
+  lessonId: string;
   autoplay?: boolean;
-  video_id: string;
+  watchedId?: string;
   url: string;
   initialLastPosition?: number;
   isLoading: boolean;
 }
 
-const getUpdateFrequency = (duration: number) => {
-  return duration * 0.15;
-};
-
 export default function Player({
-  videoIdCDN = "c8fae39c-2720-4c14-8d32-50415e57ad67",
   autoplay = true,
-  video_id,
   url,
-  initialLastPosition,
+  initialLastPosition = 0,
   isLoading,
+  lessonId,
+  moduleId,
+  courseId,
+  watchedId,
 }: PlayerProps) {
   const playerRef = useRef<ReactPlayer>(null);
+  const hasSeeked = useRef(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [isPlaying, setIsPlaying] = useState(false);
   const [lastReportedTime, setLastReportedTime] = useState(0);
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [updateInterval, setUpdateInterval] = useState<number | null>(null);
 
-  // const updateProgressMutation = useVideoUpdateProgress();
-
-  const handleDuration = (dur: number) => {
-    const frequency = getUpdateFrequency(dur);
-    setUpdateInterval(frequency);
-  };
+  const updateLessonProgress = useWatchedLesson();
 
   const updateProgress = () => {
     if (!playerRef.current) return;
+    const currentTime = playerRef.current.getCurrentTime();
+    if (currentTime === lastReportedTime) return;
 
-    const playedSeconds = playerRef.current.getCurrentTime();
-    const interval = playedSeconds - timeSpent;
-    setTimeSpent(playedSeconds);
+    setLastReportedTime(currentTime);
 
-    // updateProgressMutation.mutate({
-    //   timeSpent: playedSeconds,
-    //   lastPosition: playedSeconds,
-    //   video_id,
-    // });
-    setLastReportedTime(playedSeconds);
+    updateLessonProgress.mutate({
+      action: "record",
+      timeWatched: currentTime,
+      lessonId,
+      courseId,
+      moduleId,
+    });
   };
 
-  const handleProgress = ({ playedSeconds }: { playedSeconds: number }) => {
-    const nextUpdatePoint =
-      lastReportedTime + getUpdateFrequency(playerRef.current?.getDuration?.() ?? 0);
-
-    // if (playedSeconds >= nextUpdatePoint && !updateProgressMutation.isMutating) {
-    //   setLastReportedTime(playedSeconds);
-    //   updateProgress();
-    // }
-    if (playedSeconds >= nextUpdatePoint) {
-      setLastReportedTime(playedSeconds);
-      updateProgress();
+  useEffect(() => {
+    if (isPlaying) {
+      intervalRef.current = setInterval(() => {
+        updateProgress();
+      }, 60_000);
     }
-  };
 
-  const handlePause = () => {
-    updateProgress();
-  };
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isPlaying]);
 
   const handleReady = () => {
-    if (initialLastPosition && playerRef.current) {
+    if (
+      !hasSeeked.current &&
+      initialLastPosition != null &&
+      playerRef.current
+    ) {
       playerRef.current.seekTo(initialLastPosition);
+      hasSeeked.current = true;
     }
   };
+
+  useEffect(() => {
+    hasSeeked.current = false;
+    setLastReportedTime(0);
+  }, [watchedId]);
 
   return (
     <div className="w-full bg-secondary rounded-md p-1 grid">
@@ -85,24 +91,30 @@ export default function Player({
             url={url}
             playing={autoplay}
             controls
-            onDuration={handleDuration}
-            onProgress={handleProgress}
-            onPause={handlePause}
-            onSeek={updateProgress}
-            onPlay={updateProgress}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => {
+              setIsPlaying(false);
+              updateProgress();
+            }}
+            onEnded={() => {
+              setIsPlaying(false);
+              updateProgress();
+            }}
+            onSeek={() => updateProgress()}
             onReady={handleReady}
             width="100%"
             height="100%"
             className="absolute top-0 left-0 w-full h-full"
           />
-        ) :
+        ) : (
           <div className="absolute top-0 left-0 flex items-center justify-center h-full w-full">
             <CircleNotch
               color="#baf722"
               size={56}
               className="rotate-180 animate-spin duration-150"
             />
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );

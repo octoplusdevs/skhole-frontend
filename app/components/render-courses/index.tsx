@@ -31,7 +31,7 @@ export const RenderCourses = ({
   const handleCourseClick = (course: ICourse, status: string) => {
     const slug = course.slug;
     const lesson = getFirstLesson(course);
-    const nextPage = `/learn/${slug}/${lesson?.id}`;
+    const nextPage = `cursos/${slug}/modulo${lesson?.moduleOrder}/${lesson?.id}`;
 
     const hasLessons = course.modules?.some((mod) => mod.module.lessons.length);
 

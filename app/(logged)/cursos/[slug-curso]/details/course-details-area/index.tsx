@@ -24,8 +24,8 @@ export const CourseDetailsArea = ({ currentCourse }: ICourseDetailsArea) => {
   const [accordionOpen, setAccordionOpen] = useState<any>(null);
 
   const { data: watchedLessons } = useGetWatchedLesson({
-    courseId: currentCourse?.id,
-    userId: user?.user?.id,
+    courseId: currentCourse?.id ?? "",
+    userId: user?.id ?? "",
   });
 
   if (!currentCourse) return null;

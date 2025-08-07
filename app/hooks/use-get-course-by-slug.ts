@@ -11,7 +11,7 @@ const useGetCourseBySlug = ({
 }) => {
   return useQuery({
     queryKey: ["currentCourse"],
-    queryFn: async (): Promise<ICourse | null> => {
+    queryFn: async (): Promise<ICourse | any> => {
       const response = await API.get(`/courses/slug/${slug}`);
       return response.data;
     },

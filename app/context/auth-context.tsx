@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const res = await API.get("/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUser(res.data);
+      setUser(res.data?.user);
     } catch {
       setUser(null);
     } finally {
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     const res = await API.post("/login", { email, password });
-    Cookies.set("token", res.data.token);
+    Cookies.set("token", res.data.token, { expires: 1 / 24 });
     await loadUser();
   };
 

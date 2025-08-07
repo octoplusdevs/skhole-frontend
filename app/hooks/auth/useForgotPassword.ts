@@ -20,6 +20,10 @@ export function useForgotPassword() {
 
       if (errorMessage === "The user was not found.") {
         toast.error("E-mail não encontrado");
+      } else if (error.message === "Network Error") {
+        toast("Sem acesso a internet", {
+          description: "Verifique a sua internet!",
+        });
       }
     },
   });
