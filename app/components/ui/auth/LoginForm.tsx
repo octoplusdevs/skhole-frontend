@@ -65,7 +65,7 @@ export function LoginForm() {
 
       <p className="text-sm font-medium text-[#8799B5]">
         Esqueceu sua senha?{" "}
-        <Link href="/redefinir-senha" className="text-primary font-bold">
+        <Link href="/recuperar-conta" className="text-primary font-bold">
           Recuperar senha
         </Link>
       </p>

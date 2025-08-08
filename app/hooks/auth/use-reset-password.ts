@@ -23,6 +23,10 @@ const useResetPassword = () => {
       const errorMessage = error?.response?.data?.details;
       if (errorMessage === "The token is invalid.") {
         toast.error("Token Inválido");
+      } else if (error.message === "Network Error") {
+        toast("Sem acesso a internet", {
+          description: "Verifique a sua internet!",
+        });
       }
     },
   });

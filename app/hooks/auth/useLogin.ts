@@ -35,7 +35,13 @@ export function useLogin() {
         personalizedToast("Sessão iniciada com sucesso 🎉", "#bbf722");
         router.push("/");
       } catch (error) {
-        personalizedToast("Credenciais Inválidas");
+        if (error.message === "Network Error") {
+          toast("Sem acesso a internet", {
+            description: "Verifique a sua internet!",
+          });
+        } else {
+          personalizedToast("Credenciais Inválidas");
+        }
         throw new Error("Login failed");
       }
     },

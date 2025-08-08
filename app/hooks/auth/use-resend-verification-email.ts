@@ -26,6 +26,10 @@ const useResendVerificationEmail = () => {
         toast.error("Este e-mail já foi verificado");
       } else if (errorMessage === "Tente novamente mais tarde.") {
         toast.error("Tente novamente mais tarde.");
+      } else if (error.message === "Network Error") {
+        toast("Sem acesso a internet", {
+          description: "Verifique a sua internet!",
+        });
       }
     },
   });

@@ -1,28 +1,18 @@
 import { API } from "@/services/data";
 import { IWatchedLesson } from "@/utils/interfaces/course";
 import { useQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 
-export const useGetWatchedLesson = ({
-  courseId,
-  userId,
-}: {
-  courseId?: string;
-  userId?: string;
-}) => {
-  const token = Cookies.get("token");
+const useGetWatchedLesson = (params: { courseId: string; userId: string }) => {
   return useQuery({
-    queryKey: ["watchedLesson", courseId, userId],
+    queryKey: ["watchedLesson", params],
     queryFn: async (): Promise<IWatchedLesson[] | []> => {
-      const response = await API.get("/watched-lesson", {
-        params: {
-          courseId,
-          userId,
-        },
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await API.get("/watched-lessons", {
+        params,
       });
       return response.data?.watchedLessons;
     },
-    enabled: !!courseId && !!userId,
+    enabled: !!params,
   });
 };
+
+export { useGetWatchedLesson };

@@ -20,9 +20,6 @@ export default function HomePage() {
   const { data: enrollmentsFound, isLoading: isLoadingEnrollments } =
     useGetEnrollments({});
 
-
-    console.log(enrollmentsFound)
-
   useEffect(() => {
     refetch();
   }, [page, limit, refetch]);
