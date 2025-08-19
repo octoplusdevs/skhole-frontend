@@ -34,8 +34,8 @@ export function useLogin() {
         await login(email, password);
         personalizedToast("Sessão iniciada com sucesso 🎉", "#bbf722");
         router.push("/");
-      } catch (error) {
-        if (error.message === "Network Error") {
+      } catch (error: any) {
+        if (error?.message === "Network Error") {
           toast("Sem acesso a internet", {
             description: "Verifique a sua internet!",
           });
