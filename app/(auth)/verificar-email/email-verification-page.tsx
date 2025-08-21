@@ -11,21 +11,21 @@ export default function EmailVerificationPage() {
   const email = searchParams.get("email");
 
   return (
-    <div className="flex justify-center items-center h-screen w-full px-4">
+    <div className="flex justify-center items-center h-screen w-full px-5">
       <div className="flex flex-col gap-2">
         <Image src="/logo.svg" alt="Logo" width={180} height={200} priority />
         <div className="bg-secondary rounded-lg p-8 max-w-[586px] w-full text-start space-y-4">
           <h1 className="text-xl font-bold">Verificação de e-mail pendente</h1>
           <p className="text-sm text-muted-foreground">
-            Um e-mail foi enviado para <br />{" "}
+            Um e-mail foi enviado para: <br />{" "}
             <strong className="text-white">{email}</strong>
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <p className="text-sm text-muted-foreground">
               Não recebeu o e-mail?
             </p>
             <Button
-              className="text-primary font-semibold hover:underline bg-transparent text-[18px] hover:bg-transparent"
+              className="text-primary font-semibold hover:underline bg-transparent hover:bg-transparent sm:text-[18px] sm:px-3 px-0"
               onClick={() => {
                 if (email) {
                   resendVerificationEmail({ email });

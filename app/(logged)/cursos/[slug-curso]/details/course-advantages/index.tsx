@@ -14,6 +14,7 @@ import { CoursePrice } from "./course-price";
 import { CourseActionButton } from "./course-action-button";
 import { getCourseStats } from "./utils/calculate-course-stats";
 import { getFirstLesson } from "@/utils/get-first-lesson";
+import { formatCurrency } from "@/utils/format-currency";
 
 interface ICoursePaymentArea {
   currentCourse: ICourse;
@@ -61,7 +62,11 @@ export const CoursePaymentArea = ({ currentCourse }: ICoursePaymentArea) => {
     <div className="flex flex-col sm:flex-row sm:justify-between lg:justify-start gap-12 lg:gap-8 w-full lg:flex-col lg:max-w-[384px]">
       <div className="flex flex-col gap-4 w-full">
         {!isEnrolled && (
-          <CoursePrice price={currentCourse?.price ?? 0} isFree={isFree} />
+          <CoursePrice
+            price={currentCourse.price}
+            isFree={isFree}
+            percentage={currentCourse.discount}
+          />
         )}
         <CourseActionButton
           isEnrolled={isEnrolled}
