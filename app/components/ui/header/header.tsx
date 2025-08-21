@@ -46,9 +46,8 @@ const Header = () => {
               onClick={() => {
                 navigate(target, false);
               }}
-              className={`text-[16px] font-medium text-link hover:text-logo duration-150 ${
-                pathName === target && "text-white"
-              }`}
+              className={`text-[16px] font-medium text-link hover:text-logo duration-150 ${pathName === target && "text-white"
+                }`}
             >
               {content}
             </Link>
@@ -56,9 +55,8 @@ const Header = () => {
         </nav>
         <nav
           id="menu-mobile"
-          className={`flex flex-col gap-4 lg:hidden bg-card-foreground absolute top-14 sm:top-20 left-0 h-[100dvh] duration-150 overflow-x-scroll pt-4 ${
-            menuMobileStatus ? "w-full px-4" : "w-0 px-0"
-          }`}
+          className={`flex flex-col gap-4 lg:hidden bg-card-foreground absolute top-14 sm:top-20 left-0 h-[100dvh] duration-150 overflow-x-scroll pt-4 ${menuMobileStatus ? "w-full px-4" : "w-0 px-0"
+            }`}
         >
           {MENU.map(({ content, id, target }) => (
             <Link
@@ -67,9 +65,8 @@ const Header = () => {
               onClick={() => {
                 navigate(target, false);
               }}
-              className={`text-[16px] font-medium text-link hover:text-logo duration-150 ${
-                currentPage === target && "text-white"
-              } ${menuMobileStatus ? "opacity-100" : "opacity-0"}`}
+              className={`text-[16px] font-medium text-link hover:text-logo duration-150 ${currentPage === target && "text-white"
+                } ${menuMobileStatus ? "opacity-100" : "opacity-0"}`}
             >
               {content}
             </Link>

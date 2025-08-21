@@ -1,10 +1,10 @@
 import { formatCurrency } from "@/utils/format-currency";
 import { IPrice } from "./interface";
 
-const Price = ({ content, className }: IPrice) => {
+const Price = ({ content, className, discount }: IPrice) => {
   return (
     <p className={`text-[16px] lg:text-[18px] font-semibold ${className}`}>
-      {formatCurrency((content - 34 / 100 * content))}
+      {formatCurrency((content - discount / 100 * content))}
     </p>
   );
 };
