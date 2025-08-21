@@ -7,6 +7,7 @@ interface ICoursePrice {
 }
 
 export const CoursePrice = ({ price, isFree, percentage }: ICoursePrice) => {
+  const discountedPrice = formatCurrency(price - (price * percentage / 100))
 
   return (
     <div className="flex flex-col gap-2">
@@ -19,7 +20,7 @@ export const CoursePrice = ({ price, isFree, percentage }: ICoursePrice) => {
         </span>
       </div>
       <h3 className="font-bold text-[24px] md:text-[28px] lg:text-[32px]">
-        {isFree ? "Gratuito" : formatCurrency(price - (price * percentage / 100))}
+        {isFree ? "Gratuito" : discountedPrice}
       </h3>
     </div>
   );
