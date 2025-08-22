@@ -109,10 +109,10 @@ export const RenderCourses = ({
                         subtitle="Nível"
                         content={levelTranslator(course.level)}
                       />
-                      <CourseCard.Author
+                      {/* <CourseCard.Author
                         subtitle="Categoria"
                         content={Categories[course.category]}
-                      />
+                      /> */}
                     </div>
 
                     <div className="flex justify-between gap-2 border-t-2 border-slate-600 px-6 py-4 h-[74px]">

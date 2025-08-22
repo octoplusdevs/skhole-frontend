@@ -10,7 +10,7 @@ import { X, List } from "@phosphor-icons/react";
 import { setItemLocalStorage } from "@/utils/localStorage/set-item-local-storage";
 import { getItemLocalStorage } from "@/utils/localStorage/get-item-local-storage";
 import { usePathname } from "next/navigation";
-import { DropdownMenu } from "../dropdown-menu";
+import { DropdownMenu } from "../dropdown-menu-01";
 
 const Header = () => {
   const pathName = usePathname();
