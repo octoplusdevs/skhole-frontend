@@ -311,9 +311,13 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
 ]
 
-function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
+type DraggableRowProps<TData> = {
+  row: Row<TData>
+}
+
+function DraggableRow<TData>({ row }: DraggableRowProps<TData>) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
-    id: row.original.id,
+    id: row.id,
   })
 
   return (
@@ -336,12 +340,14 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   )
 }
 
-interface DataTableProps<TData, TValue> {
+type WithId = { id: string | number }
+
+interface DataTableProps<TData extends WithId, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends WithId, TValue>({
   columns,
   data: initialData,
 }: DataTableProps<TData, TValue>) {

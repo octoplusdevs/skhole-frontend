@@ -34,7 +34,7 @@ export const columns: ColumnDef<ICourse>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status") as ICourse[""]
+      const status = row.getValue("status") as ICourse["status"]
       return (
         <Badge
         >
