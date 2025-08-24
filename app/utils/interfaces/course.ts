@@ -143,6 +143,7 @@ export interface ICourse {
   CourseReviews: ICourseReviews[];
 }
 
+
 export interface IWatchedLesson {
   courseId: string;
   createdAt: Date;

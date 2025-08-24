@@ -17,12 +17,14 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
-          <Toaster />
-        </ReactQueryProvider>
+        {/* <ThemeProvider attribute="class" defaultTheme="dark"> */}
+          <ReactQueryProvider>
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+            <Toaster />
+          </ReactQueryProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

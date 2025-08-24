@@ -31,6 +31,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: async ({ email, password }: IUseLogin) => {
       try {
+        console.log({email, password})
         await login(email, password);
         personalizedToast("Sessão iniciada com sucesso 🎉", "#bbf722");
         router.push("/");

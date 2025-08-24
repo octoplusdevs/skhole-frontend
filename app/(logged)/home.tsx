@@ -34,7 +34,7 @@ export default function HomePage() {
     <main className="flex flex-col gap-4 pb-32">
       <RenderCourses
         title="Cursos disponíveis"
-        courses={coursesFound?.courses}
+        courses={coursesFound?.courses || []}
         enrollmentsFound={enrollmentsFound?.enrollments}
       />
 
